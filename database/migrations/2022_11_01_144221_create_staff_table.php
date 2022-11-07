@@ -21,7 +21,6 @@ class CreateStaffTable extends Migration
             $table->string('english_name', 50)->nullable()->comment('英文名稱');
             $table->string('identification', 10)->comment('身分證');
             $table->foreignId('department_id')->nullable()->constrained()->nullOnDelete()->comment('所屬部門id');
-            $table->foreignId('job_id')->nullable()->constrained()->nullOnDelete()->comment('職位id');
             $table->date('appointment_date')->nullable()->comment('到職日期');
             $table->date('resignation_date')->nullable()->comment('離職日期');
             $table->string('telephone', 10)->nullable()->comment('連絡電話');

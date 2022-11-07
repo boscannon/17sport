@@ -38,16 +38,11 @@ Route::group(['as' => 'backend.', 'prefix' => 'backend'],function () {
         Route::group(['prefix' => 'basic'],function () {
             //部門
             Route::resource('/departments', Controllers\Backend\DepartmentController::class);
-            //職稱
-            Route::resource('/jobs', Controllers\Backend\JobController::class);
             //人員
             Route::resource('/staff', Controllers\Backend\StaffController::class);
             //會員
             Route::resource('/members', Controllers\Backend\MemberController::class);
             Route::put('/members/status/{member}', [Controllers\Backend\MemberController::class, 'status'])->name('members.status');
-            //供應商
-            Route::resource('/suppliers', Controllers\Backend\SupplierController::class);
-            Route::put('/suppliers/status/{supplier}', [Controllers\Backend\SupplierController::class, 'status'])->name('suppliers.status');
         });
 
         Route::group(['prefix' => 'test'],function () {
@@ -59,8 +54,8 @@ Route::group(['as' => 'backend.', 'prefix' => 'backend'],function () {
             //新增管理員
             Route::resource('/users', Controllers\Backend\UserController::class);
             Route::put('/users/status/{user}', [Controllers\Backend\UserController::class, 'status'])->name('users.status');
-            //角色
-            Route::resource('/roles', Controllers\Backend\RoleController::class);            
+            // //角色
+            // Route::resource('/roles', Controllers\Backend\RoleController::class);            
         });
 
         Route::post('/upload', [Controllers\Backend\UploadController::class, 'store'])->name('upload.store');

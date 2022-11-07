@@ -23,6 +23,7 @@ class CreateUsersTable extends Migration
             $table->foreignId('current_team_id')->nullable();
             $table->string('profile_photo_path', 2048)->nullable();
             $table->tinyInteger('status')->default(1)->comment('狀態');
+            $table->timestamp('retirement_date')->nullable()->comment('停用日期');
             $table->timestamps();
         });
     }

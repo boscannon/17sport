@@ -4,66 +4,33 @@ namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Supplier as crudModel;
-use App\Models\BillingMethod;
-use App\Models\TaxDeductionCategory;
-use App\Models\PaymentMethod;
+use App\Models\User as crudModel;
 use DataTables;
 use Exception;
 
-class SupplierController extends Controller
+class OrderController extends Controller
 {
     public function __construct() {
-        $this->name = 'suppliers';
+        $this->name = 'users';
         $this->view = 'backend.'.$this->name;
         $this->rules = [
-            'no' => ['required', 'string', 'max:50', 'unique:App\Models\Supplier'],
-            'name' => ['required', 'string', 'max:50'],
-            'uniform_numbers' => ['nullable', 'string', 'max:50'],
-            'principal' => ['nullable', 'string', 'max:50'],
-            'address' => ['nullable', 'string', 'max:100'],
-            'contact_person' => ['nullable', 'string', 'max:50'],
-            'telephone' => ['nullable', 'string', 'max:50'],
-            'email' => ['nullable', 'string', 'email', 'max:255'],
-            'business_items' => ['nullable', 'string', 'max:50'],
-            'tax' => ['nullable', 'numeric'],
-            'billing_method_id' => ['nullable', 'string', 'exists:App\Models\BillingMethod,id'],
-            'tax_deduction_category_id' => ['nullable', 'string', 'exists:App\Models\TaxDeductionCategory,id'],
-            'invoice_address' => ['nullable', 'string', 'max:50'],
-            'invoice_issuing_company' => ['nullable', 'string', 'max:50'],
-            'checkout_date' => ['nullable', 'numeric'],
-            'remark' => ['nullable', 'string'],
-            'payment_method_id' => ['nullable', 'string', 'exists:App\Models\PaymentMethod,id'],
-            'days' => ['nullable', 'numeric'],
-            'other_instructions' => ['nullable', 'string'],
-            'bank_account' => ['nullable', 'string', 'max:50'],
+            'name' => ['required', 'string', 'max:150'],
+            'images' => ['nullable', 'array'],
+            'content' => ['nullable', 'string'],
+
+            'sort' => ['required', 'numeric', 'max:127'],
             'status' => ['required', 'boolean'],
-            'retirement_date' => ['nullable', 'date'],
+            'language_id' => ['required', 'numeric'],
         ];
         $this->messages = [];
         $this->attributes = [
-            'no' => __("backend.{$this->name}.no"),
             'name' => __("backend.{$this->name}.name"),
-            'uniform_numbers' => __("backend.{$this->name}.uniform_numbers"),
-            'principal' => __("backend.{$this->name}.principal"),
-            'address' => __("backend.{$this->name}.address"),
-            'contact_person' => __("backend.{$this->name}.contact_person"),
-            'telephone' => __("backend.{$this->name}.telephone"),
-            'email' => __("backend.{$this->name}.email"),
-            'business_items' => __("backend.{$this->name}.business_items"),
-            'tax' => __("backend.{$this->name}.tax"),
-            'billing_method_id' => __("backend.{$this->name}.billing_method_id"),
-            'tax_deduction_category_id' => __("backend.{$this->name}.tax_deduction_category_id"),
-            'invoice_address' => __("backend.{$this->name}.invoice_address"),
-            'invoice_issuing_company' => __("backend.{$this->name}.invoice_issuing_company"),
-            'checkout_date' => __("backend.{$this->name}.checkout_date"),
-            'remark' => __("backend.{$this->name}.remark"),
-            'payment_method_id' => __("backend.{$this->name}.payment_method_id"),
-            'days' => __("backend.{$this->name}.days"),
-            'other_instructions' => __("backend.{$this->name}.other_instructions"),
-            'bank_account' => __("backend.{$this->name}.bank_account"),
+            'images' => __("backend.{$this->name}.images"),
+            'content' => __("backend.{$this->name}.content"),
+
+            'sort' => __("backend.{$this->name}.sort"),
             'status' => __("backend.{$this->name}.status"),
-            'retirement_date' => __("backend.{$this->name}.retirement_date"),
+            'language_id' => __("backend.{$this->name}.language_id"),
         ];
     }
 
@@ -86,10 +53,7 @@ class SupplierController extends Controller
     public function create()
     {
         $this->authorize('create '.$this->name);
-        $billingMethods = BillingMethod::all();
-        $taxDeductionCategories = TaxDeductionCategory::all();
-        $paymentMethods = PaymentMethod::all();
-        return view($this->view.'.create', compact('billingMethods', 'taxDeductionCategories', 'paymentMethods'));
+        return view($this->view.'.create');
     }
 
     /**
@@ -105,6 +69,8 @@ class SupplierController extends Controller
 
         try{
             $data = CrudModel::create($validatedData);
+            $images = $this->dealfile($validatedData['images']);
+            dd($images);
             return response()->json(['message' => __('create').__('success')]);
         } catch (Exception $e) {
             return response()->json(['message' => $e->getMessage()],422);
@@ -130,13 +96,10 @@ class SupplierController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
-    {
+    { 
         $this->authorize('edit '.$this->name);
         $data = CrudModel::findOrFail($id);
-        $billingMethods = BillingMethod::all();
-        $taxDeductionCategories = TaxDeductionCategory::all();
-        $paymentMethods = PaymentMethod::all();
-        return view($this->view.'.edit',compact('data', 'billingMethods', 'taxDeductionCategories', 'paymentMethods'));
+        return view($this->view.'.edit',compact('data'));
     }
 
     /**
@@ -149,12 +112,13 @@ class SupplierController extends Controller
     public function update(Request $request, $id)
     {
         $this->authorize('edit '.$this->name);
-        $this->rules['no'] = ['required', 'string', 'max:50', "unique:App\Models\Supplier,no,$id"];
         $validatedData = $request->validate($this->rules, $this->messages, $this->attributes);
 
         try{
             $data = CrudModel::findOrFail($id);
             $data->update($validatedData);
+            $images = $this->dealfile($validatedData['images']);
+            dd($images);
             return response()->json(['message' => __('edit').__('success')]);
         } catch (Exception $e) {
             return response()->json(['message' => $e->getMessage()],422);
@@ -179,6 +143,13 @@ class SupplierController extends Controller
         }
     }
 
+    /**
+     * status  the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
     public function status(Request $request, $id)
     {
         $this->authorize('edit '.$this->name);

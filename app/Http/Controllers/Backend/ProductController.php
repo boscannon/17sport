@@ -4,25 +4,33 @@ namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Job as crudModel;
+use App\Models\User as crudModel;
 use DataTables;
 use Exception;
 
-class JobController extends Controller
+class ProductController extends Controller
 {
     public function __construct() {
-        $this->name = 'jobs';
+        $this->name = 'users';
         $this->view = 'backend.'.$this->name;
         $this->rules = [
-            'no' => ['required', 'string', 'max:50', 'unique:App\Models\Job'],
-            'name' => ['required', 'string', 'max:50'],
-            'remark' => ['nullable', 'string'],
+            'name' => ['required', 'string', 'max:150'],
+            'images' => ['nullable', 'array'],
+            'content' => ['nullable', 'string'],
+
+            'sort' => ['required', 'numeric', 'max:127'],
+            'status' => ['required', 'boolean'],
+            'language_id' => ['required', 'numeric'],
         ];
         $this->messages = [];
         $this->attributes = [
-            'no' => __("backend.{$this->name}.no"),
             'name' => __("backend.{$this->name}.name"),
-            'remark' => __("backend.{$this->name}.remark"),
+            'images' => __("backend.{$this->name}.images"),
+            'content' => __("backend.{$this->name}.content"),
+
+            'sort' => __("backend.{$this->name}.sort"),
+            'status' => __("backend.{$this->name}.status"),
+            'language_id' => __("backend.{$this->name}.language_id"),
         ];
     }
 
@@ -61,6 +69,8 @@ class JobController extends Controller
 
         try{
             $data = CrudModel::create($validatedData);
+            $images = $this->dealfile($validatedData['images']);
+            dd($images);
             return response()->json(['message' => __('create').__('success')]);
         } catch (Exception $e) {
             return response()->json(['message' => $e->getMessage()],422);
@@ -102,12 +112,13 @@ class JobController extends Controller
     public function update(Request $request, $id)
     {
         $this->authorize('edit '.$this->name);
-        $this->rules['no'] = ['required', 'string', 'max:50', "unique:App\Models\Job,no,$id"];
         $validatedData = $request->validate($this->rules, $this->messages, $this->attributes);
 
         try{
             $data = CrudModel::findOrFail($id);
             $data->update($validatedData);
+            $images = $this->dealfile($validatedData['images']);
+            dd($images);
             return response()->json(['message' => __('edit').__('success')]);
         } catch (Exception $e) {
             return response()->json(['message' => $e->getMessage()],422);
@@ -127,6 +138,27 @@ class JobController extends Controller
             $data = CrudModel::findOrFail($id);
             $data->delete();
             return response()->json(['message' => __('delete').__('success')]);
+        } catch (Exception $e) {
+            return response()->json(['message' => $e->getMessage()],422);
+        }
+    }
+
+    /**
+     * status  the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function status(Request $request, $id)
+    {
+        $this->authorize('edit '.$this->name);
+        $validatedData = $request->validate(['status' => ['required', 'boolean']], [], ['status' => __('status'),]);
+
+        try{
+            $data = CrudModel::findOrFail($id);
+            $data->update($validatedData);
+            return response()->json(['message' => __('edit').__('success')]);
         } catch (Exception $e) {
             return response()->json(['message' => $e->getMessage()],422);
         }

@@ -18,8 +18,8 @@ class UserController extends Controller
         $this->rules = [            
             'name' => ['required', 'string', 'max:150'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:App\Models\User'],
-            'roles' => ['required', 'array'],
-            'roles.*' => ['string', 'exists:App\Models\Role,name'],
+            // 'roles' => ['required', 'array'],
+            // 'roles.*' => ['string', 'exists:App\Models\Role,name'],
             'password' => ['required', 'string', 'confirmed', 'min:6'],
             'status' => ['required', 'boolean'],
         ];
@@ -27,7 +27,7 @@ class UserController extends Controller
         $this->attributes = [            
             'name' => __("backend.{$this->name}.name"),
             'email' => __("backend.{$this->name}.email"),
-            'roles' => __("backend.{$this->name}.roles"),
+            // 'roles' => __("backend.{$this->name}.roles"),
             'password' => __("backend.{$this->name}.password"),
             'status' => __("backend.{$this->name}.status"),
         ];    
@@ -71,7 +71,6 @@ class UserController extends Controller
             DB::beginTransaction();
 
             $data = CrudModel::create(array_merge($validatedData, ['password' => bcrypt($request->password)]));
-            $data->syncRoles($validatedData['roles']);
 
             DB::commit();
             return response()->json(['message' => __('create').__('success')]);
@@ -133,7 +132,6 @@ class UserController extends Controller
             }
             $data = CrudModel::findOrFail($id);
             $data->update($validatedData);
-            $data->syncRoles($validatedData['roles']);
 
             DB::commit();
             return response()->json(['message' => __('edit').__('success')]);

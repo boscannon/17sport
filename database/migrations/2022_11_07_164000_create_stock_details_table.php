@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Spatie\Permission\Models\Permission;
 
 class CreateStockDetailsTable extends Migration
 {
@@ -27,6 +28,12 @@ class CreateStockDetailsTable extends Migration
             $table->unsignedInteger('stock')->default(0)->comment('售價');
             $table->timestamps();
         });
+        
+        // 创建权限
+        Permission::create(['name' => 'read stock_details', 'guard_name' => 'admin']);
+        Permission::create(['name' => 'create stock_details', 'guard_name' => 'admin']);
+        Permission::create(['name' => 'edit stock_details', 'guard_name' => 'admin']);
+        Permission::create(['name' => 'delete stock_details', 'guard_name' => 'admin']);    
     }
 
     /**

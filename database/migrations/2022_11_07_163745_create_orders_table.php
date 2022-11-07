@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Spatie\Permission\Models\Permission;
 
 class CreateOrdersTable extends Migration
 {
@@ -28,6 +29,12 @@ class CreateOrdersTable extends Migration
             $table->text('remark')->nullable()->comment('備註'); 
             $table->timestamps();
         });
+        
+        // 创建权限
+        Permission::create(['name' => 'read orders', 'guard_name' => 'admin']);
+        Permission::create(['name' => 'create orders', 'guard_name' => 'admin']);
+        Permission::create(['name' => 'edit orders', 'guard_name' => 'admin']);
+        Permission::create(['name' => 'delete orders', 'guard_name' => 'admin']);    
     }
 
     /**

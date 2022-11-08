@@ -48,6 +48,7 @@ $(function() {
             },            
             { data: 'created_at', title: '{{ __('created_at') }}' },
             { data: 'updated_at', title: '{{ __('updated_at') }}' },
+            { data: 'retirement_date', title: '{{ __("backend.$routeNameData.retirement_date") }}' },
             { data: 'id', title: '{{ __('option') }}', bSortable: false, render:function(data,type,row) {
                 return `<a class="edit" href="${ path }/${ data }/edit">{{ __('edit') }}</a> |
                     <a data-id="${ data }" class="delete" href="javascript:;">{{ __('delete') }}</a>`;

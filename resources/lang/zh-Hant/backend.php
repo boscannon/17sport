@@ -29,6 +29,7 @@ return [
     'password_error' => '密碼錯誤',
     'password_confirmation' => '密碼確認',
     'status' => '狀態',
+    'retirement_date' => '停用日期',
   ],
   'roles' => [
     'name' => '角色名稱',

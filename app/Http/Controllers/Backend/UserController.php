@@ -72,7 +72,10 @@ class UserController extends Controller
         try{
             DB::beginTransaction();
 
-            $data = CrudModel::create(array_merge($validatedData, ['password' => bcrypt($request->password)]));
+            $validatedData['password'] = bcrypt($request->password);
+            $validatedData['retirement_date'] = $validatedData['status'] == 0 ? date('Y-m-d H:i:s') : null;
+
+            $data = CrudModel::create($validatedData);
 
             DB::commit();
             return response()->json(['message' => __('create').__('success')]);
@@ -132,6 +135,8 @@ class UserController extends Controller
             }else{
                 unset($validatedData['password']);
             }
+            $validatedData['retirement_date'] = $validatedData['status'] == 0 ? date('Y-m-d H:i:s') : null;
+            
             $data = CrudModel::findOrFail($id);
             $data->update($validatedData);
 
@@ -174,6 +179,8 @@ class UserController extends Controller
         $validatedData = $request->validate(['status' => ['required', 'boolean']], [], ['status' => __('status'),]);
         
         try{
+            $validatedData['retirement_date'] = $validatedData['status'] == 0 ? date('Y-m-d H:i:s') : null;
+            
             $data = CrudModel::findOrFail($id);
             $data->update($validatedData);
             return response()->json(['message' => __('edit').__('success')]);

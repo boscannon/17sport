@@ -35,6 +35,7 @@ class User extends Authenticatable
         'password',
         'status',
         'staff_id',
+        'retirement_date'
     ];
 
     /**
@@ -60,6 +61,7 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'created_at' => 'datetime:Y-m-d H:i:s',
         'updated_at' => 'datetime:Y-m-d H:i:s',
+        'retirement_date' => 'datetime:Y-m-d H:i:s',
     ];
 
     /**
@@ -78,6 +80,7 @@ class User extends Authenticatable
             'email',
             'status',           
             'staff_id',           
+            'retirement_date'
         ],
         // //關聯轉換
         'translation' => [

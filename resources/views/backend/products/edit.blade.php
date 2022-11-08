@@ -39,15 +39,15 @@
                             </div>
                             <div class="form-group col-md-6">
                                 <label>{{ __("backend.$routeNameData.specification") }}</label>
-                                <input type="text" required name="specification" class="form-control" value="{{ $data->specification }}" placeholder="{{ __("backend.$routeNameData.specification") }}">
+                                <input type="text" name="specification" class="form-control" value="{{ $data->specification }}" placeholder="{{ __("backend.$routeNameData.specification") }}">
                             </div>                                                        
                             <div class="form-group col-md-6">
                                 <label>{{ __("backend.$routeNameData.unit") }}</label>
-                                <input type="date" name="unit" class="form-control" value="{{ $data->unit }}" placeholder="{{ __("backend.$routeNameData.unit") }}">
+                                <input type="text" name="unit" class="form-control" value="{{ $data->unit }}" placeholder="{{ __("backend.$routeNameData.unit") }}">
                             </div>
                             <div class="form-group col-md-6">
                                 <label>{{ __("backend.$routeNameData.type") }}</label>
-                                <input type="date" name="type" class="form-control" value="{{ $data->type }}" placeholder="{{ __("backend.$routeNameData.type") }}">
+                                <input type="text" name="type" class="form-control" value="{{ $data->type }}" placeholder="{{ __("backend.$routeNameData.type") }}">
                             </div>
                             <div class="form-group col-md-6">
                                 <label>{{ __("backend.$routeNameData.size") }}</label>

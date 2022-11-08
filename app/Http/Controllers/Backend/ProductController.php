@@ -131,8 +131,6 @@ class ProductController extends Controller
 
             $data = CrudModel::findOrFail($id);
             $data->update($validatedData);
-            $images = $this->dealfile($validatedData['images']);
-            dd($images);
 
             DB::commit();
             return response()->json(['message' => __('edit').__('success')]);

@@ -32,7 +32,7 @@ $(function() {
             { data: 'null', title: '#', bSearchable: false, bSortable: false, render: function ( data, type, row , meta ) {
                 return  meta.row + 1;
             }},
-            { data: 'no', title: '{{ __("backend.$routeNameData.no") }}' },
+            { data: 'barcode', title: '{{ __("backend.$routeNameData.barcode") }}' },
             { data: 'name', title: '{{ __("backend.$routeNameData.name") }}' },   
             { data: 'created_at', title: '{{ __('created_at') }}' },
             { data: 'updated_at', title: '{{ __('updated_at') }}' },

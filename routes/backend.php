@@ -38,9 +38,9 @@ Route::group(['as' => 'backend.', 'prefix' => 'backend'],function () {
         //產品
         Route::resource('/products', Controllers\Backend\ProductController::class);
         //庫存明細
-        Route::resource('/stock_details', Controllers\Backend\StockDetailController::class);
+        Route::resource('/stock_details', Controllers\Backend\StockDetailController::class)->only(['index']);
         //訂單
-        Route::resource('/orders', Controllers\Backend\OrderController::class);                
+        Route::resource('/orders', Controllers\Backend\OrderController::class)->only(['index']);
         //部門
         Route::resource('/departments', Controllers\Backend\DepartmentController::class);
         //人員

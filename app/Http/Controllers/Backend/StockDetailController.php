@@ -4,34 +4,18 @@ namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\User as crudModel;
+use App\Models\Stock_detail as crudModel;
 use DataTables;
 use Exception;
 
 class StockDetailController extends Controller
 {
     public function __construct() {
-        $this->name = 'users';
+        $this->name = 'stock_details';
         $this->view = 'backend.'.$this->name;
-        $this->rules = [
-            'name' => ['required', 'string', 'max:150'],
-            'images' => ['nullable', 'array'],
-            'content' => ['nullable', 'string'],
-
-            'sort' => ['required', 'numeric', 'max:127'],
-            'status' => ['required', 'boolean'],
-            'language_id' => ['required', 'numeric'],
-        ];
+        $this->rules = [];
         $this->messages = [];
-        $this->attributes = [
-            'name' => __("backend.{$this->name}.name"),
-            'images' => __("backend.{$this->name}.images"),
-            'content' => __("backend.{$this->name}.content"),
-
-            'sort' => __("backend.{$this->name}.sort"),
-            'status' => __("backend.{$this->name}.status"),
-            'language_id' => __("backend.{$this->name}.language_id"),
-        ];
+        $this->attributes = [];
     }
 
     public function index(Request $request)

@@ -73,4 +73,28 @@ return [
     'stock' => '庫存',
     'remark' => '備註'
   ],  
+  'stock_details' => [
+    'product_id' => '產品',
+    'order_id' => '訂單',
+    'source' => '來源',
+    'no' => '訂單編號',
+    'barcode' => '國際條碼',
+    'name' => '商品名稱',
+    'type' => '型號',
+    'size' => '尺寸',
+    'amount' => '數量',
+    'stock' => '庫存',
+  ],
+  'orders' => [
+    'no' => '編號',
+    'source' => '來源',
+    'date' => '日期',
+    'recipient_name' => '收件人姓名',
+    'recipient_phone' => '收件人電話',
+    'recipient_cellphone' => '收件人手機',
+    'purchaser_name' => '購買人姓名',
+    'purchaser_cellphone' => '購買人手機',
+    'due_date' => '應出貨日',
+    'remark' => '備註',
+  ]
 ];

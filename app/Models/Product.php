@@ -47,9 +47,9 @@ class Product extends Model
     public static $audit = [
         //要紀錄欄位
         'only' => [
-            'barcode',
             'yahoo_id',
             'momo_id',
+            'barcode',
             'name',
             'specification',
             'resignation_date',

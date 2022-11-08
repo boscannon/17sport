@@ -35,6 +35,12 @@ Route::group(['as' => 'backend.', 'prefix' => 'backend'],function () {
         //操作紀錄
         Route::resource('/audits', Controllers\Backend\AuditController::class);
 
+        //產品
+        Route::resource('/products', Controllers\Backend\ProductController::class);
+        //庫存明細
+        Route::resource('/stock_details', Controllers\Backend\StockDetailController::class);
+        //訂單
+        Route::resource('/orders', Controllers\Backend\OrderController::class);                
         //部門
         Route::resource('/departments', Controllers\Backend\DepartmentController::class);
         //人員

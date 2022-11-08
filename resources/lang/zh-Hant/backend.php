@@ -12,7 +12,10 @@ return [
     'suppliers'=> '供應商管理',
     'staff'=> '人員管理',
     'test'=> '測試',
-    'template'=> '模板'
+    'template'=> '模板',
+    'products'=> '產品管理',
+    'stock_details'=> '庫存明細',
+    'orders'=> '訂單',
   ],
   'audits' => [
     'event' => '動作',
@@ -57,4 +60,17 @@ return [
     'emergency_contact_phone' => '緊急聯絡人電話',
     'remark' => '備註'
   ],
+  'products' => [
+    'barcode' => '條碼',
+    'yahoo_id' => 'yahoo編號',
+    'momo_id' => 'momo編號',
+    'name' => '名稱',
+    'specification' => '規格',
+    'unit' => '單位',
+    'type' => '型號',
+    'size' => '尺寸',
+    'price' => '售價',
+    'stock' => '庫存',
+    'remark' => '備註'
+  ],  
 ];

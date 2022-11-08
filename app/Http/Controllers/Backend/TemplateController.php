@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\User as crudModel;
 use DataTables;
 use Exception;
+use DB;
 
 class TemplateController extends Controller
 {
@@ -68,11 +69,16 @@ class TemplateController extends Controller
         $validatedData = $request->validate($this->rules, $this->messages, $this->attributes);
 
         try{
+            DB::beginTransaction();
+
             $data = CrudModel::create($validatedData);
             $images = $this->dealfile($validatedData['images']);
             dd($images);
+
+            DB::commit();
             return response()->json(['message' => __('create').__('success')]);
         } catch (Exception $e) {
+            DB::rollBack();
             return response()->json(['message' => $e->getMessage()],422);
         }
     }
@@ -115,12 +121,17 @@ class TemplateController extends Controller
         $validatedData = $request->validate($this->rules, $this->messages, $this->attributes);
 
         try{
+            DB::beginTransaction();
+
             $data = CrudModel::findOrFail($id);
             $data->update($validatedData);
             $images = $this->dealfile($validatedData['images']);
             dd($images);
+
+            DB::commit();
             return response()->json(['message' => __('edit').__('success')]);
         } catch (Exception $e) {
+            DB::rollBack();
             return response()->json(['message' => $e->getMessage()],422);
         }
     }
@@ -135,10 +146,15 @@ class TemplateController extends Controller
     {
         $this->authorize('delete '.$this->name);
         try{
+            DB::beginTransaction();
+            
             $data = CrudModel::findOrFail($id);
             $data->delete();
+
+            DB::commit();
             return response()->json(['message' => __('delete').__('success')]);
         } catch (Exception $e) {
+            DB::rollBack();
             return response()->json(['message' => $e->getMessage()],422);
         }
     }

@@ -4,33 +4,43 @@ namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\User as crudModel;
+use App\Models\Product as crudModel;
 use DataTables;
 use Exception;
+use DB;
 
 class ProductController extends Controller
 {
     public function __construct() {
-        $this->name = 'users';
+        $this->name = 'products';
         $this->view = 'backend.'.$this->name;
         $this->rules = [
-            'name' => ['required', 'string', 'max:150'],
-            'images' => ['nullable', 'array'],
-            'content' => ['nullable', 'string'],
+            'barcode' => ['required', 'string', 'max:50'],
+            'yahoo_id' => ['required', 'string', 'max:50'],
+            'momo_id' => ['required', 'string', 'max:50'],
+            'name' => ['required', 'string', 'max:50'],
 
-            'sort' => ['required', 'numeric', 'max:127'],
-            'status' => ['required', 'boolean'],
-            'language_id' => ['required', 'numeric'],
+            'specification' => ['nullable', 'string', 'max:50'],
+            'unit' => ['nullable', 'string', 'max:50'],
+            'type' => ['nullable', 'string', 'max:50'],
+            'size' => ['nullable', 'string', 'max:50'],
+            'price' => ['nullable', 'numeric'],
+            'stock' => ['nullable', 'numeric'],
+            'remark' => ['nullable', 'string'],            
         ];
         $this->messages = [];
         $this->attributes = [
+            'barcode' => __("backend.{$this->name}.barcode"),
+            'yahoo_id' => __("backend.{$this->name}.yahoo_id"),
+            'momo_id' => __("backend.{$this->name}.momo_id"),
             'name' => __("backend.{$this->name}.name"),
-            'images' => __("backend.{$this->name}.images"),
-            'content' => __("backend.{$this->name}.content"),
-
-            'sort' => __("backend.{$this->name}.sort"),
-            'status' => __("backend.{$this->name}.status"),
-            'language_id' => __("backend.{$this->name}.language_id"),
+            'specification' => __("backend.{$this->name}.specification"),
+            'unit' => __("backend.{$this->name}.unit"),
+            'type' => __("backend.{$this->name}.type"),
+            'size' => __("backend.{$this->name}.size"),
+            'price' => __("backend.{$this->name}.price"),
+            'stock' => __("backend.{$this->name}.stock"),
+            'remark' => __("backend.{$this->name}.remark"),
         ];
     }
 
@@ -68,11 +78,14 @@ class ProductController extends Controller
         $validatedData = $request->validate($this->rules, $this->messages, $this->attributes);
 
         try{
+            DB::beginTransaction();
+
             $data = CrudModel::create($validatedData);
-            $images = $this->dealfile($validatedData['images']);
-            dd($images);
+
+            DB::commit();
             return response()->json(['message' => __('create').__('success')]);
         } catch (Exception $e) {
+            DB::rollBack();
             return response()->json(['message' => $e->getMessage()],422);
         }
     }
@@ -114,13 +127,17 @@ class ProductController extends Controller
         $this->authorize('edit '.$this->name);
         $validatedData = $request->validate($this->rules, $this->messages, $this->attributes);
 
-        try{
+        try{DB::beginTransaction();
+
             $data = CrudModel::findOrFail($id);
             $data->update($validatedData);
             $images = $this->dealfile($validatedData['images']);
             dd($images);
+
+            DB::commit();
             return response()->json(['message' => __('edit').__('success')]);
         } catch (Exception $e) {
+            DB::rollBack();
             return response()->json(['message' => $e->getMessage()],422);
         }
     }
@@ -135,10 +152,15 @@ class ProductController extends Controller
     {
         $this->authorize('delete '.$this->name);
         try{
+            DB::beginTransaction();
+
             $data = CrudModel::findOrFail($id);
             $data->delete();
+
+            DB::commit();
             return response()->json(['message' => __('delete').__('success')]);
         } catch (Exception $e) {
+            DB::rollBack();
             return response()->json(['message' => $e->getMessage()],422);
         }
     }

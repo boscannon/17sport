@@ -27,24 +27,13 @@ $(function() {
         responsive: true,
         scrollX: true,
         ajax: path,
-        order: [[5, 'desc']],
+        order: [[4, 'desc']],
         columns: [
             { data: 'null', title: '#', bSearchable: false, bSortable: false, render: function ( data, type, row , meta ) {
                 return  meta.row + 1;
             }},
-            { data: 'name', title: '{{ __("backend.$routeNameData.name") }}' },
-            { data: 'email', title: '{{ __("backend.$routeNameData.email") }}' },
-            {
-                data: "status", title: '{{ __('status') }}',
-                render: function ( data, type, row ) {   
-                    return`
-                        <label class="css-control css-control-sm css-control-primary css-switch">
-                            <input type="checkbox" data-id="${ row.id }" class="status css-control-input" ${ data == 1 ? 'checked' : '' }>
-                            <span class="css-control-indicator"></span>
-                        </label>`;            
-                },
-                className: "dt-body-center"
-            },            
+            { data: 'no', title: '{{ __("backend.$routeNameData.no") }}' },
+            { data: 'name', title: '{{ __("backend.$routeNameData.name") }}' },   
             { data: 'created_at', title: '{{ __('created_at') }}' },
             { data: 'updated_at', title: '{{ __('updated_at') }}' },
             { data: 'id', title: '{{ __('option') }}', bSortable: false, render:function(data,type,row) {
@@ -65,10 +54,6 @@ $(function() {
                 data: row,
                 success: function(data) {
                     Swal.fire({ text: data.message, icon: 'success' }).then(function() {
-                        if(id == {{ Auth::user()->id }}){
-                            location.reload();
-                            return;
-                        }
                         table.ajax.reload(null, false);
                     }); 
                 },

@@ -14,17 +14,14 @@ class Staff extends Model
     protected $fillable = [
         'no',
         'name',
-        'english_name',
         'identification',
         'department_id',
-        'job_id',
         'appointment_date',
         'resignation_date',
         'telephone',
         'cellphone',
         'address',
         'email',
-        'line',
         'emergency_contact',
         'emergency_contact_phone',
         'remark',
@@ -34,21 +31,17 @@ class Staff extends Model
     protected $casts = [
         'no' => 'string',
         'name' => 'string',
-        'english_name' => 'string',
         'identification' => 'string',
         'department_id' => 'integer',
-        'job_id' => 'integer',
         'appointment_date' => 'datetime:Y-m-d',
         'resignation_date' => 'datetime:Y-m-d',
         'telephone' => 'string',
         'cellphone' => 'string',
         'address' => 'string',
         'email' => 'string',
-        'line' => 'string',
         'emergency_contact' => 'string',
         'emergency_contact_phone' => 'string',
         'remark' => 'string',
-
         'created_at' => 'datetime:Y-m-d H:i:s',
         'updated_at' => 'datetime:Y-m-d H:i:s',
     ];      
@@ -58,17 +51,14 @@ class Staff extends Model
         'only' => [
             'no',
             'name',
-            'english_name',
             'identification',
             'department_id',
-            'job_id',
             'appointment_date',
             'resignation_date',
             'telephone',
             'cellphone',
             'address',
             'email',
-            'line',
             'emergency_contact',
             'emergency_contact_phone',
             'remark',         
@@ -85,9 +75,9 @@ class Staff extends Model
             ]            
         ],
         //多對多
-        'many' => [
-            'roles' => 'name'
-        ]         
+        // 'many' => [
+        //     'roles' => 'name'
+        // ]         
     ];
 
     public function department(){

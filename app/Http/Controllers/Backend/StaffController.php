@@ -17,7 +17,6 @@ class StaffController extends Controller
         $this->rules = [
             'no' => ['required', 'string', 'max:50', "unique:App\Models\Staff"],
             'name' => ['required', 'string', 'max:50'],
-            'english_name' => ['nullable', 'string', 'max:50'],
             'identification' => ['required', 'string', 'max:10'],
             'department_id' => ['required', 'exists:App\Models\Department,id'],
             'appointment_date' => ['nullable', 'date'],
@@ -26,7 +25,6 @@ class StaffController extends Controller
             'cellphone' => ['nullable', 'string', 'max:10'],
             'address' => ['nullable', 'string', 'max:200'],
             'email' => ['nullable', 'string', 'max:150'],
-            'line' => ['nullable', 'string', 'max:50'],
             'emergency_contact' => ['nullable', 'string', 'max:50'],
             'emergency_contact_phone' => ['nullable', 'string', 'max:10'],
             'remark' => ['nullable', 'string', 'max:200'],
@@ -35,7 +33,6 @@ class StaffController extends Controller
         $this->attributes = [
             'no' => __("backend.{$this->name}.no"),
             'name' => __("backend.{$this->name}.name"),
-            'english_name' => __("backend.{$this->name}.english_name"),
             'identification' => __("backend.{$this->name}.identification"),
             'department_id' => __("backend.{$this->name}.department_id"),
             'appointment_date' => __("backend.{$this->name}.appointment_date"),
@@ -44,7 +41,6 @@ class StaffController extends Controller
             'cellphone' => __("backend.{$this->name}.cellphone"),
             'address' => __("backend.{$this->name}.address"),
             'email' => __("backend.{$this->name}.email"),
-            'line' => __("backend.{$this->name}.line"),
             'emergency_contact' => __("backend.{$this->name}.emergency_contact"),
             'emergency_contact_phone' => __("backend.{$this->name}.emergency_contact_phone"),
             'remark' => __("backend.{$this->name}.remark"),

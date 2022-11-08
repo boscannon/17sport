@@ -44,17 +44,14 @@ return [
   'staff' => [
     'no' => '人員編號',
     'name' => '人員名稱',
-    'english_name' => '人員英文名稱',
     'identification' => '身分證',
     'department_id' => '所屬部門',
-    'job_id' => '職位',
     'appointment_date' => '到職日期',
     'resignation_date' => '離職日期',
     'telephone' => '連絡電話',
     'cellphone' => '手機',
     'address' => '地址',
     'email' => 'email',
-    'line' => 'line',
     'emergency_contact' => '緊急聯絡人',
     'emergency_contact_phone' => '緊急聯絡人電話',
     'remark' => '備註'

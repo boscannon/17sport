@@ -23,7 +23,7 @@ class FortifyServiceProvider extends ServiceProvider
     {
         if(request()->is('backend/*')){
             config()->set('fortify.guard', 'admin');
-            config()->set('fortify.home', 'backend/home/dashboard');
+            config()->set('fortify.home', 'backend/dashboard');
         }
     }
 

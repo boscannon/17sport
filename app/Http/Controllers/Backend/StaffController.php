@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Staff as crudModel;
 use App\Models\Department;
-use App\Models\Job;
 use DataTables;
 use Exception;
 
@@ -21,7 +20,6 @@ class StaffController extends Controller
             'english_name' => ['nullable', 'string', 'max:50'],
             'identification' => ['required', 'string', 'max:10'],
             'department_id' => ['required', 'exists:App\Models\Department,id'],
-            'job_id' => ['required', 'exists:App\Models\Job,id'],
             'appointment_date' => ['nullable', 'date'],
             'resignation_date' => ['nullable', 'date'],
             'telephone' => ['nullable', 'string', 'max:10'],
@@ -40,7 +38,6 @@ class StaffController extends Controller
             'english_name' => __("backend.{$this->name}.english_name"),
             'identification' => __("backend.{$this->name}.identification"),
             'department_id' => __("backend.{$this->name}.department_id"),
-            'job_id' => __("backend.{$this->name}.job_id"),
             'appointment_date' => __("backend.{$this->name}.appointment_date"),
             'resignation_date' => __("backend.{$this->name}.resignation_date"),
             'telephone' => __("backend.{$this->name}.telephone"),
@@ -74,8 +71,7 @@ class StaffController extends Controller
     {
         $this->authorize('create '.$this->name);
         $departments = Department::all();
-        $jobs = Job::all();
-        return view($this->view.'.create', compact('departments', 'jobs'));
+        return view($this->view.'.create', compact('departments'));
     }
 
     /**
@@ -120,8 +116,7 @@ class StaffController extends Controller
         $this->authorize('edit '.$this->name);
         $data = CrudModel::findOrFail($id);
         $departments = Department::all();
-        $jobs = Job::all();        
-        return view($this->view.'.edit',compact('data', 'departments', 'jobs'));
+        return view($this->view.'.edit',compact('data', 'departments'));
     }
 
     /**

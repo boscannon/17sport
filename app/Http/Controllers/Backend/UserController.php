@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User as crudModel;
-use App\Models\Role;
+use App\Models\Staff;
 use DataTables;
 use Exception;
 use DB;
@@ -22,6 +22,7 @@ class UserController extends Controller
             // 'roles.*' => ['string', 'exists:App\Models\Role,name'],
             'password' => ['required', 'string', 'confirmed', 'min:6'],
             'status' => ['required', 'boolean'],
+            'staff_id' => ['required', 'exists:App\Models\Staff,id'],
         ];
         $this->messages = []; 
         $this->attributes = [            
@@ -30,6 +31,7 @@ class UserController extends Controller
             // 'roles' => __("backend.{$this->name}.roles"),
             'password' => __("backend.{$this->name}.password"),
             'status' => __("backend.{$this->name}.status"),
+            'staff_id' => __("backend.{$this->name}.staff_id"),
         ];    
     }
 
@@ -37,7 +39,7 @@ class UserController extends Controller
     {
         $this->authorize('read '.$this->name);
         if ($request->ajax()) {
-            $data = CrudModel::whereNotIn('email', explode(',', env('SUPER_ADMIN')));
+            $data = CrudModel::with('staff')->whereNotIn('email', explode(',', env('SUPER_ADMIN')));
             return Datatables::eloquent($data)
                 ->make(true);
         }
@@ -52,8 +54,8 @@ class UserController extends Controller
     public function create()
     {
         $this->authorize('create '.$this->name);
-        $roles = Role::all();
-        return view($this->view.'.create', compact('roles'));
+        $staff = Staff::all();
+        return view($this->view.'.create', compact('staff'));
     }
 
     /**
@@ -102,8 +104,8 @@ class UserController extends Controller
     { 
         $this->authorize('edit '.$this->name);
         $data = CrudModel::findOrFail($id);
-        $roles = Role::all();
-        return view($this->view.'.edit',compact('data', 'roles'));
+        $staff = Staff::all();
+        return view($this->view.'.edit',compact('data', 'staff'));
     }
 
     /**

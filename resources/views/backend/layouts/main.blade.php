@@ -52,9 +52,9 @@
             .select2-container--default .select2-results__option[aria-disabled=true] {
                 display: none;
             }
-            .nav-main li{
+            /* .nav-main li{
                 display: none;
-            }
+            } */
         </style>            
         @if(!auth()->user()->can("create $permissionsData"))
             <style>

@@ -24,20 +24,7 @@ return [
   'users' => [
     'name' => '名稱',
     'email' => '信箱',
-    'roles' => '角色',
-    'password' => '密碼',
-    'password_error' => '密碼錯誤',
-    'password_confirmation' => '密碼確認',
-    'status' => '狀態',
-  ],
-  'members' => [
-    'name' => '名稱',
-    'email' => '信箱',
-    'sex' => '性別',
-    'gender' => [
-      'boy'=> '男',
-      'girl'=> '女',
-    ],
+    'staff_id' => '人員',
     'password' => '密碼',
     'password_error' => '密碼錯誤',
     'password_confirmation' => '密碼確認',
@@ -52,11 +39,6 @@ return [
     'name' => '部門名稱',
     'parent_id' => '上層部門',
     'level' => '層級',
-    'remark' => '備註'
-  ],
-  'jobs' => [
-    'no' => '職位編號',
-    'name' => '職位名稱',
     'remark' => '備註'
   ],
   'staff' => [
@@ -76,29 +58,5 @@ return [
     'emergency_contact' => '緊急聯絡人',
     'emergency_contact_phone' => '緊急聯絡人電話',
     'remark' => '備註'
-  ],
-  'suppliers' => [
-    'no' => '供應商編號',
-    'name' => '供應商名稱',
-    'uniform_numbers' => '統一編號',
-    'principal' => '負責人',
-    'address' => '地址',
-    'contact_person' => '聯絡人',
-    'telephone' => '聯絡人電話',
-    'email' => 'email',
-    'business_items' => '營業項目',
-    'tax' => '稅金',
-    'billing_method_id' => '立帳方式',
-    'tax_deduction_category_id' => '扣稅類別',
-    'invoice_address' => '發票地址',
-    'invoice_issuing_company' => '發票開立公司別',
-    'checkout_date' => '每月結帳日',
-    'remark' => '備註',
-    'payment_method_id' => '收款方式',
-    'days' => '天數',
-    'other_instructions' => '其他說明',
-    'bank_account' => '銀行帳戶',
-    'status' => '狀態',
-    'retirement_date' => '停用日期',
   ],
 ];

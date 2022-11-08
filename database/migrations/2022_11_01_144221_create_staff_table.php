@@ -18,7 +18,6 @@ class CreateStaffTable extends Migration
             $table->id();
             $table->string('no', 50)->unique()->comment('編號');
             $table->string('name', 50)->comment('名稱');
-            $table->string('english_name', 50)->nullable()->comment('英文名稱');
             $table->string('identification', 10)->comment('身分證');
             $table->foreignId('department_id')->nullable()->constrained()->nullOnDelete()->comment('所屬部門id');
             $table->date('appointment_date')->nullable()->comment('到職日期');
@@ -27,7 +26,6 @@ class CreateStaffTable extends Migration
             $table->string('cellphone', 10)->nullable()->comment('手機');
             $table->string('address', 200)->nullable()->comment('地址');
             $table->string('email', 150)->nullable()->comment('email');
-            $table->string('line', 50)->nullable()->comment('line');
             $table->string('emergency_contact', 50)->nullable()->comment('緊急聯絡人');
             $table->string('emergency_contact_phone', 10)->nullable()->comment('緊急聯絡人電話');
             $table->string('remark', 200)->nullable()->comment('備註');

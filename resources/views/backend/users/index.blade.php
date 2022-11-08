@@ -27,13 +27,14 @@ $(function() {
         responsive: true,
         scrollX: true,
         ajax: path,
-        order: [[5, 'desc']],
+        order: [[6, 'desc']],
         columns: [
             { data: 'null', title: '#', bSearchable: false, bSortable: false, render: function ( data, type, row , meta ) {
                 return  meta.row + 1;
             }},
             { data: 'name', title: '{{ __("backend.$routeNameData.name") }}' },
             { data: 'email', title: '{{ __("backend.$routeNameData.email") }}' },
+            { data: 'staff.name', title: '{{ __("backend.$routeNameData.staff_id") }}' },
             {
                 data: "status", title: '{{ __('status') }}',
                 render: function ( data, type, row ) {   

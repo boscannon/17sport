@@ -34,6 +34,7 @@ class User extends Authenticatable
         'email',
         'password',
         'status',
+        'staff_id',
     ];
 
     /**
@@ -55,6 +56,7 @@ class User extends Authenticatable
      */
     protected $casts = [
         'status' => 'integer',
+        'staff_id' => 'integer',
         'email_verified_at' => 'datetime',
         'created_at' => 'datetime:Y-m-d H:i:s',
         'updated_at' => 'datetime:Y-m-d H:i:s',
@@ -75,23 +77,29 @@ class User extends Authenticatable
             'name',
             'email',
             'status',           
+            'staff_id',           
         ],
         // //關聯轉換
-        // 'translation' => [
-        //     'column' => [               //關聯欄位
-        //         'relation' => 'xxxx',   //關聯名稱
-        //         'name' => 'xxxx',       //顯示欄位
-        //     ]
-        // ],
+        'translation' => [
+            'staff_id' => [               //關聯欄位
+                'relation' => 'staff',   //關聯名稱
+                'name' => 'name',       //顯示欄位
+            ]
+        ],
         //多對多
-        'many' => [
-            'roles' => 'name'
-        ]         
+        // 'many' => [
+        //     'roles' => 'name'
+        // ]         
     ];
+
+    public function staff()
+    {
+        return $this->belongsTo(Staff::class);
+    }
 
     public function getSuperAdminAttribute()
     {
         return true;
-        return in_array($this->email, explode(',', env('SUPER_ADMIN')));
+        // return in_array($this->email, explode(',', env('SUPER_ADMIN')));
     }
 }

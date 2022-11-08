@@ -30,10 +30,6 @@
                                 <input type="text" required name="name" class="form-control" value="{{ $data->name }}" placeholder="{{ __("backend.$routeNameData.name") }}">
                             </div>
                             <div class="form-group col-md-6">
-                                <label>{{ __("backend.$routeNameData.english_name") }}</label>
-                                <input type="text" name="english_name" class="form-control" value="{{ $data->english_name }}" placeholder="{{ __("backend.$routeNameData.english_name") }}">
-                            </div>
-                            <div class="form-group col-md-6">
                                 <label>{{ __("backend.$routeNameData.identification") }}<span class="text-danger">*</span></label>
                                 <input type="text" required name="identification" class="form-control" value="{{ $data->identification }}" placeholder="{{ __("backend.$routeNameData.identification") }}">
                             </div>                                                        
@@ -45,16 +41,7 @@
                                         <option value="{{ $item->id }}" {{ $item->id == $data->department_id ? 'selected' : '' }}>{{ $item->name }}</option>
                                     @endforeach
                                 </select>
-                            </div>
-                            <div class="form-group col-md-6">
-                                <label>{{ __("backend.$routeNameData.job_id") }}<span class="text-danger">*</span></label>
-                                <select class="js-select2 form-control" name="job_id" data-placeholder="{{ __("backend.$routeNameData.job_id") }}">
-                                    <option></option>
-                                    @foreach($jobs as $item)
-                                        <option value="{{ $item->id }}" {{ $item->id == $data->job_id ? 'selected' : '' }}>{{ $item->name }}</option>
-                                    @endforeach
-                                </select>
-                            </div>    
+                            </div>   
                             <div class="form-group col-md-6">
                                 <label>{{ __("backend.$routeNameData.appointment_date") }}</label>
                                 <input type="date" name="appointment_date" class="form-control" value="{{ $data->appointment_date }}" placeholder="{{ __("backend.$routeNameData.appointment_date") }}">
@@ -78,10 +65,6 @@
                             <div class="form-group col-md-6">
                                 <label>{{ __("backend.$routeNameData.email") }}</label>
                                 <input type="email" name="email" class="form-control" value="{{ $data->email }}" placeholder="{{ __("backend.$routeNameData.email") }}">
-                            </div>
-                            <div class="form-group col-md-6">
-                                <label>{{ __("backend.$routeNameData.line") }}</label>
-                                <input type="text" name="line" class="form-control" value="{{ $data->line }}" placeholder="{{ __("backend.$routeNameData.line") }}">
                             </div>
                             <div class="form-group col-md-6">
                                 <label>{{ __("backend.$routeNameData.emergency_contact") }}</label>

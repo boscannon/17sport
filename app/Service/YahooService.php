@@ -14,12 +14,15 @@ class YahooService {
     protected $keyVersion = 1;
     protected $supplierId = 27566;
     protected $apiUrl = "https://tw.scm.yahooapis.com/scmapi/api/";
+    private $curl;
+    private $aes;
+    private $sha;
 
-    public function __construct() {
-        $this->curl = app(Curl::class);
-        $this->aes = app(AES_OpenSSL::class);
+    public function __construct(Curl $curl, AES_OpenSSL $aes, HMacSha512 $sha) {
+        $this->curl = $curl;
+        $this->aes = $aes;
+        $this->sha = $sha;
         $this->aes->getConfig($this->shareSecretKey, $this->shareSecretIV);
-        $this->sha = app(HMacSha512::class);
         $this->sha->getConfig($this->shareSecretKey);
         $this->timestamps = time();
     }
@@ -81,6 +84,6 @@ class YahooService {
     }
 
     public function _msg($string) {
-        echo $string.PHP_EOL;
+        dump($string);
     }
 }

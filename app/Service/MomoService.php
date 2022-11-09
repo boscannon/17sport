@@ -47,11 +47,9 @@ class MomoService {
     }
 
     public function updateStock($productModels) {
-        //我們減他們 chunk 陣列切兩千筆 pluck抓品號
         $stockQtyUrl = $this->apiUrl.'v1/goodsStockQty/query.scm';
         $updateStockUrl = $this->apiUrl.'GoodsServlet.do';
         $stockQtyRequest = [];
-        $updateStockRequest = [];
         //chunk先給2方便測試 之後記得改2000
         $products = array_chunk(array_diff($productModels->pluck('momo_dt_code')->toArray(), [null]), 2);
         foreach ($products as $key => $product) {
@@ -60,24 +58,26 @@ class MomoService {
                 'goodsCodeList' => $product,
             ]);
         }
+        $updateStockRequest = [
+            'doAction' => 'changeGoodsQty',
+            'loginInfo' => $this->loginInfo,
+        ];
         foreach ($stockQtyRequest as $key => $request) {
             $response = json_decode($this->sendRequest($request, $stockQtyUrl), true);
             foreach ($response['dataList'] as $k => $product) {
-                $updateStockRequest[] = json_encode([
-                    'doAction' => 'changeGoodsQty',
-                    'loginInfo' => $this->loginInfo,
-                    'sendInfoList' => [
-                        'goodsCode' => $product['goods_code'],
-                        'goodsName' => $product['goods_name'],
-                        'goodsdtCode' => $product['goodsdt_code'],
-                        'goodsdtInfo' => $product['goodsdt_info'],
-                        'orderCounselQty' => $product['order_counsel_qty'],
-                        //撈product stock - $product['order_counsel_qty']
-                        // 'addReduceQty' => ,
-                    ]
-                ]);
+                $data = Product::where('momo_id', $product['goods_code'])->first();
+                $updateStockRequest['sendInfoList'][] = [
+                    'goodsCode' => $product['goods_code'],
+                    'goodsName' => $product['goods_name'],
+                    'goodsdtCode' => $product['goodsdt_code'],
+                    'goodsdtInfo' => $product['goodsdt_info'],
+                    'orderCounselQty' => $product['order_counsel_qty'],
+                    'addReduceQty' => $data->stock - $product['order_counsel_qty']
+                ];
             }
         }
+        $result = $this->sendRequest($updateStockRequest, $updateStockUrl);
+        $this->_msg($result);
     }
 
     public function orderFormat($order) {

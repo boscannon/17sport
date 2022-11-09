@@ -71,7 +71,9 @@ return [
     'size' => '尺寸',
     'price' => '售價',
     'stock' => '庫存',
-    'remark' => '備註'
+    'remark' => '備註',
+    'ecxel_download' => 'excel格式下載',
+    "bulk_add" => "批量新增",
   ],  
   'stock_details' => [
     'product_id' => '產品',
@@ -84,6 +86,7 @@ return [
     'size' => '尺寸',
     'amount' => '數量',
     'stock' => '庫存',
+    'shopline_update_stock' => 'shopline 更新庫存',
   ],
   'orders' => [
     'no' => '編號',

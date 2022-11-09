@@ -3,6 +3,26 @@
 @section('content')
 <div class="block">
     <div class="block-header block-header-default">
+        <h3 class="block-title">{{ __("backend.$routeNameData.shopline_update_stock") }}</h3>
+    </div>
+    <div class="block-content block-content-full">
+        <form id="excel-create" action="be_forms_elements_bootstrap.html" method="post">
+            <div class="form-row mr-5">
+                <div class="form-group col-md-4">
+                    <div class="custom-file">
+                        <input type="file" class="custom-file-input js-custom-file-input-enabled" id="example-file-input-custom" name="example-file-input-custom" data-toggle="custom-file-input">
+                        <label class="custom-file-label" for="example-file-input-custom">{{ __('Choose file') }}</label>
+                    </div>
+                </div>
+                <div class="form-group col-md-6">
+                    <button type="submit" class="btn btn-primary mr-2"><i class="fa fa-upload mr-5"></i>{{ __('upload') }}</button>
+                </div>
+            </div>
+        </form>        
+    </div>
+</div>
+<div class="block">
+    <div class="block-header block-header-default">
         <h3 class="block-title">{{ __('list') }}</h3>
     </div>
     <div class="block-content block-content-full">

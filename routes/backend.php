@@ -37,6 +37,10 @@ Route::group(['as' => 'backend.', 'prefix' => 'backend'],function () {
 
         //產品
         Route::resource('/products', Controllers\Backend\ProductController::class);
+        //產品execl 新增或更新
+        Route::resource('/products_excel', Controllers\Backend\ProductExcelController::class)->only(['index', 'store']);
+        //產品shoopline execl 新增或更新庫存
+        Route::resource('/stock_shopline', Controllers\Backend\StockShoplineController::class)->only(['store']);
         //庫存明細
         Route::resource('/stock_details', Controllers\Backend\StockDetailController::class)->only(['index']);
         //訂單

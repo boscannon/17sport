@@ -15,6 +15,7 @@ class Product extends Model
         'barcode',
         'yahoo_id',
         'momo_id',
+        'momo_dt_code',
         'name',
         'specification',
         'resignation_date',
@@ -29,8 +30,9 @@ class Product extends Model
 
     protected $casts = [
         'barcode' => 'string',
-        'yahoo_id' => 'integer',
-        'momo_id' => 'integer',
+        'yahoo_id' => 'string',
+        'momo_id' => 'string',
+        'momo_dt_code' => 'string',
         'name' => 'string',
         'specification' => 'string',
         'resignation_date' => 'string',
@@ -49,6 +51,7 @@ class Product extends Model
         'only' => [
             'yahoo_id',
             'momo_id',
+            'momo_dt_code',
             'barcode',
             'name',
             'specification',

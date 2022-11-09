@@ -3,24 +3,26 @@
 namespace App\Service;
 
 use App\Service\YahooService;
-// use App\Service\MomoService;
+use App\Service\MomoService;
 use App\Models\Order;
+use App\Models\Product;
 use App\Models\Stock_detail;
 use DB;
 
 class UpdateOrdersStock {
     private $platform;
 
-    public function __construct(YahooService $yahoo) {
+    public function __construct(YahooService $yahoo, MomoService $momo) {
         $this->platform = [
-            $yahoo
+            
+            $momo,
         ];
     }
 
     public function index() {
-        foreach ($this->platform as $key => $platform) {
-            $this->getOrders($platform);
-        }
+        // foreach ($this->platform as $key => $platform) {
+        //     $this->getOrders($platform);
+        // }
         $this->updateStock();
     }
 
@@ -43,7 +45,7 @@ class UpdateOrdersStock {
     }
 
     public function updateStock() {
-        $productModels = Product::where('updated_at', '>=', date('Y-m-d H:i:s', '-30 min'))->get();
+        $productModels = Product::where('updated_at', '>=', date('Y-m-d H:i:s', strtotime('-30 min')))->get();
         foreach ($this->platform as $key => $platform) {
             $platform->updateStock($productModels);
         }

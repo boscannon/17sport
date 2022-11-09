@@ -17,8 +17,9 @@ class CreateProductsTable extends Migration
         Schema::create('products', function (Blueprint $table) {
             $table->id();
             $table->string('barcode', 150)->unique()->comment('國際條碼');
-            $table->string('yahoo_id', 150)->nullable()->unique()->comment('yahoo api id');
-            $table->string('momo_id', 150)->nullable()->unique()->comment('momo api id');
+            $table->string('yahoo_id', 150)->nullable()->unique()->comment('yahoo產品編號');
+            $table->string('momo_id', 150)->nullable()->unique()->comment('momo產品編號');
+            $table->string('momo_dt_code', 150)->nullable()->unique()->comment('momo 品號');
             $table->string('name', 150)->nullable()->comment('名稱');
             $table->string('specification', 150)->nullable()->comment('規格');
             $table->string('unit', 150)->nullable()->comment('單位');

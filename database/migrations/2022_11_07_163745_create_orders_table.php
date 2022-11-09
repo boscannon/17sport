@@ -26,8 +26,10 @@ class CreateOrdersTable extends Migration
             $table->string('purchaser_name', 50)->nullable()->comment('購買人姓名');
             $table->string('purchaser_cellphone', 10)->nullable()->comment('購買人手機');
             $table->timestamp('due_date')->nullable()->comment('應出貨日');
-            $table->text('remark')->nullable()->comment('備註'); 
+            $table->text('remark')->nullable()->comment('備註');
+            $table->text('json')->nullable()->comment('全部資料');
             $table->timestamps();
+            $table->unique('no', 'source');
         });
         
         // 创建权限

@@ -3,29 +3,29 @@
 namespace App\Service;
 
 use App\Library\Curl;
-use App\Library\AES_OpenSSL;
-use App\Library\HMacSha512;
+// use App\Library\AES_OpenSSL;
+// use App\Library\HMacSha512;
 use App\Models\Product;
 
-class YahooService {
-    protected $shareSecretKey = "6GIa8qR8JBiOYWxjzUxc/uch17qr+kiyTnTh7LZWcMU=";
-    protected $shareSecretIV = "O/DCgc3t2g49SSVYvIsheg==";
-    protected $saltKey = "bkPk9jksRr0EJc09ES1NRJtxVklOsziE";
-    protected $token = "Supplier_27566";
-    protected $keyVersion = 1;
-    protected $supplierId = 27566;
-    protected $apiUrl = "https://tw.scm.yahooapis.com/scmapi/api/";
+class MomoService {
+    // protected $shareSecretKey = "6GIa8qR8JBiOYWxjzUxc/uch17qr+kiyTnTh7LZWcMU=";
+    // protected $shareSecretIV = "O/DCgc3t2g49SSVYvIsheg==";
+    // protected $saltKey = "bkPk9jksRr0EJc09ES1NRJtxVklOsziE";
+    // protected $token = "Supplier_27566";
+    // protected $keyVersion = 1;
+    // protected $supplierId = 27566;
+    // protected $apiUrl = "https://tw.scm.yahooapis.com/scmapi/api/";
     private $curl;
-    private $aes;
-    private $sha;
+    // private $aes;
+    // private $sha;
 
-    public function __construct(Curl $curl, AES_OpenSSL $aes, HMacSha512 $sha) {
+    public function __construct(Curl $curl) {
         $this->curl = $curl;
-        $this->aes = $aes;
-        $this->sha = $sha;
-        $this->aes->getConfig($this->shareSecretKey, $this->shareSecretIV);
-        $this->sha->getConfig($this->shareSecretKey);
-        $this->timestamps = time();
+        // $this->aes = $aes;
+        // $this->sha = $sha;
+        // $this->aes->getConfig($this->shareSecretKey, $this->shareSecretIV);
+        // $this->sha->getConfig($this->shareSecretKey);
+        // $this->timestamps = time();
     }
 
     public function getOrders() {

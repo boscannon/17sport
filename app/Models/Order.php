@@ -20,6 +20,7 @@ class Order extends Model
         'purchaser_cellphone',
         'due_date',
         'remark',
+        'json',
     ];
 
 
@@ -34,7 +35,12 @@ class Order extends Model
         'purchaser_cellphone' => 'string',
         'due_date' => 'datetime:Y-m-d H:i:s',
         'remark' => 'string',
+        'json' => 'array',
         'created_at' => 'datetime:Y-m-d H:i:s',
         'updated_at' => 'datetime:Y-m-d H:i:s',
-    ];      
+    ];
+
+    public function stockDetail(){
+        return $this->hasMany(Stock_detail::class);
+    }
 }

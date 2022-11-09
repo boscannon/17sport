@@ -15,8 +15,8 @@ class ProductController extends Controller
         $this->name = 'products';
         $this->view = 'backend.'.$this->name;
         $this->rules = [
-            'barcode' => ['required', 'string', 'max:150'],
-            'yahoo_id' => ['required', 'string', 'max:150'],
+            'barcode' => ['nullable', 'string', 'max:150'],
+            'yahoo_id' => ['nullable', 'string', 'max:150'],
             'momo_id' => ['required', 'string', 'max:150'],
             'name' => ['required', 'string', 'max:150'],
 

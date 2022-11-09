@@ -15,21 +15,15 @@ use Maatwebsite\Excel\Facades\Excel;
 class StockShoplineController extends Controller
 {
     public function __construct() {
-        $this->name = 'products';
+        $this->name = 'stock_details';
         $this->view = 'backend.'.$this->name;
         $this->rules = [
-            'file' => ['required', 'string', 'max:150'],         
+            'file' => ['required', 'file'],         
         ];
         $this->messages = [];
         $this->attributes = [
-            'file' => __("backend.{$this->name}.file"),
+            'file' => __("backend.{$this->name}.shopline_excel"),
         ];
-    }
-
-    public function index(Request $request)
-    {
-        $this->authorize('read '.$this->name);
-        return response()->download(public_path('favicon.ico'));
     }
 
     /**
@@ -45,7 +39,7 @@ class StockShoplineController extends Controller
 
         try{
             DB::beginTransaction();
-
+            
             Excel::import(new StockShoplineImport, $validatedData['file']);
         
             DB::commit();

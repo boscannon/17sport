@@ -6,12 +6,12 @@
         <h3 class="block-title">{{ __("backend.$routeNameData.bulk_add") }}</h3>
     </div>
     <div class="block-content block-content-full">
-        <form id="excel-create" action="be_forms_elements_bootstrap.html" method="post">
+        <form id="form-create" action="{{ route('backend.products_excel.store') }}" method="post">
             <div class="form-row mr-5">
                 <div class="form-group col-md-4">
                     <div class="custom-file">
-                        <input type="file" class="custom-file-input js-custom-file-input-enabled" id="example-file-input-custom" name="example-file-input-custom" data-toggle="custom-file-input">
-                        <label class="custom-file-label" for="example-file-input-custom">{{ __('Choose file') }}</label>
+                        <input type="file" required class="custom-file-input js-custom-file-input-enabled" id="execl" name="file" data-toggle="custom-file-input">
+                        <label class="custom-file-label" for="execl">{{ __('Choose file') }}</label>
                     </div>
                 </div>
                 <div class="form-group col-md-6">
@@ -48,13 +48,14 @@ $(function() {
         responsive: true,
         scrollX: true,
         ajax: path,
-        order: [[4, 'desc']],
+        order: [[5, 'desc']],
         columns: [
             { data: 'null', title: '#', bSearchable: false, bSortable: false, render: function ( data, type, row , meta ) {
                 return  meta.row + 1;
             }},
             { data: 'barcode', title: '{{ __("backend.$routeNameData.barcode") }}' },
             { data: 'name', title: '{{ __("backend.$routeNameData.name") }}' },   
+            { data: 'stock', title: '{{ __("backend.$routeNameData.stock") }}' },   
             { data: 'created_at', title: '{{ __('created_at') }}' },
             { data: 'updated_at', title: '{{ __('updated_at') }}' },
             { data: 'id', title: '{{ __('option') }}', bSortable: false, render:function(data,type,row) {

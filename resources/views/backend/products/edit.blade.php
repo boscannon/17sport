@@ -21,14 +21,18 @@
                 <div class="block-content tab-content">
                     <div class="tab-pane active" id="btabs-static-home" role="tabpanel">
                         <div class="form-row">
-                            <div class="form-group col-md-6">
-                                <label>{{ __("backend.$routeNameData.yahoo_id") }}<span class="text-danger">*</span></label>
-                                <input type="text" required name="yahoo_id" class="form-control" value="{{ $data->yahoo_id }}" placeholder="{{ __("backend.$routeNameData.yahoo_id") }}">
+                            <div class="form-group col-md-12">
+                                <label>{{ __("backend.$routeNameData.yahoo_id") }}</label>
+                                <input type="text" name="yahoo_id" class="form-control" value="{{ $data->yahoo_id }}" placeholder="{{ __("backend.$routeNameData.yahoo_id") }}">
                             </div>
                             <div class="form-group col-md-6">
-                                <label>{{ __("backend.$routeNameData.momo_id") }}<span class="text-danger">*</span></label>
-                                <input type="text" required name="momo_id" class="form-control" value="{{ $data->momo_id }}" placeholder="{{ __("backend.$routeNameData.momo_id") }}">
+                                <label>{{ __("backend.$routeNameData.momo_id") }}</label>
+                                <input type="text" name="momo_id" class="form-control" value="{{ $data->momo_id }}" placeholder="{{ __("backend.$routeNameData.momo_id") }}">
                             </div>
+                            <div class="form-group col-md-6">
+                                <label>{{ __("backend.$routeNameData.momo_dt_code") }}</label>
+                                <input type="text" name="momo_dt_code" class="form-control" value="{{ $data->momo_dt_code }}" placeholder="{{ __("backend.$routeNameData.momo_dt_code") }}">
+                            </div>                            
                             <div class="form-group col-md-6">
                                 <label>{{ __("backend.$routeNameData.barcode") }}<span class="text-danger">*</span></label>
                                 <input type="text" required name="barcode" class="form-control" value="{{ $data->barcode }}" placeholder="{{ __("backend.$routeNameData.barcode") }}">
@@ -60,7 +64,11 @@
                             <div class="form-group col-md-6">
                                 <label>{{ __("backend.$routeNameData.stock") }}</label>
                                 <input type="text" name="stock" class="form-control" value="{{ $data->stock }}" placeholder="{{ __("backend.$routeNameData.stock") }}">
-                            </div>
+                            </div>                            
+                            <div class="form-group col-md-12">
+                                <label>{{ __("backend.$routeNameData.attribute") }}</label>
+                                <textarea name="attribute" class="form-control" placeholder="{{ __("backend.$routeNameData.attribute") }}">{{ $data->attribute }}</textarea>
+                            </div>                            
                             <div class="form-group col-md-12">
                                 <label>{{ __("backend.$routeNameData.remark") }}</label>
                                 <textarea name="remark" class="form-control" placeholder="{{ __("backend.$routeNameData.remark") }}">{{ $data->remark }}</textarea>

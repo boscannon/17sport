@@ -61,7 +61,7 @@ return [
     'remark' => '備註'
   ],
   'products' => [
-    'barcode' => '條碼',
+    'barcode' => '國際條碼',
     'yahoo_id' => 'yahoo編號',
     'momo_id' => 'momo編號',
     'name' => '名稱',

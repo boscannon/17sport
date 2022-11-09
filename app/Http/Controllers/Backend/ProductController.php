@@ -15,15 +15,15 @@ class ProductController extends Controller
         $this->name = 'products';
         $this->view = 'backend.'.$this->name;
         $this->rules = [
-            'barcode' => ['required', 'string', 'max:50'],
-            'yahoo_id' => ['required', 'string', 'max:50'],
-            'momo_id' => ['required', 'string', 'max:50'],
-            'name' => ['required', 'string', 'max:50'],
+            'barcode' => ['required', 'string', 'max:150'],
+            'yahoo_id' => ['required', 'string', 'max:150'],
+            'momo_id' => ['required', 'string', 'max:150'],
+            'name' => ['required', 'string', 'max:150'],
 
-            'specification' => ['nullable', 'string', 'max:50'],
-            'unit' => ['nullable', 'string', 'max:50'],
-            'type' => ['nullable', 'string', 'max:50'],
-            'size' => ['nullable', 'string', 'max:50'],
+            'specification' => ['nullable', 'string', 'max:150'],
+            'unit' => ['nullable', 'string', 'max:150'],
+            'type' => ['nullable', 'string', 'max:150'],
+            'size' => ['nullable', 'string', 'max:150'],
             'price' => ['nullable', 'numeric'],
             'stock' => ['nullable', 'numeric'],
             'remark' => ['nullable', 'string'],            

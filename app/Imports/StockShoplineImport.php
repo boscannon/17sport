@@ -3,10 +3,10 @@
 namespace App\Imports;
 
 use App\Models\Product;
-use Maatwebsite\Excel\Concerns\ToModel;
-use Maatwebsite\Excel\Concerns\WithStartRow;
+use Illuminate\Support\Collection;
+use Maatwebsite\Excel\Concerns\ToCollection;
 
-class StockShoplineImport implements ToModel, WithStartRow
+class StockShoplineImport implements ToCollection
 {
     /**
      * @return int
@@ -15,19 +15,30 @@ class StockShoplineImport implements ToModel, WithStartRow
     {
         return 2;
     }
-    /**
-    * @param array $row
-    *
-    * @return \Illuminate\Database\Eloquent\Model|null
-    */
-    public function model(array $row)
+
+    public function collection(Collection $rows)
     {
-        return Product::updateOrCreate([
-            'barcode' => $row[5],
-        ],[
-            'name' => $row[0],
-            'attribute' => $row[1],
-            'stock' => $row[17] == '無限數量' ? 999 : $row[17], 
-        ]);
+        foreach ($rows as $key => $row) 
+        {
+            if($key == 0) continue;
+
+            $product = Product::updateOrCreate([
+                'barcode' => $row[5],
+            ],[
+                'name' => $row[0],
+                'attribute' => $row[1],
+                'price' => $row[6] ?? 0,
+                'stock' => $row[17] == '無限數量' ? 99999 : $row[17], 
+            ]);
+
+            $product->stockDetail()->create([
+                'source' => 'excel',
+                'name' => $product->name,
+                'type' => $product->type,
+                'size' => $product->size,
+                'amount' => $product->stock,
+                'stock' => $product->stock,
+            ]);
+        }
     }
 }

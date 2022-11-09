@@ -67,4 +67,8 @@ class Product extends Model
             'remark',
         ],    
     ];  
+
+    public function stockDetail(){
+        return $this->hasMany(Stock_detail::class);
+    }
 }

@@ -12,9 +12,11 @@ use DB;
 use App\Imports\StockShoplineImport;
 use Maatwebsite\Excel\Facades\Excel;
 
+use App\Service\UpdateOrdersStock;
+
 class StockShoplineController extends Controller
 {
-    public function __construct() {
+    public function __construct(UpdateOrdersStock $UpdateOrdersStock) {
         $this->name = 'stock_details';
         $this->view = 'backend.'.$this->name;
         $this->rules = [
@@ -24,8 +26,9 @@ class StockShoplineController extends Controller
         $this->attributes = [
             'file' => __("backend.{$this->name}.shopline_excel"),
         ];
-    }
 
+        $this->UpdateOrdersStock = $UpdateOrdersStock;
+    }
     /**
      * Store a newly created resource in storage.
      *
@@ -40,7 +43,10 @@ class StockShoplineController extends Controller
         try{
             DB::beginTransaction();
             
+            //更新商品 跟 新增庫存明細
             Excel::import(new StockShoplineImport, $validatedData['file']);
+            //更新平台庫存
+            // $this->UpdateOrdersStock->updateStock();
         
             DB::commit();
             return response()->json(['message' => __('import').__('success')]);

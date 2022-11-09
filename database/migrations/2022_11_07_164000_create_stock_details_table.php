@@ -22,8 +22,8 @@ class CreateStockDetailsTable extends Migration
             $table->string('name', 255)->comment('名稱');
             $table->string('type', 50)->nullable()->comment('型號');
             $table->string('size', 50)->nullable()->comment('尺寸');
-            $table->unsignedInteger('amount')->default(0)->comment('售價');
-            $table->unsignedInteger('stock')->default(0)->comment('售價');
+            $table->Integer('amount')->default(0)->comment('數量');
+            $table->Integer('stock')->default(0)->comment('庫存');
             $table->timestamps();
         });
         

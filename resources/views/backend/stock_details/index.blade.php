@@ -52,8 +52,8 @@ $(function() {
                 return  meta.row + 1;
             }},
             { data: 'source', title: '{{ __("backend.$routeNameData.source") }}' },
-            { data: 'no', title: '{{ __("backend.$routeNameData.no") }}' },   
-            { data: 'barcode', title: '{{ __("backend.$routeNameData.barcode") }}' },   
+            { data: 'order.no', title: '{{ __("backend.$routeNameData.no") }}', defaultContent: '' },   
+            { data: 'product.barcode', title: '{{ __("backend.$routeNameData.barcode") }}' },   
             { data: 'name', title: '{{ __("backend.$routeNameData.name") }}' },   
             { data: 'type', title: '{{ __("backend.$routeNameData.type") }}' },   
             { data: 'size', title: '{{ __("backend.$routeNameData.size") }}' },   

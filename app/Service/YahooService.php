@@ -50,9 +50,8 @@ class YahooService {
                     'ProductId' => $productModel->yahoo_id,
                     'Qty' => $productModel->stock,
                 ]);
+                $response = $this->sendRequest($requestData, $url);
             }
-
-            $response = $this->sendRequest($requestData, $url);
         }
     }
 

@@ -54,14 +54,16 @@ class MomoService {
             dump($response);
             foreach ($response['dataList'] as $k => $product) {
                 $data = Product::where('momo_dt_code', $product['goodsdt_code'])->first();
-                $updateStockRequest['sendInfoList'][] = [
-                    'goodsCode' => $product['goods_code'],
-                    'goodsName' => $product['goods_name'],
-                    'goodsdtCode' => $product['goodsdt_code'],
-                    'goodsdtInfo' => $product['goodsdt_info'],
-                    'orderCounselQty' => $product['order_counsel_qty'],
-                    'addReduceQty' => $data->stock - $product['order_counsel_qty']
-                ];
+                if(isset($data)) {
+                    $updateStockRequest['sendInfoList'][] = [
+                        'goodsCode' => $product['goods_code'],
+                        'goodsName' => $product['goods_name'],
+                        'goodsdtCode' => $product['goodsdt_code'],
+                        'goodsdtInfo' => $product['goodsdt_info'],
+                        'orderCounselQty' => $product['order_counsel_qty'],
+                        'addReduceQty' => $data->stock - $product['order_counsel_qty']
+                    ];
+                }
             }
         }
         dump($updateStockRequest);

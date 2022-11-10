@@ -9,7 +9,7 @@ use DataTables;
 use Exception;
 use DB;
 
-use App\Imports\ProductShoplineImport;
+use App\Imports\ProductExcelImport;
 use Maatwebsite\Excel\Facades\Excel;
 
 class ProductExcelController extends Controller
@@ -18,18 +18,18 @@ class ProductExcelController extends Controller
         $this->name = 'products';
         $this->view = 'backend.'.$this->name;
         $this->rules = [
-            'file' => ['required', 'string', 'max:150'],         
+            'file' => ['required', 'file'],         
         ];
         $this->messages = [];
         $this->attributes = [
-            'file' => __("backend.{$this->name}.file"),
+            'file' => __("backend.{$this->name}.excel"),
         ];
     }
 
     public function index(Request $request)
     {
         $this->authorize('read '.$this->name);
-        return response()->download(public_path('favicon.ico'));
+        return response()->download(public_path('product.xlsx'));
     }
 
     /**
@@ -46,12 +46,12 @@ class ProductExcelController extends Controller
         try{
             DB::beginTransaction();
 
-            Excel::import(new ProductShoplineImport, $validatedData['file']);
+            Excel::import(new ProductExcelImport, $validatedData['file']);
         
             DB::commit();
             return response()->json(['message' => __('import').__('success')]);
         } catch (Exception $e) {
-            DB::rollBack();
+            DB::rollBack();        
             return response()->json(['message' => $e->getMessage()],422);
         }
     }

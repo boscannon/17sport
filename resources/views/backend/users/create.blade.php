@@ -27,8 +27,7 @@
                             </div>
                             <div class="form-group col-md-12">
                                 <label>{{ __("backend.$routeNameData.staff_id") }}<span class="text-danger">*</span></label>
-                                <select class="js-select2 form-control" required name="staff_id" data-placeholder="{{ __("backend.$routeNameData.staff_id") }}">
-                                    <option></option>
+                                <select class="js-select2 form-control" required name="staff_id" data-placeholder="{{ __("backend.$routeNameData.staff_id") }}">                                    
                                     @foreach($staff as $item)
                                         <option value="{{ $item->id }}">{{ $item->name }}</option>
                                     @endforeach

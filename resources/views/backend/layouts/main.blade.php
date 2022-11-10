@@ -31,6 +31,7 @@
         <link rel="stylesheet" href="{{ asset('js/plugins/summernote/summernote-bs4.css') }}">        
         <link href="{{ asset('plugins/filepond/dist/filepond.css') }}" rel="stylesheet">
         <link href="{{ asset('plugins/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css') }}" rel="stylesheet">
+        <link rel="stylesheet" href="{{ asset('/js/plugins/flatpickr/flatpickr.min.css') }}">
 
         <!-- You can include a specific file from public/css/themes/ folder to alter the default color theme of the template. eg: -->
         <!-- <link rel="stylesheet" id="css-theme" href="{{ mix('/css/themes/corporate.css') }}"> -->
@@ -336,6 +337,7 @@
         <script src="{{ asset('plugins/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.js') }}"></script>
         <script src="{{ asset('plugins/filepond-plugin-file-validate-type/dist/filepond-plugin-file-validate-type.js') }}"></script>
         <script src="{{ asset('plugins/filepond-plugin-file-encode/dist/filepond-plugin-file-encode.js') }}"></script>
+        <script src="{{ asset('/js/plugins/flatpickr/flatpickr.min.js') }}"></script>
         <script>
             $(function() {
                 $.ajaxSetup({
@@ -347,7 +349,10 @@
                     }
                 });
 
-                $( document ).ajaxError(function( event, jqxhr, settings, thrownError ) {
+                $( document ).ajaxError(function( event, jqxhr, settings, thrownError ) {                    
+                    if(thrownError === 'abort'){
+                        return;
+                    }
                     var meessage = [];
                     if(jqxhr.responseJSON && jqxhr.responseJSON.errors){
                         $.each(jqxhr.responseJSON.errors,function(key,value){
@@ -371,6 +376,7 @@
                 Codebase.helpers(['summernote']);  
                 Codebase.helpers('magnific-popup');
                 Codebase.helpers('select2');
+                Codebase.helpers('flatpickr');
                 FilePond.registerPlugin(
                     FilePondPluginImagePreview,
                     FilePondPluginImageExifOrientation,

@@ -23,6 +23,7 @@
   "import": "匯入",
   "export": "匯出",
   "back": "返回",
+  "search": "查詢",
   "Choose file": "選擇檔案",
   "upload": "上傳",
   "basic_data": "基本資料",
@@ -35,6 +36,7 @@
   "success": "成功",
   "please_choose": "請選擇",
   "captcha": "驗證碼",
+  "date_range": "時間區間",
 
   "created_at": "新增時間",
   "updated_at": "修改時間",

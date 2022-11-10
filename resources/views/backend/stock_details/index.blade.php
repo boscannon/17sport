@@ -23,6 +23,27 @@
 </div>
 <div class="block">
     <div class="block-header block-header-default">
+        <h3 class="block-title">{{ __("search") }}</h3>
+    </div>
+    <div class="block-content block-content-full">
+        <form id="form-search" action="{{ route('backend.stock_shopline.store') }}" method="post" onsubmit="return false">
+            <div class="form-row mr-5">
+                <div class="form-group col-md-4">
+                    <label for="example-flatpickr-range">{{ __("date_range") }}</label>
+                    <input type="text" name="dateRange" class="js-flatpickr form-control bg-white" id="example-flatpickr-range" name="example-flatpickr-range" placeholder="Select Date Range" data-mode="range">
+                </div> 
+                <div class="form-group col-md-4">
+                    <label>{{ __("backend.$routeNameData.product_id") }}</label>
+                    <select class="js-select2 form-control" multiple name="product_id[]" data-placeholder="{{ __("backend.$routeNameData.product_id") }}">                        
+                    </select>
+                </div>                            
+            </div>
+            <button type="submit" class="btn btn-primary mr-2">{{ __('search') }}</button>
+        </form>        
+    </div>
+</div>
+<div class="block">
+    <div class="block-header block-header-default">
         <h3 class="block-title">{{ __('list') }}</h3>
     </div>
     <div class="block-content block-content-full">
@@ -45,8 +66,14 @@ $(function() {
         serverSide: true,
         responsive: true,
         scrollX: true,
-        ajax: path,
-        order: [[4, 'desc']],
+        ajax: {
+            url: path,
+            data: function ( d ) {
+                d.dateRange = $("#form-search input[name=dateRange]").val();
+                d['product_id[]'] = $("#form-search select[name='product_id[]']").val();
+            }
+        },
+        order: [[9, 'desc']],
         columns: [
             { data: 'null', title: '#', bSearchable: false, bSortable: false, render: function ( data, type, row , meta ) {
                 return  meta.row + 1;
@@ -75,6 +102,34 @@ $(function() {
         },
         complete: function() {
             formCreate.find('button[type=submit]').attr('disabled',false);
+        }
+    });
+
+    $('#form-search').submit(function(){
+        table.draw();
+    })
+
+    $(`select[name='product_id[]']`).select2({        
+        allowClear: true,
+        placeholder: '{{ __("backend.$routeNameData.product_id") }}',					
+        ajax: {
+            url: '{{ route('backend.products.select') }}',
+            type: "get",
+            dataType: 'json',
+            data: function (params) {
+                var query = {
+                    search: params.term,				
+                }
+                return query;
+            },
+            processResults: function(data, page) {                								
+                return { 
+                    results: data.map(item => { return { 
+                        id: item.id,
+                        text: `${ item.name } ( ${ item.barcode } )`
+                    } }) 
+                }
+            },
         }
     });
 });

@@ -31,8 +31,7 @@
                             </div>
                             <div class="form-group col-md-12">
                                 <label>{{ __("backend.$routeNameData.parent_id") }}</label>
-                                <select class="js-select2 form-control" name="parent_id" data-placeholder="{{ __("backend.$routeNameData.parent_id") }}">
-                                    <option></option>
+                                <select class="js-select2 form-control" name="parent_id" data-placeholder="{{ __("backend.$routeNameData.parent_id") }}">                                    
                                     @foreach($departments as $item)
                                         <option value="{{ $item->id }}" {{ $item->id == $data->parent_id ? 'selected' : '' }}>{{ $item->name }}</option>
                                     @endforeach

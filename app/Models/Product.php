@@ -11,14 +11,13 @@ class Product extends Model
 
     use HasFactory;
 
-    protected $fillable = [
-        'barcode',
+    protected $fillable = [        
         'yahoo_id',
         'momo_id',
         'momo_dt_code',
+        'barcode',
         'name',
         'specification',
-        'resignation_date',
         'unit',
         'type',
         'size',
@@ -26,17 +25,18 @@ class Product extends Model
         'stock',
         'attribute',
         'remark',
+
+        'resignation_date',
     ];
 
 
-    protected $casts = [
-        'barcode' => 'string',
+    protected $casts = [        
         'yahoo_id' => 'string',
         'momo_id' => 'string',
         'momo_dt_code' => 'string',
+        'barcode' => 'string',
         'name' => 'string',
-        'specification' => 'string',
-        'resignation_date' => 'string',
+        'specification' => 'string',        
         'unit' => 'string',
         'type' => 'string',
         'size' => 'string',
@@ -46,6 +46,8 @@ class Product extends Model
         'remark' => 'string',
         'created_at' => 'datetime:Y-m-d H:i:s',
         'updated_at' => 'datetime:Y-m-d H:i:s',
+
+        'resignation_date' => 'string',
     ];      
 
     public static $audit = [
@@ -56,8 +58,7 @@ class Product extends Model
             'momo_dt_code',
             'barcode',
             'name',
-            'specification',
-            'resignation_date',
+            'specification',            
             'unit',
             'type',
             'size',            
@@ -65,6 +66,8 @@ class Product extends Model
             'stock',
             'attribute',
             'remark',
+
+            'resignation_date',
         ],    
     ];  
 

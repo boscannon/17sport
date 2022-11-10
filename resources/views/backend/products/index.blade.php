@@ -10,8 +10,8 @@
             <div class="form-row mr-5">
                 <div class="form-group col-md-4">
                     <div class="custom-file">
-                        <input type="file" required class="custom-file-input js-custom-file-input-enabled" id="execl" name="file" data-toggle="custom-file-input">
-                        <label class="custom-file-label" for="execl">{{ __('Choose file') }}</label>
+                        <input type="file" required class="custom-file-input" id="example-file-input-custom" name="file" data-toggle="custom-file-input">
+                        <label class="custom-file-label" for="example-file-input-custom">{{ __('Choose file') }}</label>
                     </div>
                 </div>
                 <div class="form-group col-md-6">
@@ -64,6 +64,21 @@ $(function() {
             }},
         ]
     });
+
+    var formCreate = $('#form-create');
+    formCreate.ajaxForm({
+        beforeSubmit: function(arr, $form, options) {
+            formCreate.find('button[type=submit]').attr('disabled',true);
+        },
+        success: function(data) {
+            Swal.fire({ text: data.message, icon: 'success' }).then(function() {
+                location.href = path;
+            });
+        },
+        complete: function() {
+            formCreate.find('button[type=submit]').attr('disabled',false);
+        }
+    });    
 
     tableList.on('click','.css-switch input[type="checkbox"]',function(){
         var id = $(this).data('id');

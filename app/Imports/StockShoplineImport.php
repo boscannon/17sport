@@ -8,13 +8,7 @@ use Maatwebsite\Excel\Concerns\ToCollection;
 
 class StockShoplineImport implements ToCollection
 {
-    /**
-     * @return int
-     */
-    public function startRow(): int
-    {
-        return 2;
-    }
+
 
     public function collection(Collection $rows)
     {

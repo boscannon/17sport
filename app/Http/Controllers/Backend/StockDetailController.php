@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Stock_detail as crudModel;
+use App\Models\Product;
 use DataTables;
 use Exception;
 
@@ -23,9 +24,19 @@ class StockDetailController extends Controller
         $this->authorize('read '.$this->name);
         if ($request->ajax()) {
             $data = CrudModel::with(['order', 'product']);
+
+            if($request->dateRange){                
+                $data->whereBetween('created_at', explode(" to ", $request->dateRange));
+            }
+            
+            if($request->product_id){
+                $data->whereIn('product_id', $request->product_id);
+            }
+
             return Datatables::eloquent($data)
                 ->make(true);
         }
+
         return view($this->view.'.index');
     }
 

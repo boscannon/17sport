@@ -75,10 +75,10 @@ class MomoService {
                 $stock_detail[] = $productModelDetail;
             }
             $data[] = [
-                'no' => $value['COMPLETE_ORDER_NO'],
+                'no' => $product['COMPLETE_ORDER_NO'],
                 'source' => 'momo',
-                'date' => $value['ORDER_DATE'],
-                'json' => $value,
+                'date' => $product['ORDER_DATE'],
+                'json' => $product,
                 'stock_detail' => $stock_detail
             ];
         }

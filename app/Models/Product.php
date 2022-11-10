@@ -24,6 +24,7 @@ class Product extends Model
         'size',
         'price',
         'stock',
+        'attribute',
         'remark',
     ];
 
@@ -41,6 +42,7 @@ class Product extends Model
         'size' => 'string',
         'price' => 'integer',
         'stock' => 'integer',
+        'attribute' => 'string',
         'remark' => 'string',
         'created_at' => 'datetime:Y-m-d H:i:s',
         'updated_at' => 'datetime:Y-m-d H:i:s',
@@ -58,10 +60,15 @@ class Product extends Model
             'resignation_date',
             'unit',
             'type',
-            'size',
+            'size',            
             'price',
             'stock',
+            'attribute',
             'remark',
         ],    
     ];  
+
+    public function stockDetail(){
+        return $this->hasMany(Stock_detail::class);
+    }
 }

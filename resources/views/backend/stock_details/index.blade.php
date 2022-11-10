@@ -3,6 +3,26 @@
 @section('content')
 <div class="block">
     <div class="block-header block-header-default">
+        <h3 class="block-title">{{ __("backend.$routeNameData.shopline_update_stock") }}</h3>
+    </div>
+    <div class="block-content block-content-full">
+        <form id="form-create" action="{{ route('backend.stock_shopline.store') }}" method="post">
+            <div class="form-row mr-5">
+                <div class="form-group col-md-4">
+                    <div class="custom-file">
+                        <input type="file" required class="custom-file-input" id="example-file-input-custom" name="file" data-toggle="custom-file-input">
+                        <label class="custom-file-label" for="example-file-input-custom">{{ __('Choose file') }}</label>
+                    </div>
+                </div>
+                <div class="form-group col-md-6">
+                    <button type="submit" class="btn btn-primary mr-2"><i class="fa fa-upload mr-5"></i>{{ __('upload') }}</button>
+                </div>
+            </div>
+        </form>        
+    </div>
+</div>
+<div class="block">
+    <div class="block-header block-header-default">
         <h3 class="block-title">{{ __('list') }}</h3>
     </div>
     <div class="block-content block-content-full">
@@ -32,8 +52,8 @@ $(function() {
                 return  meta.row + 1;
             }},
             { data: 'source', title: '{{ __("backend.$routeNameData.source") }}' },
-            { data: 'no', title: '{{ __("backend.$routeNameData.no") }}' },   
-            { data: 'barcode', title: '{{ __("backend.$routeNameData.barcode") }}' },   
+            { data: 'order.no', title: '{{ __("backend.$routeNameData.no") }}', defaultContent: '' },   
+            { data: 'product.barcode', title: '{{ __("backend.$routeNameData.barcode") }}' },   
             { data: 'name', title: '{{ __("backend.$routeNameData.name") }}' },   
             { data: 'type', title: '{{ __("backend.$routeNameData.type") }}' },   
             { data: 'size', title: '{{ __("backend.$routeNameData.size") }}' },   
@@ -41,6 +61,21 @@ $(function() {
             { data: 'stock', title: '{{ __("backend.$routeNameData.stock") }}' },   
             { data: 'created_at', title: '{{ __('created_at') }}' },
         ]
+    });
+
+    var formCreate = $('#form-create');
+    formCreate.ajaxForm({
+        beforeSubmit: function(arr, $form, options) {
+            formCreate.find('button[type=submit]').attr('disabled',true);
+        },
+        success: function(data) {
+            Swal.fire({ text: data.message, icon: 'success' }).then(function() {
+                location.href = path;
+            });
+        },
+        complete: function() {
+            formCreate.find('button[type=submit]').attr('disabled',false);
+        }
     });
 });
 </script>

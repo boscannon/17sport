@@ -24,9 +24,10 @@ class CreateProductsTable extends Migration
             $table->string('specification', 150)->nullable()->comment('規格');
             $table->string('unit', 150)->nullable()->comment('單位');
             $table->string('type', 150)->nullable()->comment('型號');
-            $table->string('size', 150)->nullable()->comment('尺寸');
-            $table->unsignedInteger('price')->default(0)->comment('售價');
-            $table->unsignedInteger('stock')->default(0)->comment('庫存');
+            $table->string('size', 150)->nullable()->comment('尺寸');            
+            $table->Integer('price')->default(0)->comment('售價');
+            $table->Integer('stock')->default(0)->comment('庫存');
+            $table->string('attribute', 255)->nullable()->comment('屬性');
             $table->text('remark')->nullable()->comment('備註');
             $table->timestamps();
         });

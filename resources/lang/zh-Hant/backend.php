@@ -62,16 +62,20 @@ return [
   ],
   'products' => [
     'barcode' => '國際條碼',
-    'yahoo_id' => 'yahoo編號',
-    'momo_id' => 'momo編號',
+    'yahoo_id' => 'yahoo 編號',
+    'momo_id' => 'momo 編號',
+    'momo_dt_code' => 'momo 品號',
     'name' => '名稱',
     'specification' => '規格',
     'unit' => '單位',
     'type' => '型號',
     'size' => '尺寸',
+    'attribute' => '屬性',
     'price' => '售價',
     'stock' => '庫存',
-    'remark' => '備註'
+    'remark' => '備註',
+    'ecxel_download' => 'excel格式下載',
+    "bulk_add" => "批量新增",
   ],  
   'stock_details' => [
     'product_id' => '產品',
@@ -84,6 +88,8 @@ return [
     'size' => '尺寸',
     'amount' => '數量',
     'stock' => '庫存',
+    'shopline_update_stock' => 'shopline 更新庫存',
+    'shopline_excel' => 'shopline excel',
   ],
   'orders' => [
     'no' => '編號',

@@ -3,8 +3,29 @@
 @section('content')
 <div class="block">
     <div class="block-header block-header-default">
+        <h3 class="block-title">{{ __("backend.$routeNameData.bulk_add") }}</h3>
+    </div>
+    <div class="block-content block-content-full">
+        <form id="form-create" action="{{ route('backend.products_excel.store') }}" method="post">
+            <div class="form-row mr-5">
+                <div class="form-group col-md-4">
+                    <div class="custom-file">
+                        <input type="file" required class="custom-file-input js-custom-file-input-enabled" id="execl" name="file" data-toggle="custom-file-input">
+                        <label class="custom-file-label" for="execl">{{ __('Choose file') }}</label>
+                    </div>
+                </div>
+                <div class="form-group col-md-6">
+                    <button type="submit" class="btn btn-primary mr-2"><i class="fa fa-upload mr-5"></i>{{ __('upload') }}</button>
+                    <a href="{{ route('backend.products_excel.index') }}" target="_blank" class="btn btn-info"><i class="fa fa-download mr-5"></i>{{ __("backend.$routeNameData.ecxel_download") }}</a>                
+                </div>
+            </div>
+        </form>        
+    </div>
+</div>
+<div class="block">
+    <div class="block-header block-header-default">
         <h3 class="block-title">{{ __('list') }}</h3>
-        <a href="{{ route('backend.'.$routeNameData.'.create') }}" class="btn btn-primary">{{ __('create') }}</a>
+        <a href="{{ route('backend.'.$routeNameData.'.create') }}" class="btn btn-primary mr-2">{{ __('create') }}</a>
     </div>
     <div class="block-content block-content-full">
         <table class="table table-bordered table-striped table-vcenter js-dataTable-full nowrap" id="data-table" style="width:100%">
@@ -12,7 +33,7 @@
             </thead>
         </table>
     </div>
-</div>
+</div>  
 @stop
 
 @push('scripts')
@@ -27,13 +48,14 @@ $(function() {
         responsive: true,
         scrollX: true,
         ajax: path,
-        order: [[4, 'desc']],
+        order: [[5, 'desc']],
         columns: [
             { data: 'null', title: '#', bSearchable: false, bSortable: false, render: function ( data, type, row , meta ) {
                 return  meta.row + 1;
             }},
             { data: 'barcode', title: '{{ __("backend.$routeNameData.barcode") }}' },
             { data: 'name', title: '{{ __("backend.$routeNameData.name") }}' },   
+            { data: 'stock', title: '{{ __("backend.$routeNameData.stock") }}' },   
             { data: 'created_at', title: '{{ __('created_at') }}' },
             { data: 'updated_at', title: '{{ __('updated_at') }}' },
             { data: 'id', title: '{{ __('option') }}', bSortable: false, render:function(data,type,row) {

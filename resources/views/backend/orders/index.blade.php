@@ -76,7 +76,7 @@ $(function() {
                             <td>${ _.get(item, 'name', '') }</td>
                             <td>${ _.get(item, 'amount', '') }</td>
                         </tr>
-                    `).join("\n") || '<tr></tr>'
+                    `).join("\n") || '<tr><td>{{ __("not_data") }}</td></tr>'
                 }
             </table>`
         );         

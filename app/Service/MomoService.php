@@ -69,12 +69,10 @@ class MomoService {
 
     public function orderFormat($order) {
         $data = [];
-        foreach ($order as $key => $value) {
+        foreach ($order as $key => $product) {
             $stock_detail = [];
-            foreach ($value as $k => $product) {
-                if($productModelDetail = $this->updateProduct($product, ['momo_id' => $product['GOODS_CODE']])) {
-                    $stock_detail[] = $productModelDetail;
-                }
+            if($productModelDetail = $this->updateProduct($product, ['momo_id' => $product['GOODS_CODE']])) {
+                $stock_detail[] = $productModelDetail;
             }
             $data[] = [
                 'no' => $value['COMPLETE_ORDER_NO'],

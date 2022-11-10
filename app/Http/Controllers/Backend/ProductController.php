@@ -16,10 +16,10 @@ class ProductController extends Controller
         $this->view = 'backend.'.$this->name;
         $this->rules = [
             
-            'yahoo_id' => ['nullable', 'string', 'max:150'],
+            'yahoo_id' => ['nullable', 'string', 'max:150', 'unique:App\Models\Product'],
             'momo_id' => ['nullable', 'string', 'max:150'],
             'momo_dt_code' => ['nullable', 'string', 'max:150'],
-            'barcode' => ['required', 'string', 'max:150'],
+            'barcode' => ['required', 'string', 'max:150', 'unique:App\Models\Product'],
             'name' => ['required', 'string', 'max:150'],
             'specification' => ['nullable', 'string', 'max:150'],
             'unit' => ['nullable', 'string', 'max:150'],
@@ -129,6 +129,10 @@ class ProductController extends Controller
     public function update(Request $request, $id)
     {
         $this->authorize('edit '.$this->name);
+        $this->rules = array_merge($this->rules, [
+            'yahoo_id' => ['nullable', 'string', 'max:150', 'unique:App\Models\Product,yahoo_id,'.$id],
+            'barcode' => ['required', 'string', 'max:150', 'unique:App\Models\Product,barcode,'.$id],            
+        ]);        
         $validatedData = $request->validate($this->rules, $this->messages, $this->attributes);
 
         try{DB::beginTransaction();

@@ -22,7 +22,7 @@ class OrderController extends Controller
     {
         $this->authorize('read '.$this->name);
         if ($request->ajax()) {
-            $data = CrudModel::query();
+            $data = CrudModel::with(['stockDetail', 'stockDetail.product']);
             return Datatables::eloquent($data)
                 ->make(true);
         }

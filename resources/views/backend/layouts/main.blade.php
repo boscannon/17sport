@@ -32,6 +32,7 @@
         <link href="{{ asset('plugins/filepond/dist/filepond.css') }}" rel="stylesheet">
         <link href="{{ asset('plugins/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css') }}" rel="stylesheet">
         <link rel="stylesheet" href="{{ asset('/js/plugins/flatpickr/flatpickr.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('/js/plugins/jquery-datatables/datatables.min.css') }}">
 
         <!-- You can include a specific file from public/css/themes/ folder to alter the default color theme of the template. eg: -->
         <!-- <link rel="stylesheet" id="css-theme" href="{{ mix('/css/themes/corporate.css') }}"> -->
@@ -327,6 +328,7 @@
 
         <!-- Codebase Core JS -->
         <script src="{{ mix('js/codebase.app.js') }}"></script>
+        <script src="{{ asset('/js/plugins/lodash/lodash.js') }}"></script>
         <script src="{{ asset('/js/plugins/summernote/summernote-bs4.min.js') }}"></script>
         <script src="{{ asset('js/jquery.form.min.js') }}"></script>
         <script src="{{ asset('/js/plugins/select2/js/select2.full.min.js') }}"></script>
@@ -338,6 +340,7 @@
         <script src="{{ asset('plugins/filepond-plugin-file-validate-type/dist/filepond-plugin-file-validate-type.js') }}"></script>
         <script src="{{ asset('plugins/filepond-plugin-file-encode/dist/filepond-plugin-file-encode.js') }}"></script>
         <script src="{{ asset('/js/plugins/flatpickr/flatpickr.min.js') }}"></script>
+        <script src="{{ asset('/js/plugins/jquery-datatables/datatables.min.js') }}"></script>        
         <script>
             $(function() {
                 $.ajaxSetup({

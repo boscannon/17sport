@@ -102,5 +102,8 @@ return [
     'purchaser_cellphone' => '購買人手機',
     'due_date' => '應出貨日',
     'remark' => '備註',
+    'barcode' => '國際條碼',
+    'name' => '商品名稱',
+    'amount' => '數量',
   ]
 ];

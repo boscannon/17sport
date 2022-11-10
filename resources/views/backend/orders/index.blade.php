@@ -20,7 +20,7 @@ $(function() {
     var path = '{{ route('backend.'.$routeNameData.'.index') }}';
     var tableList = $('#data-table');
     var formCreate = $('#form-create');
-    var table = tableList.DataTable({
+    var table = tableList.DataTable({      
         processing: true,
         serverSide: true,
         responsive: true,
@@ -28,6 +28,7 @@ $(function() {
         ajax: path,
         order: [[4, 'desc']],
         columns: [
+            { className: 'dt-control', bSearchable: false, orderable: false, data: null, defaultContent: '' },
             { data: 'null', title: '#', bSearchable: false, bSortable: false, render: function ( data, type, row , meta ) {
                 return  meta.row + 1;
             }},
@@ -46,6 +47,40 @@ $(function() {
             { data: 'created_at', title: '{{ __('created_at') }}' },
         ]
     });
+
+    tableList.on('click', 'td.dt-control', function () {
+        var tr = $(this).closest('tr');
+        var row = table.row(tr);
+ 
+        if (row.child.isShown()) {            
+            row.child.hide();
+            tr.removeClass('shown');
+        } else {
+            row.child(format(row.data())).show();
+            tr.addClass('shown');
+        }
+    });
+
+    function format(d) {        
+        return (
+            `<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px; width: 100%">
+                <tr>
+                    <th>{{ __("backend.$routeNameData.barcode") }}</th>
+                    <th>{{ __("backend.$routeNameData.name") }}</th>
+                    <th>{{ __("backend.$routeNameData.amount") }}</th>                
+                </tr>
+                ${
+                    d.stock_detail && d.stock_detail.map(item => `
+                        <tr>
+                            <td>${ _.get(item, 'product.barcode', '') }</td>
+                            <td>${ _.get(item, 'name', '') }</td>
+                            <td>${ _.get(item, 'amount', '') }</td>
+                        </tr>
+                    `).join("\n") || ''
+                }
+            </table>`
+        );         
+    }
 });
 </script>
 @endpush

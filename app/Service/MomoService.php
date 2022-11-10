@@ -29,8 +29,7 @@ class MomoService {
         ]);
         $url = $this->apiUrl.'v2/accounting/order/C1105.scm';
         $response = json_decode($this->sendRequest($requestData, $url), true);
-        dd($response);
-        return $response['Orders'];
+        return $response;
     }
 
     public function updateStock($productModels) {

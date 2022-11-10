@@ -43,15 +43,14 @@ class YahooService {
     }
 
     public function updateStock($productModels) {
-        //我們減他們 chunk 陣列切兩千筆 pluck抓品號
-        // $url = $this->apiUrl.'GdStock/UpdateQty';
+        $url = $this->apiUrl.'GdStock/UpdateQty';
         foreach ($productModels as $key => $productModel) {
-        // $requestData = json_encode([
-        //     'ProductId' => $productModel->yahoo_id,
-        //     'Qty' => $productModel->stock,
-        // ]);
+        $requestData = json_encode([
+            'ProductId' => $productModel->yahoo_id,
+            'Qty' => $productModel->stock,
+        ]);
 
-        // $response = $this->sendRequest($requestData, $url);
+        $response = $this->sendRequest($requestData, $url);
         }
     }
 

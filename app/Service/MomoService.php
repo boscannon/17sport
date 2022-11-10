@@ -12,7 +12,7 @@ class MomoService {
         'entpPwd' => 'tmc100201',
         'otpBackNo' => '896',
     ];
-    protected $apiUrl = "https://scmapi.momoshop.com.tw/api/";
+    protected $apiUrl = "https://scmapi.momoshop.com.tw/";
     private $curl;
 
     public function __construct(Curl $curl) {
@@ -27,13 +27,13 @@ class MomoService {
             'delyGbType' => '1',
             'sendRecoverType' => '1'
         ]);
-        $url = $this->apiUrl.'v2/accounting/order/C1105.scm';
+        $url = $this->apiUrl.'api/v2/accounting/order/C1105.scm';
         $response = json_decode($this->sendRequest($requestData, $url), true);
         return $response;
     }
 
     public function updateStock($productModels) {
-        $stockQtyUrl = $this->apiUrl.'v1/goodsStockQty/query.scm';
+        $stockQtyUrl = $this->apiUrl.'api/v1/goodsStockQty/query.scm';
         $updateStockUrl = $this->apiUrl.'GoodsServlet.do';
         $stockQtyRequest = [];
         //chunk先給2方便測試 之後記得改2000
@@ -68,8 +68,8 @@ class MomoService {
             }
         }
         dump($updateStockRequest);
-        // $result = $this->sendRequest(json_encode($updateStockRequest), $updateStockUrl);
-        // $this->_msg($result);
+        $result = $this->sendRequest(json_encode($updateStockRequest), $updateStockUrl);
+        $this->_msg($result);
     }
 
     public function orderFormat($order) {

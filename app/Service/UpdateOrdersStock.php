@@ -21,7 +21,7 @@ class UpdateOrdersStock {
 
     public function index() {
         foreach ($this->platform as $key => $platform) {
-            $this->getOrders($platform);
+            // $this->getOrders($platform);
         }
         $this->updateStock();
     }

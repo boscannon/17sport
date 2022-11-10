@@ -40,7 +40,7 @@ class UpdateOrdersStock {
             DB::commit();
         } catch (Exception $e) {
             DB::rollBack();
-            dd($e);
+            dump($e);
         }
     }
 

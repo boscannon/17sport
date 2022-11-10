@@ -66,15 +66,15 @@ $(function() {
             `<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px; width: 100%">
                 <tr>
                     <th>{{ __("backend.$routeNameData.barcode") }}</th>
-                    <th>{{ __("backend.$routeNameData.name") }}</th>
-                    <th>{{ __("backend.$routeNameData.amount") }}</th>                
+                    <th>{{ __("backend.$routeNameData.amount") }}</th>
+                    <th>{{ __("backend.$routeNameData.name") }}</th>           
                 </tr>
                 ${
                     d.stock_detail && d.stock_detail.map(item => `
                         <tr>
                             <td>${ _.get(item, 'product.barcode', '') }</td>
-                            <td>${ _.get(item, 'name', '') }</td>
                             <td>${ _.get(item, 'amount', '') }</td>
+                            <td>${ _.get(item, 'name', '') }</td>
                         </tr>
                     `).join("\n") || '<tr><td>{{ __("not_data") }}</td></tr>'
                 }

@@ -13,7 +13,7 @@ class AuditController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $data = CrudModel::where([
+            $data = CrudModel::with(['user'])->where([
                 'table' => $request->table,
                 'table_id' => $request->table_id,
             ]);

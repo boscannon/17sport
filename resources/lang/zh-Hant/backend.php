@@ -18,6 +18,7 @@ return [
     'orders'=> '訂單',
   ],
   'audits' => [
+    'user' => '管理員',
     'event' => '動作',
     'auditing' => '操作紀錄',
     'created' => '「:name」 => [:new]',

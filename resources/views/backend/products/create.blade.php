@@ -30,8 +30,8 @@
                                 <input type="text" name="momo_dt_code" class="form-control" placeholder="{{ __("backend.$routeNameData.momo_dt_code") }}">
                             </div>                            
                             <div class="form-group col-md-6">
-                                <label>{{ __("backend.$routeNameData.barcode") }}<span class="text-danger">*</span></label>
-                                <input type="text" required name="barcode" class="form-control" placeholder="{{ __("backend.$routeNameData.barcode") }}">
+                                <label>{{ __("backend.$routeNameData.barcode") }}</label>
+                                <input type="text" name="barcode" class="form-control" placeholder="{{ __("backend.$routeNameData.barcode") }}">
                             </div>                            
                             <div class="form-group col-md-6">
                                 <label>{{ __("backend.$routeNameData.name") }}<span class="text-danger">*</span></label>

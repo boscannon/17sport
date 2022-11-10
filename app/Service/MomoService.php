@@ -38,7 +38,7 @@ class MomoService {
             'loginInfo' => $this->loginInfo,
             'goodsCodeList' => $momoIds,
         ]);
-        return json_decode($this->sendRequest($request, $url), true);
+        return json_decode($this->sendRequest($request, $url), true)['dataList'];
     }
 
     public function updateStock($productModels) {

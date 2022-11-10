@@ -30,7 +30,7 @@ class CreateProductsTable extends Migration
             $table->string('attribute', 255)->nullable()->comment('屬性');
             $table->text('remark')->nullable()->comment('備註');
             $table->timestamps();
-            $table->unique(['momo_id','momo_dt_code']);
+            $table->unique(['momo_id', 'momo_dt_code']);
         });
         
         // 创建权限

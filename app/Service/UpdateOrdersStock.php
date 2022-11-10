@@ -14,7 +14,7 @@ class UpdateOrdersStock {
 
     public function __construct(YahooService $yahoo, MomoService $momo) {
         $this->platform = [
-            // $yahoo,
+            $yahoo,
             $momo,
         ];
     }
@@ -45,7 +45,7 @@ class UpdateOrdersStock {
     }
 
     public function updateStock() {
-        $productModels = Product::where('updated_at', '>=', date('Y-m-d H:i:s', strtotime('-30 min')))->get();
+        $productModels = Product::where('updated_at', '>=', date('Y-m-d H:i:s', strtotime('-15 min')))->get();
         foreach ($this->platform as $key => $platform) {
             $platform->updateStock($productModels);
         }

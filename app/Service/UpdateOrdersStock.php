@@ -14,8 +14,8 @@ class UpdateOrdersStock {
 
     public function __construct(YahooService $yahoo, MomoService $momo) {
         $this->platform = [
-            $yahoo,
-            // $momo,
+            // $yahoo,
+            $momo,
         ];
     }
 

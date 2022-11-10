@@ -42,32 +42,46 @@ class YahooService {
         return $response['Orders'];
     }
 
+    public function getStock($yahooIds) {
+        $url = $this->apiUrl.'GdStock/GetMultipleQuantities';
+        $request = json_encode([
+            'ProductIds' => $yahooIds
+        ]);
+        return json_decode($this->sendRequest($request, $url), true)['GdStocks'];
+    }
+
     public function updateStock($productModels) {
-        $stockQtyUrl = $this->apiUrl.'GdStock/GetMultipleQuantities';
-        $stockQtyRequest = [];
-        $products = array_diff($productModels->pluck('yahoo_id')->toArray(), [null]);
-        foreach ($products as $key => $product) {
-            $stockQtyRequest['ProductIds'][] = $product;
-        }
-        $response = $this->sendRequest(json_encode($stockQtyRequest), $stockQtyUrl);
-        dd($response);
-        $url = $this->apiUrl.'GdStock/UpdateQty';
-        foreach ($productModels as $key => $productModel) {
-            if(isset($productModel->yahoo_id)){
-                $requestData = json_encode([
-                    'ProductId' => $productModel->yahoo_id,
-                    'Qty' => $productModel->stock,
-                ]);
-                $response = $this->sendRequest($requestData, $url);
+        $url = $this->apiUrl.'GdStock/UpdateMultipleQuantities';
+        //之後改500
+        $yahooIdsArray = array_chunk(array_diff($productModels->pluck('yahoo_id')->toArray(), [null]), 2);
+        foreach ($yahooIdsArray as $yahooIds) {
+            $request = [];
+            $stocks = $this->getStock($yahooIds);
+            dump($stocks);
+            foreach ($stocks as $product) {
+                $data = $productModels->first(function ($item, $key) use ($product){
+                    return $item->yahoo_id == $product['ProductId'];
+                });
+                dump($data);
+                if(!isset($data)) continue;
+                $qty = ($data->stock >= 0) ? $qty = $data->stock - $product['Qty'] : 0 - $product['Qty'];
+                $request[] = [
+                    'ProductId' => $product['ProductId'],
+                    'Quantity' => $qty,
+                ];
             }
+
+            dd($request);
+            // $response = $this->sendRequest(json_encode($request), $url);
+            // $this->_msg($response);
         }
     }
 
     public function orderFormat($order) {
         $data = [];
-        foreach ($order as $key => $value) {
+        foreach ($order as $value) {
             $stock_detail = [];
-            foreach ($value['Products'] as $k => $product) {
+            foreach ($value['Products'] as $product) {
                 if($productModelDetail = $this->updateProduct($product, ['yahoo_id' => $product['Id']])
                 ) {
                     $stock_detail[] = $productModelDetail;

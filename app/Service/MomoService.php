@@ -32,49 +32,53 @@ class MomoService {
         return $response;
     }
 
-    public function updateStock($productModels) {
-        $stockQtyUrl = $this->apiUrl.'api/v1/goodsStockQty/query.scm';
-        $updateStockUrl = $this->apiUrl.'GoodsServlet.do';
-        $stockQtyRequest = [];
-        //chunk先給2方便測試 之後記得改2000
-        $products = array_chunk(array_diff($productModels->pluck('momo_id')->toArray(), [null]), 2);
-        foreach ($products as $key => $product) {
-            $stockQtyRequest[] = json_encode([
-                'loginInfo' => $this->loginInfo,
-                'goodsCodeList' => $product,
-            ]);
-        }
-        $updateStockRequest = [
-            'doAction' => 'changeGoodsQty',
+    public function getStock($momoIds) {
+        $url = $this->apiUrl.'api/v1/goodsStockQty/query.scm';
+        $request = json_encode([
             'loginInfo' => $this->loginInfo,
-        ];
-        dump($stockQtyRequest);
-        foreach ($stockQtyRequest as $key => $request) {
-            $response = json_decode($this->sendRequest($request, $stockQtyUrl), true);
-            dump($response);
-            foreach ($response['dataList'] as $k => $product) {
-                $data = Product::where('momo_dt_code', $product['goodsdt_code'])->first();
-                if(isset($data)) {
-                    $addReduceQty = ($data->stock >= 0) ? $addReduceQty = $data->stock - $product['order_counsel_qty'] : 0 - $product['order_counsel_qty'];
-                    $updateStockRequest['sendInfoList'][] = [
-                        'goodsCode' => $product['goods_code'],
-                        'goodsName' => $product['goods_name'],
-                        'goodsdtCode' => $product['goodsdt_code'],
-                        'goodsdtInfo' => $product['goodsdt_info'],
-                        'orderCounselQty' => $product['order_counsel_qty'],
-                        'addReduceQty' => $addReduceQty
-                    ];
-                }
+            'goodsCodeList' => $momoIds,
+        ]);
+        return json_decode($this->sendRequest($request, $url), true);
+    }
+
+    public function updateStock($productModels) {
+        $url = $this->apiUrl.'GoodsServlet.do';
+        //之後記得改500
+        $momoIdsArray = array_chunk(array_diff($productModels->pluck('momo_id')->toArray(), [null]), 2);
+        foreach ($momoIdsArray as $momoIds) {
+            $request = [
+                'doAction' => 'changeGoodsQty',
+                'loginInfo' => $this->loginInfo,
+                'sendInfoList' => []
+            ];
+            $stocks = $this->getStock($momoIds);
+            dump($stocks);
+            foreach ($stocks as $product) {
+                $data = $productModels->first(function ($item, $key) use ($product){
+                    return $item->momo_id == $product['goods_code'] &&
+                            $item->momo_dt_code == $product['goodsdt_code'];
+                });
+                dump($data);
+                if(!isset($data)) continue;
+                $qty = ($data->stock >= 0) ? $qty = $data->stock - $product['order_counsel_qty'] : 0 - $product['order_counsel_qty'];
+                $request['sendInfoList'][] = [
+                    'goodsCode' => $product['goods_code'],
+                    'goodsName' => $product['goods_name'],
+                    'goodsdtCode' => $product['goodsdt_code'],
+                    'goodsdtInfo' => $product['goodsdt_info'],
+                    'orderCounselQty' => $product['order_counsel_qty'],
+                    'addReduceQty' => $qty
+                ];
             }
+            dump($request);
+            $response = $this->sendRequest(json_encode($request), $url);
+            $this->_msg($response);
         }
-        dump($updateStockRequest);
-        $result = $this->sendRequest(json_encode($updateStockRequest), $updateStockUrl);
-        $this->_msg($result);
     }
 
     public function orderFormat($order) {
         $data = [];
-        foreach ($order as $key => $product) {
+        foreach ($order as $product) {
             $stock_detail = [];
             if($productModelDetail = $this->updateProduct($product, ['momo_id' => $product['GOODS_CODE']])) {
                 $stock_detail[] = $productModelDetail;

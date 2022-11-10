@@ -18,8 +18,8 @@ class CreateProductsTable extends Migration
             $table->id();
             $table->string('barcode', 150)->unique()->comment('國際條碼');
             $table->string('yahoo_id', 150)->nullable()->unique()->comment('yahoo產品編號');
-            $table->string('momo_id', 150)->nullable()->unique()->comment('momo產品編號');
-            $table->string('momo_dt_code', 150)->nullable()->unique()->comment('momo 品號');
+            $table->string('momo_id', 150)->nullable()->comment('momo產品編號');
+            $table->string('momo_dt_code', 150)->nullable()->comment('momo 品號');
             $table->string('name', 150)->nullable()->comment('名稱');
             $table->string('specification', 150)->nullable()->comment('規格');
             $table->string('unit', 150)->nullable()->comment('單位');
@@ -30,6 +30,7 @@ class CreateProductsTable extends Migration
             $table->string('attribute', 255)->nullable()->comment('屬性');
             $table->text('remark')->nullable()->comment('備註');
             $table->timestamps();
+            $table->unique(['momo_id', 'momo_dt_code']);
         });
         
         // 创建权限

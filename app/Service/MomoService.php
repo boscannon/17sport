@@ -3,47 +3,33 @@
 namespace App\Service;
 
 use App\Library\Curl;
-// use App\Library\AES_OpenSSL;
-// use App\Library\HMacSha512;
 use App\Models\Product;
 
 class MomoService {
-    // protected $shareSecretKey = "6GIa8qR8JBiOYWxjzUxc/uch17qr+kiyTnTh7LZWcMU=";
-    // protected $shareSecretIV = "O/DCgc3t2g49SSVYvIsheg==";
-    // protected $saltKey = "bkPk9jksRr0EJc09ES1NRJtxVklOsziE";
-    // protected $token = "Supplier_27566";
-    // protected $keyVersion = 1;
-    // protected $supplierId = 27566;
     protected $loginInfo = [
-        'entpID' => 'xxx',
-        'entpCode' => 'xxx',
-        'entpPwd' => 'xxx',
-        'otpBackNo' => 'xxx',
+        'entpID' => '81069886',
+        'entpCode' => '019858',
+        'entpPwd' => 'tmc100201',
+        'otpBackNo' => '896',
     ];
     protected $apiUrl = "https://scmapi.momoshop.com.tw/api/";
     private $curl;
-    // private $aes;
-    // private $sha;
 
     public function __construct(Curl $curl) {
         $this->curl = $curl;
-        // $this->aes = $aes;
-        // $this->sha = $sha;
-        // $this->aes->getConfig($this->shareSecretKey, $this->shareSecretIV);
-        // $this->sha->getConfig($this->shareSecretKey);
-        // $this->timestamps = time();
     }
 
     public function getOrders() {
         $requestData = json_encode([
             'loginInfo' => $this->loginInfo,
-            'fromDate' => date('Y-m-d'),
-            'toDate' => date('Y-m-d'),
-            'delyGbType' => 1
+            'fromDate' => date('Y/m/d'),
+            'toDate' => date('Y/m/d'),
+            'delyGbType' => '1',
+            'sendRecoverType' => '1'
         ]);
         $url = $this->apiUrl.'v2/accounting/order/C1105.scm';
         $response = json_decode($this->sendRequest($requestData, $url), true);
-        return $response['Orders'];
+        return $response;
     }
 
     public function updateStock($productModels) {
@@ -51,7 +37,7 @@ class MomoService {
         $updateStockUrl = $this->apiUrl.'GoodsServlet.do';
         $stockQtyRequest = [];
         //chunk先給2方便測試 之後記得改2000
-        $products = array_chunk(array_diff($productModels->pluck('momo_dt_code')->toArray(), [null]), 2);
+        $products = array_chunk(array_diff($productModels->pluck('momo_id')->toArray(), [null]), 2);
         foreach ($products as $key => $product) {
             $stockQtyRequest[] = json_encode([
                 'loginInfo' => $this->loginInfo,
@@ -62,38 +48,42 @@ class MomoService {
             'doAction' => 'changeGoodsQty',
             'loginInfo' => $this->loginInfo,
         ];
+        dump($stockQtyRequest);
         foreach ($stockQtyRequest as $key => $request) {
             $response = json_decode($this->sendRequest($request, $stockQtyUrl), true);
+            dump($response);
             foreach ($response['dataList'] as $k => $product) {
-                $data = Product::where('momo_id', $product['goods_code'])->first();
-                $updateStockRequest['sendInfoList'][] = [
-                    'goodsCode' => $product['goods_code'],
-                    'goodsName' => $product['goods_name'],
-                    'goodsdtCode' => $product['goodsdt_code'],
-                    'goodsdtInfo' => $product['goodsdt_info'],
-                    'orderCounselQty' => $product['order_counsel_qty'],
-                    'addReduceQty' => $data->stock - $product['order_counsel_qty']
-                ];
+                $data = Product::where('momo_dt_code', $product['goodsdt_code'])->first();
+                if(isset($data)) {
+                    $addReduceQty = ($data->stock >= 0) ? $addReduceQty = $data->stock - $product['order_counsel_qty'] : 0 - $product['order_counsel_qty'];
+                    $updateStockRequest['sendInfoList'][] = [
+                        'goodsCode' => $product['goods_code'],
+                        'goodsName' => $product['goods_name'],
+                        'goodsdtCode' => $product['goodsdt_code'],
+                        'goodsdtInfo' => $product['goodsdt_info'],
+                        'orderCounselQty' => $product['order_counsel_qty'],
+                        'addReduceQty' => $addReduceQty
+                    ];
+                }
             }
         }
-        $result = $this->sendRequest($updateStockRequest, $updateStockUrl);
-        $this->_msg($result);
+        dump($updateStockRequest);
+        // $result = $this->sendRequest(json_encode($updateStockRequest), $updateStockUrl);
+        // $this->_msg($result);
     }
 
     public function orderFormat($order) {
         $data = [];
-        foreach ($order as $key => $value) {
+        foreach ($order as $key => $product) {
             $stock_detail = [];
-            foreach ($value as $k => $product) {
-                if($productModelDetail = $this->updateProduct($product, ['momo_id' => $product['GOODS_CODE']])) {
-                    $stock_detail[] = $productModelDetail;
-                }
+            if($productModelDetail = $this->updateProduct($product, ['momo_id' => $product['GOODS_CODE']])) {
+                $stock_detail[] = $productModelDetail;
             }
             $data[] = [
-                'no' => $value['COMPLETE_ORDER_NO'],
+                'no' => $product['COMPLETE_ORDER_NO'],
                 'source' => 'momo',
-                'date' => $value['ORDER_DATE'],
-                'json' => $value,
+                'date' => $product['ORDER_DATE'],
+                'json' => $product,
                 'stock_detail' => $stock_detail
             ];
         }
@@ -115,39 +105,19 @@ class MomoService {
         ];
     }
 
-    // public function encrypt($requestData) {
-    //     $this->_msg('明文: '.$requestData);
-    //     $this->aes->getConfig($this->shareSecretKey, $this->shareSecretIV);
-    //     $cipherText = $this->aes->encryptString($requestData);
-    //     $this->_msg('密文: '.$cipherText);
-    //     return $cipherText;
-    // }
-
-    // public function getHeader($signature) {
-    //     $headers = [
-    //         'Accept: application/json',
-    //         'Content-Type: application/json',
-    //         'api-token: '.$this->token,
-    //         'api-signature: '.$signature,
-    //         'api-timestamp: '.$this->timestamps,
-    //         'api-keyversion: '.$this->keyVersion,
-    //         'api-supplierid: '.$this->supplierId,
-    //     ];
-    //     return $headers;
-    // }
+    public function getHeader() {
+        $headers = [
+            'Accept: application/json',
+            'Content-Type: application/json',
+        ];
+        return $headers;
+    }
 
     public function sendRequest($requestData, $url) {
-        // $encrypt = $this->encrypt($requestData);
-        // $signatureString = sprintf("%s%s%s%s", $this->timestamps, $this->token, $this->saltKey, $encrypt);
-        // $signature = $this->sha->hash($signatureString);
-        // $this->_msg('簽名字串: '.$signatureString);
-        // $this->_msg('簽名: '.$signature);
-
-        // $header = $this->getHeader($signature);
-        // $responseEncode = $this->curl->request($url, $header, $encrypt);
-        // $response = $this->aes->decryptString($responseEncode);
-        // $this->_msg('API 密文解密: '. $response);
-        // return $response;
+        $header = $this->getHeader();
+        $response = $this->curl->request($url, $header, $requestData);
+        $this->_msg('momo response: '. $response);
+        return $response;
     }
 
     public function _msg($string) {

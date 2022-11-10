@@ -37,7 +37,7 @@ class MomoService {
         $updateStockUrl = $this->apiUrl.'GoodsServlet.do';
         $stockQtyRequest = [];
         //chunk先給2方便測試 之後記得改2000
-        $products = array_chunk(array_diff($productModels->pluck('momo_dt_code')->toArray(), [null]), 2);
+        $products = array_chunk(array_diff($productModels->pluck('momo_id')->toArray(), [null]), 2);
         foreach ($products as $key => $product) {
             $stockQtyRequest[] = json_encode([
                 'loginInfo' => $this->loginInfo,
@@ -48,10 +48,12 @@ class MomoService {
             'doAction' => 'changeGoodsQty',
             'loginInfo' => $this->loginInfo,
         ];
+        dump($stockQtyRequest);
         foreach ($stockQtyRequest as $key => $request) {
             $response = json_decode($this->sendRequest($request, $stockQtyUrl), true);
+            dump($response);
             foreach ($response['dataList'] as $k => $product) {
-                $data = Product::where('momo_id', $product['goods_code'])->first();
+                $data = Product::where('momo_dt_code', $product['goodsdt_code'])->first();
                 $updateStockRequest['sendInfoList'][] = [
                     'goodsCode' => $product['goods_code'],
                     'goodsName' => $product['goods_name'],

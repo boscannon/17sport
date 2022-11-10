@@ -45,12 +45,14 @@ class YahooService {
     public function updateStock($productModels) {
         $url = $this->apiUrl.'GdStock/UpdateQty';
         foreach ($productModels as $key => $productModel) {
-        $requestData = json_encode([
-            'ProductId' => $productModel->yahoo_id,
-            'Qty' => $productModel->stock,
-        ]);
+            if($productModel->yahoo_id){
+                $requestData = json_encode([
+                    'ProductId' => $productModel->yahoo_id,
+                    'Qty' => $productModel->stock,
+                ]);
+            }
 
-        $response = $this->sendRequest($requestData, $url);
+            $response = $this->sendRequest($requestData, $url);
         }
     }
 

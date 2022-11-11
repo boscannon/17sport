@@ -32,10 +32,10 @@ class YahooService {
         $transferDateStart = date('Y-m-d\TH:i:s', strtotime('-10 min'));
         $transferDateEnd = date('Y-m-d\TH:i:s');
         $requestData = json_encode([
-            'TransferDateStart' => date('Y-m-d\TH:i:s', strtotime('-10 min')),
-            'TransferDateEnd' => date('Y-m-d\TH:i:s'),
-            // 'TransferDateStart' => '2022-10-25T00:00:00',
-            // 'TransferDateEnd' => '2022-10-30T00:00:00',
+            // 'TransferDateStart' => date('Y-m-d\TH:i:s', strtotime('-10 min')),
+            // 'TransferDateEnd' => date('Y-m-d\TH:i:s'),
+            'TransferDateStart' => '2022-10-25T00:00:00',
+            'TransferDateEnd' => '2022-10-30T00:00:00',
         ]);
         $url = $this->apiUrl.'HomeDelivery/GetShippingOrders';
         $response = json_decode($this->sendRequest($requestData, $url), true);
@@ -91,11 +91,11 @@ class YahooService {
                 'date' => $value['OrderInfo']['TransferDate'],
                 'due_date' => $value['OrderInfo']['ExpectedShippingDate'],
                 'remark' => $value['OrderInfo']['Note'],
-                'recipient_name' => $value['Receiver']['Name'],
-                'recipient_phone' => $value['Receiver']['Phone'],
-                'recipient_cellphone' => $value['Receiver']['Mobile'],
-                'purchaser_name' => $value['Buyer']['Name'],
-                'purchaser_cellphone' => $value['Buyer']['Mobile'],
+                'recipient_name' => $value['ReceiverInfo']['Name'],
+                'recipient_phone' => $value['ReceiverInfo']['Phone'],
+                'recipient_cellphone' => $value['ReceiverInfo']['Mobile'],
+                'purchaser_name' => $value['BuyerInfo']['Name'],
+                'purchaser_cellphone' => $value['BuyerInfo']['Mobile'],
                 'json' => $value,
                 'stock_detail' => $stock_detail
             ];

@@ -46,7 +46,7 @@ class StockShoplineController extends Controller
             //更新商品 跟 新增庫存明細
             Excel::import(new StockShoplineImport, $validatedData['file']);
             //更新平台庫存
-            // $this->UpdateOrdersStock->updateStock();
+            $this->UpdateOrdersStock->updateStock();
         
             DB::commit();
             return response()->json(['message' => __('import').__('success')]);

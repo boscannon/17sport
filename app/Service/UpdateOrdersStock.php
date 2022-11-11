@@ -15,13 +15,13 @@ class UpdateOrdersStock {
     public function __construct(YahooService $yahoo, MomoService $momo) {
         $this->platform = [
             $yahoo,
-            // $momo,
+            $momo,
         ];
     }
 
     public function index() {
         foreach ($this->platform as $key => $platform) {
-            // $this->getOrders($platform);
+            $this->getOrders($platform);
         }
         $this->updateStock();
     }

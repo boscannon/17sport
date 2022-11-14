@@ -3,7 +3,7 @@
 @section('content')
 <div class="block">
     <div class="block-header block-header-default">
-        <h3 class="block-title">{{ __("backend.$routeNameData.shopline_update_stock") }}</h3>
+        <h3 class="block-title">{{ __("backend.$routeNameData.shopline_update_stock") }} <span class="text-danger">({{ __("backend.$routeNameData.bulk_add_info") }})</span></h3>
     </div>
     <div class="block-content block-content-full">
         <form id="form-create" action="{{ route('backend.stock_shopline.store') }}" method="post">

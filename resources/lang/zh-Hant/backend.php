@@ -94,6 +94,7 @@ return [
     'shopline_update_stock' => 'shopline 更新庫存',
     'shopline_excel' => 'shopline excel',
     "file" => "檔案",
+    "bulk_add_info" => "注意！國際條碼重複會進行覆蓋",
   ],
   'orders' => [
     'no' => '編號',

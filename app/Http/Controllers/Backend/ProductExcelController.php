@@ -42,9 +42,11 @@ class ProductExcelController extends Controller
 
         try{
             $import = new ProductExcelImport;
-            $error = Excel::import($import, $validatedData['file']);
+            Excel::import($import, $validatedData['file']);
+
+            $ignore = $import->ignore;
         
-            return response()->json(['message' => __('import').__('success')]);
+            return response()->json(['message' => __('import').__('success'), 'ignore' => $ignore]);
         } catch (Exception $e) {
             return response()->json(['message' => $e->getMessage()],422);
         }

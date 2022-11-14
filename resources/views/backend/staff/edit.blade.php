@@ -35,7 +35,8 @@
                             </div>                                                        
                             <div class="form-group col-md-6">
                                 <label>{{ __("backend.$routeNameData.department_id") }}<span class="text-danger">*</span></label>
-                                <select class="js-select2 form-control" name="department_id" data-placeholder="{{ __("backend.$routeNameData.department_id") }}">                                    
+                                <select class="js-select2 form-control" name="department_id" data-placeholder="{{ __("backend.$routeNameData.department_id") }}">
+                                    <option></option>
                                     @foreach($departments as $item)
                                         <option value="{{ $item->id }}" {{ $item->id == $data->department_id ? 'selected' : '' }}>{{ $item->name }}</option>
                                     @endforeach

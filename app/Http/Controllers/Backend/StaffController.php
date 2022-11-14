@@ -30,21 +30,7 @@ class StaffController extends Controller
             'remark' => ['nullable', 'string', 'max:200'],
         ];
         $this->messages = [];
-        $this->attributes = [
-            'no' => __("backend.{$this->name}.no"),
-            'name' => __("backend.{$this->name}.name"),
-            'identification' => __("backend.{$this->name}.identification"),
-            'department_id' => __("backend.{$this->name}.department_id"),
-            'appointment_date' => __("backend.{$this->name}.appointment_date"),
-            'resignation_date' => __("backend.{$this->name}.resignation_date"),
-            'telephone' => __("backend.{$this->name}.telephone"),
-            'cellphone' => __("backend.{$this->name}.cellphone"),
-            'address' => __("backend.{$this->name}.address"),
-            'email' => __("backend.{$this->name}.email"),
-            'emergency_contact' => __("backend.{$this->name}.emergency_contact"),
-            'emergency_contact_phone' => __("backend.{$this->name}.emergency_contact_phone"),
-            'remark' => __("backend.{$this->name}.remark"),
-        ];
+        $this->attributes = __("backend.{$this->name}");
     }
 
     public function index(Request $request)

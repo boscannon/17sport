@@ -77,6 +77,7 @@ return [
     'remark' => '備註',
     'ecxel_download' => 'excel格式下載',
     "bulk_add" => "批量新增",
+    "file" => "檔案",
   ],  
   'stock_details' => [
     'product_id' => '產品',
@@ -91,6 +92,7 @@ return [
     'stock' => '庫存',
     'shopline_update_stock' => 'shopline 更新庫存',
     'shopline_excel' => 'shopline excel',
+    "file" => "檔案",
   ],
   'orders' => [
     'no' => '編號',

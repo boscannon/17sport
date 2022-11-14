@@ -25,14 +25,7 @@ class UserController extends Controller
             'staff_id' => ['required', 'exists:App\Models\Staff,id'],
         ];
         $this->messages = []; 
-        $this->attributes = [            
-            'name' => __("backend.{$this->name}.name"),
-            'email' => __("backend.{$this->name}.email"),
-            // 'roles' => __("backend.{$this->name}.roles"),
-            'password' => __("backend.{$this->name}.password"),
-            'status' => __("backend.{$this->name}.status"),
-            'staff_id' => __("backend.{$this->name}.staff_id"),
-        ];    
+        $this->attributes = __("backend.{$this->name}");
     }
 
     public function index(Request $request)

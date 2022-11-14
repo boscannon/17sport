@@ -19,10 +19,7 @@ class RoleController extends Controller
             'permissions' => ['nullable', 'array'],
         ];
         $this->messages = [];
-        $this->attributes = [
-            'name' => __("backend.{$this->name}.name"),
-            'permissions' => __("backend.{$this->name}.permissions"),
-        ];
+        $this->attributes = __("backend.{$this->name}");
         $this->actions = [
             [ 'name' => __('read'), 'permissions' => 'read' ],
             [ 'name' => __('create'), 'permissions' => 'create' ],

@@ -21,9 +21,7 @@ class ProductExcelController extends Controller
             'file' => ['required', 'file'],         
         ];
         $this->messages = [];
-        $this->attributes = [
-            'file' => __("backend.{$this->name}.excel"),
-        ];
+        $this->attributes = __("backend.{$this->name}");
     }
 
     public function index(Request $request)

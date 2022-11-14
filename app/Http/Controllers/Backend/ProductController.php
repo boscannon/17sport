@@ -31,21 +31,7 @@ class ProductController extends Controller
             'remark' => ['nullable', 'string'],            
         ];
         $this->messages = [];
-        $this->attributes = [            
-            'yahoo_id' => __("backend.{$this->name}.yahoo_id"),
-            'momo_id' => __("backend.{$this->name}.momo_id"),
-            'momo_dt_code' => __("backend.{$this->name}.momo_dt_code"),
-            'barcode' => __("backend.{$this->name}.barcode"),
-            'name' => __("backend.{$this->name}.name"),
-            'specification' => __("backend.{$this->name}.specification"),
-            'unit' => __("backend.{$this->name}.unit"),
-            'type' => __("backend.{$this->name}.type"),
-            'size' => __("backend.{$this->name}.size"),
-            'price' => __("backend.{$this->name}.price"),
-            'stock' => __("backend.{$this->name}.stock"),
-            'attribute' => __("backend.{$this->name}.attribute"),
-            'remark' => __("backend.{$this->name}.remark"),
-        ];
+        $this->attributes = __("backend.{$this->name}");
     }
 
     public function index(Request $request)

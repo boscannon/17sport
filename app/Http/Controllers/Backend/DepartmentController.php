@@ -21,13 +21,7 @@ class DepartmentController extends Controller
             'remark' => ['nullable', 'string'],
         ];
         $this->messages = [];
-        $this->attributes = [
-            'no' => __("backend.{$this->name}.no"),
-            'name' => __("backend.{$this->name}.name"),
-            'parent_id' => __("backend.{$this->name}.parent_id"),
-            'level' => __("backend.{$this->name}.level"),
-            'remark' => __("backend.{$this->name}.remark"),
-        ];
+        $this->attributes = __("backend.{$this->name}");
     }
 
     public function index(Request $request)

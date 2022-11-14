@@ -24,15 +24,7 @@ class TemplateController extends Controller
             'language_id' => ['required', 'numeric'],
         ];
         $this->messages = [];
-        $this->attributes = [
-            'name' => __("backend.{$this->name}.name"),
-            'images' => __("backend.{$this->name}.images"),
-            'content' => __("backend.{$this->name}.content"),
-
-            'sort' => __("backend.{$this->name}.sort"),
-            'status' => __("backend.{$this->name}.status"),
-            'language_id' => __("backend.{$this->name}.language_id"),
-        ];
+        $this->attributes = __("backend.{$this->name}");
     }
 
     public function index(Request $request)

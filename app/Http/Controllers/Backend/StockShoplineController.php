@@ -23,9 +23,7 @@ class StockShoplineController extends Controller
             'file' => ['required', 'file'],         
         ];
         $this->messages = [];
-        $this->attributes = [
-            'file' => __("backend.{$this->name}.shopline_excel"),
-        ];
+        $this->attributes = __("backend.{$this->name}");
 
         $this->UpdateOrdersStock = $UpdateOrdersStock;
     }

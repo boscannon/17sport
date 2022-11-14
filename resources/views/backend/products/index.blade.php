@@ -19,12 +19,7 @@
                     <a href="{{ route('backend.products_excel.index') }}" target="_blank" class="btn btn-info"><i class="fa fa-download mr-5"></i>{{ __("backend.$routeNameData.ecxel_download") }}</a>                
                 </div>
             </div>
-        </form>   
-        <div class="progress mt-5">
-            <div id="progressBar" class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">
-                0%
-            </div>
-        </div>                 
+        </form>               
     </div>
 </div>
 <div class="block">
@@ -70,16 +65,11 @@ $(function() {
         ]
     });
 
-    var formCreate = $('#form-create');
-    var percentComplete = '0';
+    var formCreate = $('#form-create'); 
     formCreate.ajaxForm({
-        beforeSubmit: function(arr, $form, options) {            
-            $('#progressBar').attr('aria-valuenow', percentComplete).css('width', percentComplete + '%').text(percentComplete + '%');
+        beforeSubmit: function(arr, $form, options) {                        
             formCreate.find('button[type=submit]').attr('disabled',true);
-        },
-        uploadProgress: function(event, position, total, percentComplete) {
-            $('#progressBar').attr('aria-valuenow', percentComplete).css('width', percentComplete + '%').text(percentComplete + '%');
-        },        
+        },      
         success: function(data) {
             Swal.fire({ text: data.message, icon: 'success' }).then(function() {
                 location.href = path;

@@ -32,10 +32,10 @@ class YahooService {
         $transferDateStart = date('Y-m-d\TH:i:s', strtotime('-10 min'));
         $transferDateEnd = date('Y-m-d\TH:i:s');
         $requestData = json_encode([
-            // 'TransferDateStart' => date('Y-m-d\TH:i:s', strtotime('-10 min')),
-            // 'TransferDateEnd' => date('Y-m-d\TH:i:s'),
-            'TransferDateStart' => '2022-10-25T00:00:00',
-            'TransferDateEnd' => '2022-10-30T00:00:00',
+            'TransferDateStart' => date('Y-m-d\TH:i:s', strtotime('-10 min')),
+            'TransferDateEnd' => date('Y-m-d\TH:i:s'),
+            // 'TransferDateStart' => '2022-10-25T00:00:00',
+            // 'TransferDateEnd' => '2022-10-30T00:00:00',
         ]);
         $url = $this->apiUrl.'HomeDelivery/GetShippingOrders';
         $response = json_decode($this->sendRequest($requestData, $url), true);
@@ -53,7 +53,7 @@ class YahooService {
     public function updateStock($productModels) {
         $url = $this->apiUrl.'GdStock/UpdateMultipleQuantities';
         //之後改500
-        $yahooIdsArray = array_chunk(array_diff($productModels->pluck('yahoo_id')->toArray(), [null]), 2);
+        $yahooIdsArray = array_chunk(array_diff($productModels->pluck('yahoo_id')->toArray(), [null]), 500);
         foreach ($yahooIdsArray as $yahooIds) {
             $request = [];
             $stocks = $this->getStock($yahooIds);
@@ -70,10 +70,8 @@ class YahooService {
                     'Quantity' => $qty,
                 ];
             }
-
-            dd($request);
-            // $response = $this->sendRequest(json_encode($request), $url);
-            // $this->_msg($response);
+            $response = $this->sendRequest(json_encode($request), $url);
+            $this->_msg($response);
         }
     }
 
@@ -91,6 +89,13 @@ class YahooService {
                 'no' => $value['OrderInfo']['OrderCode'],
                 'source' => 'yahoo',
                 'date' => $value['OrderInfo']['TransferDate'],
+                'due_date' => $value['OrderInfo']['ExpectedShippingDate'],
+                'remark' => $value['OrderInfo']['Note'],
+                'recipient_name' => $value['ReceiverInfo']['Name'],
+                'recipient_phone' => $value['ReceiverInfo']['Phone'],
+                'recipient_cellphone' => $value['ReceiverInfo']['Mobile'],
+                'purchaser_name' => $value['BuyerInfo']['Name'],
+                'purchaser_cellphone' => $value['BuyerInfo']['Mobile'],
                 'json' => $value,
                 'stock_detail' => $stock_detail
             ];

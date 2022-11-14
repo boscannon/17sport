@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 use App\Models\Product as crudModel;
 use DataTables;
 use Exception;
-use DB;
 
 use App\Imports\ProductExcelImport;
 use Maatwebsite\Excel\Facades\Excel;
@@ -42,14 +41,11 @@ class ProductExcelController extends Controller
         $validatedData = $request->validate($this->rules, $this->messages, $this->attributes);
 
         try{
-            DB::beginTransaction();
-
-            Excel::import(new ProductExcelImport, $validatedData['file']);
+            $import = new ProductExcelImport;
+            $error = Excel::import($import, $validatedData['file']);
         
-            DB::commit();
             return response()->json(['message' => __('import').__('success')]);
         } catch (Exception $e) {
-            DB::rollBack();        
             return response()->json(['message' => $e->getMessage()],422);
         }
     }

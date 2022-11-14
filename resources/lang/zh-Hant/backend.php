@@ -77,6 +77,7 @@ return [
     'remark' => '備註',
     'ecxel_download' => 'excel格式下載',
     "bulk_add" => "批量新增",
+    "bulk_add_info" => "注意！國際條碼重複會進行覆蓋",
     "file" => "檔案",
   ],  
   'stock_details' => [

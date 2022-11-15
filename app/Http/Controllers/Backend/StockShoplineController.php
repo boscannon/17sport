@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Product as crudModel;
 use DataTables;
 use Exception;
+use Log;
 
 use App\Imports\StockShoplineImport;
 use Maatwebsite\Excel\Facades\Excel;
@@ -39,7 +40,11 @@ class StockShoplineController extends Controller
 
         try{
             //更新商品 跟 新增庫存明細
-            Excel::import(new StockShoplineImport, $validatedData['file']);
+            $import = new StockShoplineImport;
+            Excel::import($import, $validatedData['file']);
+
+            $ignore = $import->ignore;
+            Log::error($ignore);
             //更新平台庫存
             $this->UpdateOrdersStock->updateStock();
 

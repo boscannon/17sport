@@ -32,10 +32,10 @@ class YahooService {
         $transferDateStart = date('Y-m-d\TH:i:s', strtotime('-10 min'));
         $transferDateEnd = date('Y-m-d\TH:i:s');
         $requestData = json_encode([
-            'TransferDateStart' => date('Y-m-d\TH:i:s', strtotime('-10 min')),
-            'TransferDateEnd' => date('Y-m-d\TH:i:s'),
-            // 'TransferDateStart' => '2022-10-25T00:00:00',
-            // 'TransferDateEnd' => '2022-10-30T00:00:00',
+            //'TransferDateStart' => date('Y-m-d\TH:i:s', strtotime('-10 min')),
+            //'TransferDateEnd' => date('Y-m-d\TH:i:s'),
+             'TransferDateStart' => '2022-10-25T00:00:00',
+             'TransferDateEnd' => '2022-10-30T00:00:00',
         ]);
         $url = $this->apiUrl.'HomeDelivery/GetShippingOrders';
         $response = json_decode($this->sendRequest($requestData, $url), true);

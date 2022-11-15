@@ -38,7 +38,7 @@ $(function() {
             { width: '5%', data: 'null', title: '#', bSearchable: false, bSortable: false, render: function ( data, type, row , meta ) {
                 return  meta.row + 1;
             }},
-            { width: '10%', data: 'user.name', title: '{{ __("backend.audits.user") }}' } ,
+            { width: '10%', data: 'user.name', title: '{{ __("backend.audits.user") }}', defaultContent: '' } ,
             { width: '10%', data: 'event', title: '{{ __("backend.audits.event") }}' } ,
             { width: '45%', data: 'auditing', title: '{{ __("backend.audits.auditing") }}', render: function ( data, type, row , meta ) {
                 return `<pre style="margin: 0">${ data.join("\n") }</pre>`;

@@ -17,7 +17,7 @@ class ProductExcelController extends Controller
         $this->name = 'products';
         $this->view = 'backend.'.$this->name;
         $this->rules = [
-            'file' => ['required', 'file'],         
+            'file' => ['required', 'file', 'mimes:xls,xlsx,csv'],
         ];
         $this->messages = [];
         $this->attributes = __("backend.{$this->name}");

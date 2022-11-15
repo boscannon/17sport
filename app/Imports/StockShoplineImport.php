@@ -17,8 +17,6 @@ class StockShoplineImport implements ToCollection
         foreach ($rows as $key => $row) 
         {
             try{
-                DB::beginTransaction();
-
                 if($key == 0) continue;
 
                 if($row[5] == '') throw new Exception(__('not_barcode'));
@@ -41,9 +39,7 @@ class StockShoplineImport implements ToCollection
                     'stock' => $product->stock,
                 ]);
 
-                DB::commit();
             } catch (Exception $e) {
-                DB::rollBack();
                 $this->ignore[] = [
                     'line' => $key + 1, //行數
                     'message' => $e->getMessage()

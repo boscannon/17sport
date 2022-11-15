@@ -12,7 +12,7 @@ class GetOrders extends Command
      *
      * @var string
      */
-    protected $signature = 'GetOrders';
+    protected $signature = "GetOrders {st?} {et?}";
 
     /**
      * The console command description.
@@ -41,6 +41,8 @@ class GetOrders extends Command
      */
     public function handle()
     {
-        $this->updateOrdersStock->index();
+        $st = $this->argument('st');
+        $et = $this->argument('et');
+        $this->updateOrdersStock->index($st, $et);
     }
 }

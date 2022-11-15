@@ -19,15 +19,15 @@ class UpdateOrdersStock {
         ];
     }
 
-    public function index() {
+    public function index($st, $et) {
         foreach ($this->platform as $key => $platform) {
-            $this->getOrders($platform);
+            $this->getOrders($platform, $st, $et);
         }
         $this->updateStock();
     }
 
-    public function getOrders($platform) {
-        $orders = $platform->getOrders();
+    public function getOrders($platform, $st, $et) {
+        $orders = (count($platform->getOrders($st, $et)) > 0) ? $orders = $platform->getOrders($st, $et) : $orders = [];
         try{
             DB::beginTransaction();
 

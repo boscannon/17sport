@@ -28,14 +28,12 @@ class YahooService {
         $this->timestamps = time();
     }
 
-    public function getOrders() {
-        $transferDateStart = date('Y-m-d\TH:i:s', strtotime('-10 min'));
-        $transferDateEnd = date('Y-m-d\TH:i:s');
+    public function getOrders($st = '', $et = '') {
+        $startTime = ($st == '') ? $startTime = date('Y-m-d\TH:i:s', strtotime('-10 min')) : $startTime = $st.'T00:00:00';
+        $endTime = ($et == '') ? $endTime = date('Y-m-d\TH:i:s') : $endTime = $et.'T23:59:59';
         $requestData = json_encode([
-            //'TransferDateStart' => date('Y-m-d\TH:i:s', strtotime('-10 min')),
-            //'TransferDateEnd' => date('Y-m-d\TH:i:s'),
-             'TransferDateStart' => '2022-10-25T00:00:00',
-             'TransferDateEnd' => '2022-10-30T00:00:00',
+            'TransferDateStart' => $startTime,
+            'TransferDateEnd' => $endTime,
         ]);
         $url = $this->apiUrl.'HomeDelivery/GetShippingOrders';
         $response = json_decode($this->sendRequest($requestData, $url), true);
@@ -57,12 +55,10 @@ class YahooService {
         foreach ($yahooIdsArray as $yahooIds) {
             $request = [];
             $stocks = $this->getStock($yahooIds);
-            dump($stocks);
             foreach ($stocks as $product) {
                 $data = $productModels->first(function ($item, $key) use ($product){
                     return $item->yahoo_id == $product['ProductId'];
                 });
-                dump($data);
                 if(!isset($data)) continue;
                 $qty = ($data->stock >= 0) ? $qty = $data->stock - $product['Qty'] : 0 - $product['Qty'];
                 $request[] = [

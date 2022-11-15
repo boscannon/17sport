@@ -19,11 +19,13 @@ class MomoService {
         $this->curl = $curl;
     }
 
-    public function getOrders() {
+    public function getOrders($st = '', $et = '') {
+        $startTime = ($st == '') ? $startTime = date('Y/m/d') : $startTime = date('Y/m/d', strtotime($st));
+        $endTime = ($et == '') ? $endTime = date('Y/m/d') : $endTime = date('Y/m/d', strtotime($et));
         $requestData = json_encode([
             'loginInfo' => $this->loginInfo,
-            'fromDate' => date('Y/m/d'),
-            'toDate' => date('Y/m/d'),
+            'fromDate' => $startTime,
+            'toDate' => $endTime,
             'delyGbType' => '1',
             'sendRecoverType' => '1'
         ]);
@@ -52,13 +54,11 @@ class MomoService {
                 'sendInfoList' => []
             ];
             $stocks = $this->getStock($momoIds);
-            dump($stocks);
             foreach ($stocks as $product) {
                 $data = $productModels->first(function ($item, $key) use ($product){
                     return $item->momo_id == $product['goods_code'] &&
                             $item->momo_dt_code == $product['goodsdt_code'];
                 });
-                dump($data);
                 if(!isset($data)) continue;
                 $qty = ($data->stock >= 0) ? $qty = $data->stock - $product['order_counsel_qty'] : 0 - $product['order_counsel_qty'];
                 $request['sendInfoList'][] = [
@@ -70,7 +70,6 @@ class MomoService {
                     'addReduceQty' => $qty
                 ];
             }
-            dump($request);
             $response = $this->sendRequest(json_encode($request), $url);
             $this->_msg($response);
         }

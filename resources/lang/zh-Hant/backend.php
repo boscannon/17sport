@@ -59,7 +59,7 @@ return [
     'email' => 'email',
     'emergency_contact' => '緊急聯絡人',
     'emergency_contact_phone' => '緊急聯絡人電話',
-    'remark' => '備註'
+    'remark' => '備註',
   ],
   'products' => [
     'barcode' => '國際條碼',
@@ -110,5 +110,8 @@ return [
     'barcode' => '國際條碼',
     'name' => '商品名稱',
     'amount' => '數量',
+    'stock_detail_count' => '匹配',
+    'not_match' => '未匹配',
+    'match' => '匹配',    
   ]
 ];

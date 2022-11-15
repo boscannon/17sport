@@ -26,15 +26,18 @@ $(function() {
         responsive: true,
         scrollX: true,
         ajax: path,
-        order: [[4, 'desc']],
+        order: [[4, 'desc'],[13, 'desc']],
         columns: [
             { className: 'dt-control', bSearchable: false, orderable: false, data: null, defaultContent: '' },
             { data: 'null', title: '#', bSearchable: false, bSortable: false, render: function ( data, type, row , meta ) {
                 return  meta.row + 1;
             }},
-            
             { data: 'no', title: '{{ __("backend.$routeNameData.no") }}' },   
             { data: 'source', title: '{{ __("backend.$routeNameData.source") }}' },
+            { data: 'stock_detail_count', title: '{{ __("backend.$routeNameData.stock_detail_count") }}', bSortable: false, render: function ( data, type, row , meta ) {
+                return  `${ data == 0 ? '<span class="badge badge-danger">{{ __("backend.$routeNameData.not_match") }}</span>' : 
+                '<span class="badge badge-danger">{{ __("backend.$routeNameData.match") }}' }</span>`;
+            }},
             { data: 'date', title: '{{ __("backend.$routeNameData.date") }}' },   
             { data: 'recipient_name', title: '{{ __("backend.$routeNameData.recipient_name") }}' },   
             { data: 'recipient_phone', title: '{{ __("backend.$routeNameData.recipient_phone") }}' },   

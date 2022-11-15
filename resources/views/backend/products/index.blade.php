@@ -77,7 +77,7 @@ $(function() {
         },   
         success: function(data) {
             Swal.fire({ text: data.message, icon: 'success' }).then(function() {
-                location.href = path;
+                table.ajax.reload(null, false);
             });
         },
         complete: function() {

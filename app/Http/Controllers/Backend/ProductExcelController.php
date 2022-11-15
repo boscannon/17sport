@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Product as crudModel;
 use DataTables;
 use Exception;
+use Log;
 
 use App\Imports\ProductExcelImport;
 use Maatwebsite\Excel\Facades\Excel;
@@ -17,7 +18,7 @@ class ProductExcelController extends Controller
         $this->name = 'products';
         $this->view = 'backend.'.$this->name;
         $this->rules = [
-            'file' => ['required', 'file'],         
+            'file' => ['required', 'file', 'mimes:xls,xlsx,csv'],
         ];
         $this->messages = [];
         $this->attributes = __("backend.{$this->name}");
@@ -45,6 +46,7 @@ class ProductExcelController extends Controller
             Excel::import($import, $validatedData['file']);
 
             $ignore = $import->ignore;
+            Log::error($ignore);
         
             return response()->json(['message' => __('import').__('success'), 'ignore' => $ignore]);
         } catch (Exception $e) {

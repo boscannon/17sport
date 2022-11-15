@@ -18,6 +18,8 @@ class ProductExcelImport implements ToCollection
         {
             try{
                 if($key == 0) continue;
+
+                if($row[3] == '') throw new Exception(__('not_barcode'));
                 
                 $product = Product::updateOrCreate([
                     'barcode' => $row[3],
@@ -38,7 +40,10 @@ class ProductExcelImport implements ToCollection
                 ]);
             
             } catch (Exception $e) {
-                $this->ignore[] = $key + 1; //行數
+                $this->ignore[] = [
+                    'line' => $key + 1, //行數
+                    'message' => $e->getMessage()
+                ];
             }
         }        
     }

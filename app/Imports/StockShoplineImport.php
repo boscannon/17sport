@@ -5,34 +5,46 @@ namespace App\Imports;
 use App\Models\Product;
 use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\ToCollection;
+use Exception;
+use DB;
 
 class StockShoplineImport implements ToCollection
 {
-
+    public $ignore = [];
 
     public function collection(Collection $rows)
     {
         foreach ($rows as $key => $row) 
         {
-            if($key == 0) continue;
+            try{
+                if($key == 0) continue;
 
-            $product = Product::updateOrCreate([
-                'barcode' => $row[5],
-            ],[
-                'name' => $row[0],
-                'attribute' => $row[1],
-                'price' => $row[6] ?? 0,
-                'stock' => $row[17] == '無限數量' ? 99999 : $row[17], 
-            ]);
+                if($row[5] == '') throw new Exception(__('not_barcode'));
 
-            $product->stockDetail()->create([
-                'source' => 'excel',
-                'name' => $product->name,
-                'type' => $product->type,
-                'size' => $product->size,
-                'amount' => $product->stock,
-                'stock' => $product->stock,
-            ]);
+                $product = Product::updateOrCreate([
+                    'barcode' => $row[5],
+                ],[
+                    'name' => $row[0],
+                    'attribute' => $row[1],
+                    'price' => $row[6] ?? 0,
+                    'stock' => $row[17] == '無限數量' ? 99999 : $row[17], 
+                ]);
+
+                $product->stockDetail()->create([
+                    'source' => 'excel',
+                    'name' => $product->name,
+                    'type' => $product->type,
+                    'size' => $product->size,
+                    'amount' => $product->stock,
+                    'stock' => $product->stock,
+                ]);
+
+            } catch (Exception $e) {
+                $this->ignore[] = [
+                    'line' => $key + 1, //行數
+                    'message' => $e->getMessage()
+                ];
+            }                
         }
     }
 }

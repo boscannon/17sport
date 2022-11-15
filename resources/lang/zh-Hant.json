@@ -46,5 +46,6 @@
   "status": "狀態",
   "image": "圖片",
   "pdf": "pdf",
+  "not_barcode": "未有國際條碼",
   "language_id": "語系"
 }

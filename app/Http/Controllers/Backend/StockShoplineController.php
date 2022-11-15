@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Product as crudModel;
 use DataTables;
 use Exception;
+use Log;
 use DB;
 
 use App\Imports\StockShoplineImport;
@@ -20,7 +21,7 @@ class StockShoplineController extends Controller
         $this->name = 'stock_details';
         $this->view = 'backend.'.$this->name;
         $this->rules = [
-            'file' => ['required', 'file'],         
+            'file' => ['required', 'file', 'mimes:xls,xlsx,csv'],
         ];
         $this->messages = [];
         $this->attributes = __("backend.{$this->name}");
@@ -40,14 +41,17 @@ class StockShoplineController extends Controller
 
         try{
             DB::beginTransaction();
-            
             //更新商品 跟 新增庫存明細
-            Excel::import(new StockShoplineImport, $validatedData['file']);
+            $import = new StockShoplineImport;
+            Excel::import($import, $validatedData['file']);
+
+            $ignore = $import->ignore;
+            Log::error($ignore);
+
+            DB::commit();
             //更新平台庫存
             $this->UpdateOrdersStock->updateStock();
-        
-            DB::commit();
-            return response()->json(['message' => __('import').__('success')]);
+            return response()->json(['message' => __('import').__('success'), 'ignore' => $ignore]);
         } catch (Exception $e) {
             DB::rollBack();
             return response()->json(['message' => $e->getMessage()],422);

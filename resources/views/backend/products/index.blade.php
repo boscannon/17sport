@@ -10,7 +10,7 @@
             <div class="form-row mr-5">
                 <div class="form-group col-md-4">
                     <div class="custom-file">
-                        <input type="file" required class="custom-file-input" id="example-file-input-custom" name="file" data-toggle="custom-file-input">
+                        <input type="file" required class="custom-file-input" id="example-file-input-custom" name="file" data-toggle="custom-file-input" accept=".xlsx, .xls, .csv">
                         <label class="custom-file-label" for="example-file-input-custom">{{ __('Choose file') }}</label>
                     </div>
                 </div>
@@ -19,6 +19,9 @@
                     <a href="{{ route('backend.products_excel.index') }}" target="_blank" class="btn btn-info"><i class="fa fa-download mr-5"></i>{{ __("backend.$routeNameData.ecxel_download") }}</a>                
                 </div>
             </div>
+            <div class="spinner-border text-primary upload-loading" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>             
         </form>               
     </div>
 </div>
@@ -65,20 +68,23 @@ $(function() {
         ]
     });
 
-    var formCreate = $('#form-create'); 
+    var formCreate = $('#form-create');    
+    formCreate.find('.spinner-border').hide();
     formCreate.ajaxForm({
         beforeSubmit: function(arr, $form, options) {                        
             formCreate.find('button[type=submit]').attr('disabled',true);
-        },      
+            formCreate.find('.spinner-border').show();
+        },   
         success: function(data) {
             Swal.fire({ text: data.message, icon: 'success' }).then(function() {
-                location.href = path;
+                table.ajax.reload(null, false);
             });
         },
         complete: function() {
             formCreate.find('button[type=submit]').attr('disabled',false);
+            formCreate.find('.spinner-border').hide();
         }
-    });    
+    }); 
 
     tableList.on('click','.css-switch input[type="checkbox"]',function(){
         var id = $(this).data('id');

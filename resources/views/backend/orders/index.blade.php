@@ -64,7 +64,7 @@ $(function() {
                 if(typeof(data.Products) == "undefined") {
                     return '';
                 }else {
-                    if(data.source == 'yahoo') {
+                    if(row.source == 'yahoo') {
                         return `<pre style="margin: 0">${ data.Products.map((item) => item.Name).join("\n") }</pre>`;
                     }else {
                         return `<pre style="margin: 0">${ data.GOODS_NAME }</pre>`;

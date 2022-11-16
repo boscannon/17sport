@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Product extends Model
 {
     use \App\Traits\ObserverTrait;
-
+    use \App\Traits\HasDateTimeFormatter;
     use HasFactory;
 
     protected $fillable = [        

@@ -14,6 +14,7 @@ use App\Notifications\ResetPasswordNotification;
 class Member extends Authenticatable
 {
     use \App\Traits\ObserverTrait;
+    use \App\Traits\HasDateTimeFormatter;
     use HasApiTokens;
     use HasFactory;
     use HasProfilePhoto;

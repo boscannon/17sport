@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Audit extends Model
 {
     use HasFactory;
+    use \App\Traits\HasDateTimeFormatter;
 
     protected $fillable = [
         'user_id',

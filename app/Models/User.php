@@ -14,7 +14,7 @@ use Spatie\Permission\Traits\HasRoles;
 class User extends Authenticatable
 {
     use \App\Traits\ObserverTrait;
-
+    use \App\Traits\HasDateTimeFormatter;
     use HasApiTokens;
     use HasFactory;
     use HasProfilePhoto;

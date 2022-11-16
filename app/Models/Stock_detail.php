@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Stock_detail extends Model
 {
     use HasFactory;
+    use \App\Traits\HasDateTimeFormatter;
 
     protected $fillable = [
         'product_id',

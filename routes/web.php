@@ -14,7 +14,11 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-  return 123;
+  return redirect()->route("backend.login");
+});
+
+Route::get('/login', function () {
+  abort(404);
 });
 
 Route::get('/dashboard', function () {

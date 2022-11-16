@@ -76,7 +76,7 @@ $(function() {
                 d['product_id[]'] = $("#form-search select[name='product_id[]']").val();
             }
         },
-        order: [[9, 'desc']],
+        order: [[11, 'desc']],
         columns: [
             { data: 'null', title: '#', bSearchable: false, bSortable: false, render: function ( data, type, row , meta ) {
                 return  meta.row + 1;
@@ -84,6 +84,8 @@ $(function() {
             { data: 'source', title: '{{ __("backend.$routeNameData.source") }}' },
             { data: 'order.no', title: '{{ __("backend.$routeNameData.no") }}', defaultContent: '' },   
             { data: 'product.barcode', title: '{{ __("backend.$routeNameData.barcode") }}', defaultContent: '' },   
+            { data: 'product.yahoo_id', title: '{{ __("backend.$routeNameData.yahoo_id") }}', defaultContent: '' },
+            { data: 'product.momo_id', title: '{{ __("backend.$routeNameData.momo_id") }}', defaultContent: '' },
             { data: 'name', title: '{{ __("backend.$routeNameData.name") }}' },   
             { data: 'type', title: '{{ __("backend.$routeNameData.type") }}' },   
             { data: 'size', title: '{{ __("backend.$routeNameData.size") }}' },   

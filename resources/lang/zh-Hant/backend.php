@@ -95,6 +95,8 @@ return [
     'shopline_excel' => 'shopline excel',
     "file" => "檔案",
     "bulk_add_info" => "注意！國際條碼重複會進行覆蓋",
+    'yahoo_id' => 'yahoo 編號',
+    'momo_id' => 'momo 編號',
   ],
   'orders' => [
     'no' => '編號',

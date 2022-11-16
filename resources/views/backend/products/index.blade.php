@@ -51,7 +51,7 @@ $(function() {
         responsive: true,
         scrollX: true,
         ajax: path,
-        order: [[7, 'desc']],
+        order: [[8, 'desc']],
         columns: [
             { data: 'null', title: '#', bSearchable: false, bSortable: false, render: function ( data, type, row , meta ) {
                 return  meta.row + 1;
@@ -59,8 +59,9 @@ $(function() {
             { data: 'barcode', title: '{{ __("backend.$routeNameData.barcode") }}' },
             { data: 'yahoo_id', title: '{{ __("backend.$routeNameData.yahoo_id") }}' },
             { data: 'momo_id', title: '{{ __("backend.$routeNameData.momo_id") }}' },
-            { data: 'name', title: '{{ __("backend.$routeNameData.name") }}' },   
-            { data: 'stock', title: '{{ __("backend.$routeNameData.stock") }}' },   
+            { data: 'name', title: '{{ __("backend.$routeNameData.name") }}' },
+            { data: 'size', title: '{{ __("backend.$routeNameData.size") }}' },
+            { data: 'stock', title: '{{ __("backend.$routeNameData.stock") }}' },
             { data: 'created_at', title: '{{ __('created_at') }}' },
             { data: 'updated_at', title: '{{ __('updated_at') }}' },
             { data: 'id', title: '{{ __('option') }}', bSortable: false, render:function(data,type,row) {

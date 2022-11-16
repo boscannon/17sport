@@ -29,7 +29,7 @@ class StockDetailController extends Controller
                 $tmp = explode(" to ", $request->dateRange);
                 $start = $tmp[0];                
                 $end = isset($tmp[1]) ? $tmp[1] : $start;                
-                $data->whereBetween('created_at', [$start, $end]);
+                $data->whereBetween('created_at', ["$start 00:00:00", "$end 23:59:59"]);
             }
             
             if($request->product_id){

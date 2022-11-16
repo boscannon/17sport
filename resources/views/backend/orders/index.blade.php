@@ -60,11 +60,15 @@ $(function() {
                 '<span class="badge badge-success">{{ __("backend.$routeNameData.match") }}' }</span>`;
             }},
             { data: 'date', title: '{{ __("backend.$routeNameData.date") }}' },
-            { data: 'json.Products', title: '{{ __("backend.$routeNameData.name") }}', defaultContent: '', render: function ( data, type, row , meta ) {
-                if(typeof(data) == "undefined") {
+            { data: 'json', title: '{{ __("backend.$routeNameData.name") }}', defaultContent: '', render: function ( data, type, row , meta ) {
+                if(typeof(data.Products) == "undefined") {
                     return '';
                 }else {
-                    return `<pre style="margin: 0">${ data.map((item) => item.Name).join("\n") }</pre>`;
+                    if(data.source == 'yahoo') {
+                        return `<pre style="margin: 0">${ data.Products.map((item) => item.Name).join("\n") }</pre>`;
+                    }else {
+                        return `<pre style="margin: 0">${ data.GOODS_NAME }</pre>`;
+                    }
                 }
             } },
             { data: 'date', title: '{{ __("backend.$routeNameData.date") }}' },

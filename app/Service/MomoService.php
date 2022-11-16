@@ -22,7 +22,6 @@ class MomoService {
     }
 
     public function getOrders($st = '', $et = '') {
-        dd($this->loginInfo);
         $startTime = ($st == '') ? $startTime = date('Y/m/d') : $startTime = date('Y/m/d', strtotime($st));
         $endTime = ($et == '') ? $endTime = date('Y/m/d') : $endTime = date('Y/m/d', strtotime($et));
         $requestData = json_encode([

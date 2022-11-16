@@ -23,6 +23,12 @@ class OrderController extends Controller
         $this->authorize('read '.$this->name);
         if ($request->ajax()) {
             $data = CrudModel::with(['stockDetail', 'stockDetail.product'])->withCount('stockDetail');
+            if($request->dateRange){ 
+                $tmp = explode(" to ", $request->dateRange);
+                $start = $tmp[0];
+                $end = isset($tmp[1]) ? $tmp[1] : $start;
+                $data->whereBetween('date', ["$start 00:00:00", "$end 23:59:59"]);
+            }
             return Datatables::eloquent($data)
                 ->make(true);
         }

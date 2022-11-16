@@ -13,7 +13,7 @@
     <!-- Sidebar Content -->
     <div class="sidebar-content">
         <!-- Side Header -->
-        <div class="content-header content-header-fullrow px-15">
+        <div class="content-header content-header-fullrow px-15" style="background: url('{{ asset('/image/logo.png') }}') no-repeat center center; background-size: 230px auto">
             <!-- Mini Mode -->
             <div class="content-header-section sidebar-mini-visible-b">
                 <!-- Logo -->
@@ -35,10 +35,10 @@
 
                 <!-- Logo -->
                 <div class="content-header-item">
-                    <a class="link-effect font-w700" href="/">
+                    {{-- <a class="link-effect font-w700" href="/">
                         <i class="si si-fire text-primary"></i>
                         <span class="font-size-xl text-dual-primary-dark">code</span><span class="font-size-xl text-primary">base</span>
-                    </a>
+                    </a> --}}
                 </div>
                 <!-- END Logo -->
             </div>

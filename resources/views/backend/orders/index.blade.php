@@ -3,6 +3,22 @@
 @section('content')
 <div class="block">
     <div class="block-header block-header-default">
+        <h3 class="block-title">{{ __("search") }}</h3>
+    </div>
+    <div class="block-content block-content-full">
+        <form id="form-search" onsubmit="return false">
+            <div class="form-row mr-5">
+                <div class="form-group col-md-4">
+                    <label for="example-flatpickr-range">{{ __("date_range") }}</label>
+                    <input type="text" name="dateRange" class="js-flatpickr form-control bg-white" id="example-flatpickr-range" name="example-flatpickr-range" placeholder="Select Date Range" data-mode="range">
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary mr-2">{{ __('search') }}</button>
+        </form>
+    </div>
+</div>
+<div class="block">
+    <div class="block-header block-header-default">
         <h3 class="block-title">{{ __('list') }}</h3>
     </div>
     <div class="block-content block-content-full">
@@ -25,8 +41,13 @@ $(function() {
         serverSide: true,
         responsive: true,
         scrollX: true,
-        ajax: path,
-        order: [[4, 'asc'],[13, 'desc']],
+        ajax: {
+            url: path,
+            data: function ( d ) {
+                d.dateRange = $("#form-search input[name=dateRange]").val();
+            }
+        },
+        order: [[4, 'asc'],[5, 'asc']],
         columns: [
             { className: 'dt-control', bSearchable: false, orderable: false, data: null, defaultContent: '' },
             { data: 'null', title: '#', bSearchable: false, bSortable: false, render: function ( data, type, row , meta ) {
@@ -38,7 +59,11 @@ $(function() {
                 return  `${ data == 0 ? '<span class="badge badge-danger">{{ __("backend.$routeNameData.not_match") }}</span>' : 
                 '<span class="badge badge-success">{{ __("backend.$routeNameData.match") }}' }</span>`;
             }},
-            { data: 'date', title: '{{ __("backend.$routeNameData.date") }}' },   
+            { data: 'date', title: '{{ __("backend.$routeNameData.date") }}' },
+            { data: 'json.Products', title: '{{ __("backend.$routeNameData.name") }}', defaultContent: '', render: function ( data, type, row , meta ) {
+                return `<pre style="margin: 0">${ data.map((item) => item.Name).join("\n") }</pre>`;
+            } },
+            { data: 'date', title: '{{ __("backend.$routeNameData.date") }}' },
             { data: 'recipient_name', title: '{{ __("backend.$routeNameData.recipient_name") }}' },   
             { data: 'recipient_phone', title: '{{ __("backend.$routeNameData.recipient_phone") }}' },   
             { data: 'recipient_cellphone', title: '{{ __("backend.$routeNameData.recipient_cellphone") }}' },   
@@ -63,6 +88,10 @@ $(function() {
             tr.addClass('shown');
         }
     });
+
+    $('#form-search').submit(function(){
+        table.draw();
+    })
 
     function format(d) {        
         return (

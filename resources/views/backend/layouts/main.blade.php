@@ -4,9 +4,9 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
 
-        <title>Codebase - Bootstrap 4 Admin Template &amp; UI Framework</title>
+        <title>{{ config('app.name', 'Laravel') }}</title>
 
-        <meta name="description" content="Codebase - Bootstrap 4 Admin Template &amp; UI Framework created by pixelcave and published on Themeforest">
+        <meta name="description" content="{{ config('app.name', 'Laravel') }}">
         <meta name="author" content="pixelcave">
         <meta name="robots" content="noindex, nofollow">
 
@@ -14,9 +14,9 @@
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
         <!-- Icons -->
-        <link rel="shortcut icon" href="{{ asset('media/favicons/favicon.png') }}">
-        <link rel="icon" sizes="192x192" type="image/png" href="{{ asset('media/favicons/favicon-192x192.png') }}">
-        <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('media/favicons/apple-touch-icon-180x180.png') }}">
+        <link rel="shortcut icon" href="{{ asset('media/favicons/favicon.png?v=1') }}">
+        <link rel="icon" sizes="192x192" type="image/png" href="{{ asset('media/favicons/favicon-192x192.png?v=1') }}">
+        <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('media/favicons/apple-touch-icon-180x180.png?v=1') }}">
 
         <!-- Fonts and Styles -->
         @yield('css_before')
@@ -315,10 +315,10 @@
             <footer id="page-footer">
                 <div class="content py-20 font-size-sm clearfix">
                     <div class="float-right">
-                        Crafted with <i class="fa fa-heart text-pulse"></i> by <a class="font-w600" href="https://1.envato.market/ydb" target="_blank">pixelcave</a>
+                        {{-- Crafted with <i class="fa fa-heart text-pulse"></i> by <a class="font-w600" href="https://1.envato.market/ydb" target="_blank">pixelcave</a> --}}
                     </div>
                     <div class="float-left">
-                        <a class="font-w600" href="https://1.envato.market/95j" target="_blank">Codebase</a> &copy; <span class="js-year-copy"></span>
+                        <a class="font-w600" href="/">億起運動</a> &copy; <span class="js-year-copy"></span>
                     </div>
                 </div>
             </footer>

@@ -183,7 +183,9 @@ class ProductController extends Controller
         $this->authorize('read '.$this->name);
         if ($request->ajax()) {
             $data = CrudModel::where('name', 'like', "%{$request->search}%")
-                ->where('barcode', 'like', "%{$request->search}%")
+                ->orwhere('barcode', 'like', "%{$request->search}%")
+                ->orwhere('yahoo_id', 'like', "%{$request->search}%")
+                ->orwhere('momo_id', 'like', "%{$request->search}%")
                 ->select(['id', 'name', 'barcode'])
                 ->limit(200)
                 ->get();

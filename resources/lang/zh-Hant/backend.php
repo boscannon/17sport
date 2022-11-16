@@ -4,6 +4,7 @@ return [
   'menu' => [
     'users'=> '管理員',
     'users_setting'=> '管理員設定',
+    'system_settings'=> '系統設定',
     'roles'=> '角色',
     'basic'=> '基本資料',
     'departments'=> '部門管理',
@@ -24,6 +25,11 @@ return [
     'created' => '「:name」 => [:new]',
     'updated' => '「:name」 => [:new]',
     'deleted' => '「:name」 => [:old]',
+  ],
+  'system_settings' => [
+    'key' => '鍵值',
+    'value' => '內容',
+    'momo_password' => 'momo master密碼'
   ],
   'users' => [
     'name' => '名稱',

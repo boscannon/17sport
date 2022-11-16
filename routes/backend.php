@@ -50,6 +50,8 @@ Route::group(['as' => 'backend.', 'prefix' => 'backend'],function () {
         Route::resource('/departments', Controllers\Backend\DepartmentController::class);
         //人員
         Route::resource('/staff', Controllers\Backend\StaffController::class);
+        //系統設定
+        Route::resource('/system_settings', Controllers\Backend\SystemSettingController::class)->only(['index', 'update']);
 
         Route::group(['prefix' => 'test'],function () {
             Route::resource('/template', Controllers\Backend\TemplateController::class);

@@ -4,12 +4,13 @@ namespace App\Service;
 
 use App\Library\Curl;
 use App\Models\Product;
+use App\Models\System_setting;
 
 class MomoService {
     protected $loginInfo = [
         'entpID' => '81069886',
         'entpCode' => '019858',
-        'entpPwd' => 'tmc100201',
+        'entpPwd' => '',
         'otpBackNo' => '896',
     ];
     protected $apiUrl = "https://scmapi.momoshop.com.tw/";
@@ -17,9 +18,11 @@ class MomoService {
 
     public function __construct(Curl $curl) {
         $this->curl = $curl;
+        $this->loginInfo['entpPwd'] = System_setting::where('key', 'momo_password')->first()->value;
     }
 
     public function getOrders($st = '', $et = '') {
+        dd($this->loginInfo);
         $startTime = ($st == '') ? $startTime = date('Y/m/d') : $startTime = date('Y/m/d', strtotime($st));
         $endTime = ($et == '') ? $endTime = date('Y/m/d') : $endTime = date('Y/m/d', strtotime($et));
         $requestData = json_encode([

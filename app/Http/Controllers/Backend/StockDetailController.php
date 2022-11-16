@@ -25,8 +25,11 @@ class StockDetailController extends Controller
         if ($request->ajax()) {
             $data = CrudModel::with(['order', 'product']);
 
-            if($request->dateRange){                
-                $data->whereBetween('created_at', explode(" to ", $request->dateRange));
+            if($request->dateRange){ 
+                $tmp = explode(" to ", $request->dateRange);
+                $start = $tmp[0];                
+                $end = isset($tmp[1]) ? $tmp[1] : $start;                
+                $data->whereBetween('created_at', [$start, $end]);
             }
             
             if($request->product_id){

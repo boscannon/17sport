@@ -61,7 +61,11 @@ $(function() {
             }},
             { data: 'date', title: '{{ __("backend.$routeNameData.date") }}' },
             { data: 'json.Products', title: '{{ __("backend.$routeNameData.name") }}', defaultContent: '', render: function ( data, type, row , meta ) {
-                return `<pre style="margin: 0">${ data.map((item) => item.Name).join("\n") }</pre>`;
+                if(typeof(data) == "undefined") {
+                    return '';
+                }else {
+                    return `<pre style="margin: 0">${ data.map((item) => item.Name).join("\n") }</pre>`;
+                }
             } },
             { data: 'date', title: '{{ __("backend.$routeNameData.date") }}' },
             { data: 'recipient_name', title: '{{ __("backend.$routeNameData.recipient_name") }}' },   

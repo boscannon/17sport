@@ -97,15 +97,15 @@ $(function() {
         return (
             `<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px; width: 100%">
                 <tr>
-                    <th>{{ __("backend.$routeNameData.barcode") }}</th>
-                    <th>{{ __("backend.$routeNameData.amount") }}</th>
+                    <th style="width: 10%;">{{ __("backend.$routeNameData.barcode") }}</th>
+                    <th style="width: 5%;">{{ __("backend.$routeNameData.amount") }}</th>
                     <th>{{ __("backend.$routeNameData.name") }}</th>
                 </tr>
                 ${
                     d.stock_detail && d.stock_detail.map(item => `
                         <tr>
-                            <td style="width: 10%;">${ _.get(item, 'product.barcode', '') }</td>
-                            <td style="width: 5%;">${ _.get(item, 'amount', '') }</td>
+                            <td>${ _.get(item, 'product.barcode', '') }</td>
+                            <td>${ _.get(item, 'amount', '') }</td>
                             <td>${ _.get(item, 'name', '') }</td>
                         </tr>
                     `).join("\n") || '<tr><td>{{ __("not_data") }}</td></tr>'

@@ -106,7 +106,7 @@ $(function() {
                         <tr>
                             <td>${ _.get(item, 'product.barcode', '') }</td>
                             <td>${ _.get(item, 'amount', '') }</td>
-                            <td>${ _.get(item, 'product.name', '') }</td>
+                            <td>${ _.get(item, 'name', '') }</td>
                         </tr>
                     `).join("\n") || '<tr><td>{{ __("not_data") }}</td></tr>'
                 }

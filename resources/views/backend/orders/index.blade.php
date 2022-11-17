@@ -104,8 +104,8 @@ $(function() {
                 ${
                     d.stock_detail && d.stock_detail.map(item => `
                         <tr>
-                            <td>${ _.get(item, 'product.barcode', '') }</td>
-                            <td>${ _.get(item, 'amount', '') }</td>
+                            <td style="width: 10%;">${ _.get(item, 'product.barcode', '') }</td>
+                            <td style="width: 5%;">${ _.get(item, 'amount', '') }</td>
                             <td>${ _.get(item, 'name', '') }</td>
                         </tr>
                     `).join("\n") || '<tr><td>{{ __("not_data") }}</td></tr>'

@@ -36,7 +36,7 @@ $(function() {
     var path = '{{ route('backend.'.$routeNameData.'.index') }}';
     var tableList = $('#data-table');
     var formCreate = $('#form-create');
-    var table = tableList.DataTable({      
+    var table = tableList.DataTable({
         processing: true,
         serverSide: true,
         responsive: true,
@@ -61,34 +61,7 @@ $(function() {
             }},
             { data: 'date', title: '{{ __("backend.$routeNameData.date") }}' },
             { data: 'stock_detail', title: '{{ __("backend.$routeNameData.name") }}', defaultContent: '', render: function ( data, type, row , meta ) {
-                // if(typeof(data) != "undefined") {
-                    return `<pre style="margin: 0">${ data.map((item) => item.product.name).join("\n") }</pre>`;
-                // }else {
-                //     return '';
-                // }
-
-                // if(row.source == 'yahoo') {
-                //     if(typeof(data.Products) != "undefined") {
-                //         return `<pre style="margin: 0">${ data.Products.map((item) => item.Name).join("\n") }</pre>`;
-                //     }else {
-                //         return '';
-                //     }
-                // }else if(row.source == 'momo') {
-                //     return `<pre style="margin: 0">${ data.GOODS_NAME }</pre>`;
-                // }else {
-                //     return '';
-                // }
-
-
-                // if(typeof(data.Products) == "undefined") {
-                //     return '';
-                // }else {
-                //     if(row.source == 'yahoo') {
-                //         return `<pre style="margin: 0">${ data.Products.map((item) => item.Name).join("\n") }</pre>`;
-                //     }else {
-                //         return `<pre style="margin: 0">${ data.GOODS_NAME }</pre>`;
-                //     }
-                // }
+                return `<pre style="margin: 0">${ data.map((item) => item.product.name).join("\n") }</pre>`;
             } },
             { data: 'date', title: '{{ __("backend.$routeNameData.date") }}' },
             { data: 'recipient_name', title: '{{ __("backend.$routeNameData.recipient_name") }}' },   
@@ -106,8 +79,8 @@ $(function() {
     tableList.on('click', 'td.dt-control', function () {
         var tr = $(this).closest('tr');
         var row = table.row(tr);
- 
-        if (row.child.isShown()) {            
+
+        if (row.child.isShown()) {
             row.child.hide();
             tr.removeClass('shown');
         } else {
@@ -120,25 +93,25 @@ $(function() {
         table.draw();
     })
 
-    function format(d) {        
+    function format(d) {
         return (
             `<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px; width: 100%">
                 <tr>
                     <th>{{ __("backend.$routeNameData.barcode") }}</th>
                     <th>{{ __("backend.$routeNameData.amount") }}</th>
-                    <th>{{ __("backend.$routeNameData.name") }}</th>           
+                    <th>{{ __("backend.$routeNameData.name") }}</th>
                 </tr>
                 ${
                     d.stock_detail && d.stock_detail.map(item => `
                         <tr>
                             <td>${ _.get(item, 'product.barcode', '') }</td>
                             <td>${ _.get(item, 'amount', '') }</td>
-                            <td>${ _.get(item, 'name', '') }</td>
+                            <td>${ _.get(item, 'product.name', '') }</td>
                         </tr>
                     `).join("\n") || '<tr><td>{{ __("not_data") }}</td></tr>'
                 }
             </table>`
-        );         
+        );
     }
 });
 </script>

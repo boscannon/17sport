@@ -28,7 +28,7 @@
 
             <div class="mt-4">
                 <x-jet-label for="captcha" value="{{ __('captcha') }}" />
-                <div class="input-group efew1">
+                <div class="input-group">
                     <x-jet-input id="captcha" class="block mt-1 w-full form-control" type="text" name="captcha" required autofocus />
                     <div class="input-group-append mt-1">
                         <img src="{{ captcha_src() }}" onclick="this.src = '/captcha/default?' + Math.random()" style="cursor:pointer">

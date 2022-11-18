@@ -31,6 +31,7 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
+        'avatar',
         'email',
         'password',
         'status',
@@ -57,6 +58,7 @@ class User extends Authenticatable
      */
     protected $casts = [
         'status' => 'integer',
+        'avatar' => 'string',
         'staff_id' => 'integer',
         'email_verified_at' => 'datetime',
         'created_at' => 'datetime:Y-m-d H:i:s',

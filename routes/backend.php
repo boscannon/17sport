@@ -31,6 +31,7 @@ Route::group(['as' => 'backend.', 'prefix' => 'backend'],function () {
         Route::get('/dashboard', [Controllers\Backend\DashboardController::class, 'index'])->name('dashboard');
         //修改密碼
         Route::resource('/edit_password', Controllers\Backend\AuthController::class);
+        Route::post('/avatar', [Controllers\Backend\AvatarController::class, 'store'])->name('avatar.store');
 
         //操作紀錄
         Route::resource('/audits', Controllers\Backend\AuditController::class);

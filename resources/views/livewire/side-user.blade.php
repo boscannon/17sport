@@ -7,9 +7,13 @@
 
     <!-- Visible only in normal mode -->
     <div class="sidebar-mini-hidden-b text-center">
-        <a class="img-link" href="javascript:void(0)">
-            <img class="img-avatar" src="{{ asset('media/avatars/avatar15.jpg') }}" alt="">
-        </a>
+        <div class="avatar-wrapper">
+            <img class="profile-pic" src="{{ Auth::user()->avatar ?? '' }}" />
+            <div class="upload-button">
+                <i class="fa fa-arrow-circle-up" aria-hidden="true"></i>
+            </div>
+            <input class="file-upload" type="file" accept="image/*"/>
+        </div>
         <ul class="list-inline mt-10">
             <li class="list-inline-item">
                 <a class="link-effect text-dual-primary-dark font-size-sm font-w600 text-uppercase" href="javascript:void(0)">{{ Auth::user()->name }}</a>

@@ -31,6 +31,7 @@
         <link rel="stylesheet" href="{{ asset('js/plugins/summernote/summernote-bs4.css') }}">        
         <link href="{{ asset('plugins/filepond/dist/filepond.css') }}" rel="stylesheet">
         <link href="{{ asset('plugins/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css') }}" rel="stylesheet">
+
         <link rel="stylesheet" href="{{ asset('/js/plugins/flatpickr/flatpickr.min.css') }}">
         <link rel="stylesheet" href="{{ asset('/js/plugins/jquery-datatables/datatables.min.css') }}">
 
@@ -334,11 +335,16 @@
         <script src="{{ asset('/js/plugins/select2/js/select2.full.min.js') }}"></script>
         <script src="{{ asset('/js/plugins/sweetalert2/sweetalert2.min.js') }}"></script>
         <script src="{{ asset('/js/plugins/magnific-popup/jquery.magnific-popup.min.js') }}"></script>
-        <script src="{{ asset('plugins/filepond/dist/filepond.js') }}"></script>
+        
         <script src="{{ asset('plugins/filepond-plugin-image-exif-orientation/dist/filepond-plugin-image-exif-orientation.js') }}"></script>
         <script src="{{ asset('plugins/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.js') }}"></script>
         <script src="{{ asset('plugins/filepond-plugin-file-validate-type/dist/filepond-plugin-file-validate-type.js') }}"></script>
         <script src="{{ asset('plugins/filepond-plugin-file-encode/dist/filepond-plugin-file-encode.js') }}"></script>
+
+        <script src="https://unpkg.com/filepond-plugin-image-transform/dist/filepond-plugin-image-transform.js"></script>
+        <script src="https://unpkg.com/filepond-plugin-image-edit/dist/filepond-plugin-image-edit.js"></script>
+
+        <script src="{{ asset('plugins/filepond/dist/filepond.js') }}"></script>
         <script src="{{ asset('/js/plugins/flatpickr/flatpickr.min.js') }}"></script>
         <script src="{{ asset('/js/plugins/jquery-datatables/datatables.min.js') }}"></script>        
         <script>
@@ -384,7 +390,7 @@
                     FilePondPluginImagePreview,
                     FilePondPluginImageExifOrientation,
                     FilePondPluginFileValidateType,
-                    FilePondPluginFileEncode
+                    FilePondPluginFileEncode,
                 );       
                 FilePond.setOptions({
                     allowPaste: false
@@ -443,6 +449,29 @@
                     }
                 })
 
+                var readURL = function(input) {
+                    if (input.files && input.files[0]) {
+                        var reader = new FileReader();
+
+                        reader.onload = function (e) {
+                            $('.profile-pic').attr('src', e.target.result);
+                            $.post('{{ route('backend.avatar.store') }}', { avatar: e.target.result }, function(data){
+                                Swal.fire({ text: data.message, icon: 'success' })
+                            })
+                        }
+                
+                        reader.readAsDataURL(input.files[0]);
+                        
+                    }
+                }
+            
+                $(".file-upload").on('change', function(){
+                    readURL(this);
+                });
+                
+                $(".upload-button").on('click', function() {
+                    $(".file-upload").click();
+                });
                 // chageLanguage(false);
             });
         </script>

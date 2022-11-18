@@ -26,6 +26,7 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')->hourly();
         $schedule->command('GetOrders')->everyTenMinutes();
+        Log::info('成功排程');
     }
 
     /**

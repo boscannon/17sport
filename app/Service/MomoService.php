@@ -90,7 +90,7 @@ class MomoService {
 
     public function orderFormat($order) {
         $data = [];
-        foreach ($order as $value) {
+        foreach ($order['dataList'] as $value) {
             $stock_detail = [];
             if($productModelDetail = $this->updateProduct($value, ['momo_id' => $value['goodsCode']])) {
                 $stock_detail[] = $productModelDetail;

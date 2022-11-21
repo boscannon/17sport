@@ -29,13 +29,13 @@ class YahooService {
     }
 
     public function getOrders($st = '', $et = '') {
-        $startTime = ($st == '') ? $startTime = date('Y-m-d\TH:i:s', strtotime('-10 min')) : $startTime = $st.'T00:00:00';
+        $startTime = ($st == '') ? $startTime = date('Y-m-d\TH:i:s', strtotime('-12 min')) : $startTime = $st.'T00:00:00';
         $endTime = ($et == '') ? $endTime = date('Y-m-d\TH:i:s') : $endTime = $et.'T23:59:59';
         $requestData = json_encode([
             'TransferDateStart' => $startTime,
             'TransferDateEnd' => $endTime,
         ]);
-        $url = $this->apiUrl.'HomeDelivery/GetShippingOrders';
+        $url = $this->apiUrl.'ThirdPartyDelivery/GetPreparingOrders';
         $response = json_decode($this->sendRequest($requestData, $url), true);
         return $response['Orders'];
     }

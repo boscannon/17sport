@@ -28,7 +28,7 @@ class MomoService {
         $requestData = json_encode([
             'doAction' => 'unsendThirdQuery',
             'loginInfo' => $this->loginInfo,
-            'sendInfoList' => [
+            'sendInfo' => [
                 'third_fr_dd' => $startTime,
                 'third_fr_hh' => '00',
                 'third_fr_mm' => '00',

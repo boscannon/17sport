@@ -33,9 +33,9 @@ class YahooService {
         $endTime = ($et == '') ? $endTime = date('Y-m-d\TH:i:s') : $endTime = $et.'T23:59:59';
         $requestData = json_encode([
             'TransferDateStart' => '2022-11-21T00:00:00',
-            'TransferDateEnd' => '2022-11-21T23:59:00',
+            'TransferDateEnd' => '2022-11-21T23:59:59',
         ]);
-        $url = $this->apiUrl.'ThirdPartyDelivery/GetPreparingOrders';
+        $url = $this->apiUrl.'HomeDelivery/GetPreparingOrders';
         $response = json_decode($this->sendRequest($requestData, $url), true);
         return $response['Orders'];
     }

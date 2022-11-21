@@ -99,7 +99,7 @@ class MomoService {
                 'no' => $value['completeOrderNo'],
                 'source' => 'momo',
                 'date' => $value['lastPricDate'],
-                'due_date' => $value['scmDelyDate'],
+                'due_date' => $value['delyHopeDate'],
                 'remark' => $value['scm_msg'],
                 'recipient_name' => $value['receiverMask'],
                 'purchaser_name' => $value['custNameMask'],

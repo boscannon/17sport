@@ -37,7 +37,11 @@ class MomoService {
                 'third_to_mm' => '59',
                 'third_orderGb' => '',
                 'third_delyGb' => '62',
-                'third_delyTemp' => '01'
+                'third_delyTemp' => '01',
+                'third_receiver' => '',
+                'third_goodsCode' => '',
+                'third_orderNo' => '',
+                'third_entpGoodsNo' => '',
             ],
         ]);
         $response = json_decode($this->sendRequest($requestData, $url), true);

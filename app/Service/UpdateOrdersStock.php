@@ -34,6 +34,7 @@ class UpdateOrdersStock {
             $createData = $platform->orderFormat($orders);
             foreach ($createData as $key => $value) {
                 $data = Order::firstOrCreate(['no' => $value['no']], $value);
+                dd($data);
                 $data->stockDetail()->createMany($value['stock_detail'] ?? []);
             }
 

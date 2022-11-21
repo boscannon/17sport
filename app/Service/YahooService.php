@@ -32,8 +32,8 @@ class YahooService {
         $startTime = ($st == '') ? $startTime = date('Y-m-d\TH:i:s', strtotime('-12 min')) : $startTime = $st.'T00:00:00';
         $endTime = ($et == '') ? $endTime = date('Y-m-d\TH:i:s') : $endTime = $et.'T23:59:59';
         $requestData = json_encode([
-            'TransferDateStart' => '2022-11-01T00:00:00',
-            'TransferDateEnd' => '2022-11-20T00:00:00',
+            'TransferDateStart' => '2022-11-21T00:00:00',
+            'TransferDateEnd' => '2022-11-21T23:59:00',
         ]);
         $url = $this->apiUrl.'ThirdPartyDelivery/GetPreparingOrders';
         $response = json_decode($this->sendRequest($requestData, $url), true);

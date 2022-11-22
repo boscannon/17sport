@@ -14,7 +14,7 @@ class UpdateUsers20221118Table extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->longtext('avatar')->comment('大頭貼')->after('name');
+            $table->longtext('avatar')->nullable()->comment('大頭貼')->after('name');
         });
     }
 

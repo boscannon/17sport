@@ -18,10 +18,10 @@ class MomoService {
 
     public function __construct(Curl $curl) {
         $this->curl = $curl;
-        $this->loginInfo['entpPwd'] = System_setting::where('key', 'momo_password')->first()->value;
     }
 
     public function getOrders($st = '', $et = '') {
+        $this->loginInfo['entpPwd'] = System_setting::where('key', 'momo_password')->first()->value;
         $startTime = ($st == '') ? $startTime = date('Y/m/d') : $startTime = date('Y/m/d', strtotime($st));
         $endTime = ($et == '') ? $endTime = date('Y/m/d') : $endTime = date('Y/m/d', strtotime($et));
         $url = $this->apiUrl.'OrderServlet.do';

@@ -118,6 +118,7 @@ return [
     'barcode' => '國際條碼',
     'name' => '商品名稱',
     'amount' => '數量',
+    'size' => '選項',
     'stock_detail_count' => '匹配',
     'not_match' => '未匹配',
     'match' => '匹配',    

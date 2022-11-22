@@ -63,12 +63,10 @@ $(function() {
             { data: 'stock_detail', title: '{{ __("backend.$routeNameData.name") }}', defaultContent: '', render: function ( data, type, row , meta ) {
                 return `<pre style="margin: 0">${ data.map((item) => item.product.name).join("\n") }</pre>`;
             } },
+            { data: 'stock_detail', title: '{{ __("backend.$routeNameData.size") }}', defaultContent: '', render: function ( data, type, row , meta ) {
+                return `<pre style="margin: 0">${ data.map((item) => item.product.size).join("\n") }</pre>`;
+            } },
             { data: 'date', title: '{{ __("backend.$routeNameData.date") }}' },
-            { data: 'recipient_name', title: '{{ __("backend.$routeNameData.recipient_name") }}' },   
-            { data: 'recipient_phone', title: '{{ __("backend.$routeNameData.recipient_phone") }}' },   
-            { data: 'recipient_cellphone', title: '{{ __("backend.$routeNameData.recipient_cellphone") }}' },   
-            { data: 'purchaser_name', title: '{{ __("backend.$routeNameData.purchaser_name") }}' },   
-            { data: 'purchaser_cellphone', title: '{{ __("backend.$routeNameData.purchaser_cellphone") }}' }, 
             { data: 'due_date', title: '{{ __("backend.$routeNameData.due_date") }}' }, 
             { data: 'remark', title: '{{ __("backend.$routeNameData.remark") }}' }, 
 

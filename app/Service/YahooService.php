@@ -29,13 +29,13 @@ class YahooService {
     }
 
     public function getOrders($st = '', $et = '') {
-        $startTime = ($st == '') ? $startTime = date('Y-m-d\TH:i:s', strtotime('-10 min')) : $startTime = $st.'T00:00:00';
+        $startTime = ($st == '') ? $startTime = date('Y-m-d\TH:i:s', strtotime('-12 min')) : $startTime = $st.'T00:00:00';
         $endTime = ($et == '') ? $endTime = date('Y-m-d\TH:i:s') : $endTime = $et.'T23:59:59';
         $requestData = json_encode([
             'TransferDateStart' => $startTime,
             'TransferDateEnd' => $endTime,
         ]);
-        $url = $this->apiUrl.'HomeDelivery/GetShippingOrders';
+        $url = $this->apiUrl.'HomeDelivery/GetPreparingOrders';
         $response = json_decode($this->sendRequest($requestData, $url), true);
         return $response['Orders'];
     }
@@ -50,7 +50,6 @@ class YahooService {
 
     public function updateStock($productModels) {
         $url = $this->apiUrl.'GdStock/UpdateMultipleQuantities';
-        //之後改500
         $yahooIdsArray = array_chunk(array_diff($productModels->pluck('yahoo_id')->toArray(), [null]), 500);
         foreach ($yahooIdsArray as $yahooIds) {
             $request = [];

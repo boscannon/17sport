@@ -33,8 +33,10 @@ class UpdateOrdersStock {
 
             $createData = $platform->orderFormat($orders);
             foreach ($createData as $key => $value) {
-                $data = Order::create($value);
-                $data->stockDetail()->createMany($value['stock_detail'] ?? []);
+                $data = Order::firstOrCreate(['no' => $value['no'], 'source' => $value['source']], $value);
+                if($data->wasRecentlyCreated) {
+                    $data->stockDetail()->createMany($value['stock_detail'] ?? []);
+                }
             }
 
             DB::commit();

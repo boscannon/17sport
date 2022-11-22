@@ -18,20 +18,32 @@ class MomoService {
 
     public function __construct(Curl $curl) {
         $this->curl = $curl;
-        $this->loginInfo['entpPwd'] = System_setting::where('key', 'momo_password')->first()->value;
     }
 
     public function getOrders($st = '', $et = '') {
+        $this->loginInfo['entpPwd'] = System_setting::where('key', 'momo_password')->first()->value;
         $startTime = ($st == '') ? $startTime = date('Y/m/d') : $startTime = date('Y/m/d', strtotime($st));
         $endTime = ($et == '') ? $endTime = date('Y/m/d') : $endTime = date('Y/m/d', strtotime($et));
+        $url = $this->apiUrl.'OrderServlet.do';
         $requestData = json_encode([
+            'doAction' => 'unsendThirdQuery',
             'loginInfo' => $this->loginInfo,
-            'fromDate' => $startTime,
-            'toDate' => $endTime,
-            'delyGbType' => '1',
-            'sendRecoverType' => '1'
+            'sendInfo' => [
+                'third_fr_dd' => $startTime,
+                'third_fr_hh' => '00',
+                'third_fr_mm' => '00',
+                'third_to_dd' => $endTime,
+                'third_to_hh' => '23',
+                'third_to_mm' => '59',
+                'third_orderGb' => '',
+                'third_delyGb' => '62',
+                'third_delyTemp' => '01',
+                'third_receiver' => '',
+                'third_goodsCode' => '',
+                'third_orderNo' => '',
+                'third_entpGoodsNo' => '',
+            ],
         ]);
-        $url = $this->apiUrl.'api/v2/accounting/order/C1105.scm';
         $response = json_decode($this->sendRequest($requestData, $url), true);
         return $response;
     }
@@ -46,9 +58,9 @@ class MomoService {
     }
 
     public function updateStock($productModels) {
+        $this->loginInfo['entpPwd'] = System_setting::where('key', 'momo_password')->first()->value;
         $url = $this->apiUrl.'GoodsServlet.do';
-        //之後記得改500
-        $momoIdsArray = array_chunk(array_diff($productModels->pluck('momo_id')->toArray(), [null]), 2);
+        $momoIdsArray = array_chunk(array_diff($productModels->pluck('momo_id')->toArray(), [null]), 500);
         foreach ($momoIdsArray as $momoIds) {
             $request = [
                 'doAction' => 'changeGoodsQty',
@@ -79,18 +91,19 @@ class MomoService {
 
     public function orderFormat($order) {
         $data = [];
-        foreach ($order as $value) {
+        foreach ($order['dataList'] as $value) {
             $stock_detail = [];
-            if($productModelDetail = $this->updateProduct($value, ['momo_id' => $value['GOODS_CODE']])) {
+            if($productModelDetail = $this->updateProduct($value, ['momo_id' => $value['goodsCode']])) {
                 $stock_detail[] = $productModelDetail;
             }
             $data[] = [
-                'no' => $value['COMPLETE_ORDER_NO'],
+                'no' => $value['completeOrderNo'],
                 'source' => 'momo',
-                'date' => $value['ORDER_DATE'],
-                'due_date' => $value['DELY_HOPE_DATE'],
-                'remark' => $value['DESCRIBE_NOTE'],
-                'recipient_name' => $value['RECEIVER_MASK'],
+                'date' => $value['lastPricDate'],
+                'due_date' => $value['delyHopeDate'],
+                'remark' => $value['scm_msg'],
+                'recipient_name' => $value['receiverMask'],
+                'purchaser_name' => $value['custNameMask'],
                 'json' => $value,
                 'stock_detail' => $stock_detail
             ];
@@ -101,14 +114,14 @@ class MomoService {
     public function updateProduct($parameters, $where, $replace = false) {
         $productModel = Product::where($where)->first();
         if(!$productModel) return false;
-        $stock = $replace ? $parameters['SYSLAST'] : $productModel->stock - $parameters['SYSLAST'];
+        $stock = $replace ? $parameters['syslast'] : $productModel->stock - $parameters['syslast'];
         $productModel->update(['stock' => $stock]);
         return [
             'product_id' => $productModel->id,
             'source' => 'momo',
-            'name' => $parameters['GOODS_NAME'],
-            'type' => $parameters['GOODSDT_INFO'],
-            'amount' => $parameters['SYSLAST'],
+            'name' => $parameters['goodsName'],
+            'type' => $parameters['goodsDtInfo'],
+            'amount' => $parameters['syslast'],
             'stock' => $productModel->stock,
         ];
     }

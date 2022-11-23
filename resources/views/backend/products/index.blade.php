@@ -16,7 +16,7 @@
                 </div>
                 <div class="form-group col-md-6">
                     <button type="submit" class="btn btn-primary mr-2"><i class="fa fa-upload mr-5"></i>{{ __('upload') }}</button>
-                    <a href="{{ route('backend.products_excel.index') }}" target="_blank" class="btn btn-info"><i class="fa fa-download mr-5"></i>{{ __("backend.$routeNameData.ecxel_download") }}</a>                
+                    <a href="{{ route('backend.products_excel.index') }}?v=1" target="_blank" class="btn btn-info"><i class="fa fa-download mr-5"></i>{{ __("backend.$routeNameData.ecxel_download") }}</a>                
                 </div>
             </div>
             <div class="spinner-border text-primary upload-loading" role="status">

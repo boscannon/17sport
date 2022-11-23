@@ -60,10 +60,10 @@ $(function() {
                 '<span class="badge badge-success">{{ __("backend.$routeNameData.match") }}' }</span>`;
             }},
             { data: 'date', title: '{{ __("backend.$routeNameData.date") }}' },
-            { data: 'stock_detail', title: '{{ __("backend.$routeNameData.name") }}', defaultContent: '', render: function ( data, type, row , meta ) {
+            { data: 'stock_detail', title: '{{ __("backend.$routeNameData.name") }}', defaultContent: '', bSearchable: false, orderable: false, render: function ( data, type, row , meta ) {
                 return `<pre style="margin: 0">${ data.map((item) => item.product.name).join("\n") }</pre>`;
             } },
-            { data: 'stock_detail', title: '{{ __("backend.$routeNameData.size") }}', defaultContent: '', render: function ( data, type, row , meta ) {
+            { data: 'stock_detail', title: '{{ __("backend.$routeNameData.size") }}', defaultContent: '', bSearchable: false, orderable: false, render: function ( data, type, row , meta ) {
                 return `<pre style="margin: 0">${ data.map((item) => item.product.size).join("\n") }</pre>`;
             } },
             { data: 'date', title: '{{ __("backend.$routeNameData.date") }}' },

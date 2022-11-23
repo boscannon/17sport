@@ -21,10 +21,8 @@ class ProductExcelImport implements ToCollection
 
                 if($row[3] == '') throw new Exception(__('not_barcode'));
                 
-                $product = Product::updateOrCreate([
-                    'barcode' => $row[3],
-                ],[                
-                    'yahoo_id' => $row[0],
+                $update = collect([
+                    'yahoo_id' => $row[0] ?? null,
                     'momo_id' => $row[1],
                     'momo_dt_code' => $row[2],
                     'barcode' => $row[3],
@@ -38,6 +36,12 @@ class ProductExcelImport implements ToCollection
                     'attribute' => $row[11],
                     'remark' => $row[12],
                 ]);
+
+                $product = Product::updateOrCreate([
+                    'barcode' => $row[3],
+                ], $update->map(function($item){
+                    return $item != '' ? $item : null;
+                })->toArray());
             
             } catch (Exception $e) {
                 $this->ignore[] = [

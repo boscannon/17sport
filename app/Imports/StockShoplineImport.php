@@ -21,15 +21,19 @@ class StockShoplineImport implements ToCollection
 
                 if($row[5] == '') throw new Exception(__('not_barcode'));
 
-                $product = Product::updateOrCreate([
-                    'barcode' => $row[5],
-                ],[
+                $update = collect([
                     'name' => $row[0],
                     'attribute' => $row[1],
                     'price' => $row[6] ?? 0,
                     'stock' => $row[17] == '無限數量' ? 99999 : $row[17], 
                 ]);
 
+                $product = Product::updateOrCreate([
+                    'barcode' => $row[5],
+                ], $update->map(function($item){
+                    return $item != '' ? $item : null;
+                })->toArray());
+                
                 $product->stockDetail()->create([
                     'source' => 'excel',
                     'name' => $product->name,

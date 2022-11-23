@@ -69,9 +69,9 @@ return [
   ],
   'products' => [
     'barcode' => '國際條碼',
-    'yahoo_id' => 'yahoo 編號',
-    'momo_id' => 'momo 編號',
-    'momo_dt_code' => 'momo 品號',
+    'yahoo_id' => 'yahoo 商品序號',
+    'momo_id' => 'momo 商品編號',
+    'momo_dt_code' => 'momo 單品編號',
     'name' => '名稱',
     'specification' => '規格',
     'unit' => '單位',

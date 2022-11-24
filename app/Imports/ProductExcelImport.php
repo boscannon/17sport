@@ -22,19 +22,19 @@ class ProductExcelImport implements ToCollection
                 if($row[3] == '') throw new Exception(__('not_barcode'));
                 
                 $update = collect([
-                    'yahoo_id' => $row[0] ?? null,
-                    'momo_id' => $row[1],
-                    'momo_dt_code' => $row[2],
-                    'barcode' => $row[3],
-                    'name' => $row[4],
-                    'specification' => $row[5],
-                    'unit' => $row[6],
-                    'type' => $row[7],
-                    'size' => $row[8],
+                    'yahoo_id' => trim($row[0] ?? null),
+                    'momo_id' => trim($row[1]),
+                    'momo_dt_code' => trim($row[2]),
+                    'barcode' => trim($row[3]),
+                    'name' => trim($row[4]),
+                    'specification' => trim($row[5]),
+                    'unit' => trim($row[6]),
+                    'type' => trim($row[7]),
+                    'size' => trim($row[8]),
                     'price' => intval($row[9]),
                     'stock' => intval($row[10]),
-                    'attribute' => $row[11],
-                    'remark' => $row[12],
+                    'attribute' => trim($row[11]),
+                    'remark' => trim($row[12]),
                 ]);
 
                 $product = Product::updateOrCreate([

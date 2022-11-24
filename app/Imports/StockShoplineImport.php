@@ -22,10 +22,10 @@ class StockShoplineImport implements ToCollection
                 if($row[5] == '') throw new Exception(__('not_barcode'));
 
                 $update = collect([
-                    'name' => $row[0],
-                    'attribute' => $row[1],
-                    'price' => $row[6] ?? 0,
-                    'stock' => $row[17] == '無限數量' ? 99999 : $row[17], 
+                    'name' => trim($row[0]),
+                    'attribute' => trim($row[1]),
+                    'price' => trim($row[6] ?? 0),
+                    'stock' => trim($row[17] == '無限數量' ? 99999 : $row[17]) ,
                 ]);
 
                 $product = Product::updateOrCreate([

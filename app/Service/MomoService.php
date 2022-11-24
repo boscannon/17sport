@@ -5,6 +5,7 @@ namespace App\Service;
 use App\Library\Curl;
 use App\Models\Product;
 use App\Models\System_setting;
+use Illuminate\Support\Facades\Log;
 
 class MomoService {
     protected $loginInfo = [
@@ -142,6 +143,6 @@ class MomoService {
     }
 
     public function _msg($string) {
-        dump($string);
+        Log::info($string);
     }
 }

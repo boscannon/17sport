@@ -6,6 +6,7 @@ use App\Library\Curl;
 use App\Library\AES_OpenSSL;
 use App\Library\HMacSha512;
 use App\Models\Product;
+use App\Models\Order;
 use Illuminate\Support\Facades\Log;
 
 class YahooService {
@@ -74,6 +75,7 @@ class YahooService {
     public function orderFormat($order) {
         $data = [];
         foreach ($order as $value) {
+            if(Order::where('no', $value['OrderInfo']['OrderCode'])->first()) continue;
             $stock_detail = [];
             foreach ($value['Products'] as $product) {
                 if($productModelDetail = $this->updateProduct($product, ['yahoo_id' => $product['Id']])

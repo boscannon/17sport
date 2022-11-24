@@ -52,7 +52,7 @@ class YahooService {
 
     public function updateStock($productModels) {
         $url = $this->apiUrl.'GdStock/UpdateMultipleQuantities';
-        $yahooIdsArray = array_chunk(array_diff($productModels->pluck('yahoo_id')->toArray(), [null]), 500);
+        $yahooIdsArray = array_chunk(array_diff($productModels->pluck('yahoo_id')->toArray(), [null, '']), 500);
         foreach ($yahooIdsArray as $yahooIds) {
             $request = [];
             $stocks = $this->getStock($yahooIds);

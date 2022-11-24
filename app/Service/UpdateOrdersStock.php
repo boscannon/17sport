@@ -23,7 +23,7 @@ class UpdateOrdersStock {
         foreach ($this->platform as $key => $platform) {
             $this->getOrders($platform, $st, $et);
         }
-        // $this->updateStock();
+        $this->updateStock();
     }
 
     public function getOrders($platform, $st, $et) {

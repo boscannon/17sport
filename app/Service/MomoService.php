@@ -5,6 +5,8 @@ namespace App\Service;
 use App\Library\Curl;
 use App\Models\Product;
 use App\Models\System_setting;
+use App\Models\Order;
+use Illuminate\Support\Facades\Log;
 
 class MomoService {
     protected $loginInfo = [
@@ -73,7 +75,7 @@ class MomoService {
                     return $item->momo_id == $product['goods_code'] &&
                             $item->momo_dt_code == $product['goodsdt_code'];
                 });
-                if(!isset($data)) continue;
+                if(!isset($data) || $data->stock == $product['order_counsel_qty']) continue;
                 $qty = ($data->stock >= 0) ? $qty = $data->stock - $product['order_counsel_qty'] : 0 - $product['order_counsel_qty'];
                 $request['sendInfoList'][] = [
                     'goodsCode' => $product['goods_code'],
@@ -92,6 +94,7 @@ class MomoService {
     public function orderFormat($order) {
         $data = [];
         foreach ($order['dataList'] as $value) {
+            if(Order::where('no', $value['completeOrderNo'])->first()) continue;
             $stock_detail = [];
             if($productModelDetail = $this->updateProduct($value, ['momo_id' => $value['goodsCode']])) {
                 $stock_detail[] = $productModelDetail;
@@ -142,6 +145,6 @@ class MomoService {
     }
 
     public function _msg($string) {
-        dump($string);
+        Log::info($string);
     }
 }

@@ -6,6 +6,8 @@ use App\Library\Curl;
 use App\Library\AES_OpenSSL;
 use App\Library\HMacSha512;
 use App\Models\Product;
+use App\Models\Order;
+use Illuminate\Support\Facades\Log;
 
 class YahooService {
     protected $shareSecretKey = "6GIa8qR8JBiOYWxjzUxc/uch17qr+kiyTnTh7LZWcMU=";
@@ -58,7 +60,7 @@ class YahooService {
                 $data = $productModels->first(function ($item, $key) use ($product){
                     return $item->yahoo_id == $product['ProductId'];
                 });
-                if(!isset($data)) continue;
+                if(!isset($data) || $data->stock == $product['Qty']) continue;
                 $qty = ($data->stock >= 0) ? $qty = $data->stock - $product['Qty'] : 0 - $product['Qty'];
                 $request[] = [
                     'ProductId' => $product['ProductId'],
@@ -73,6 +75,7 @@ class YahooService {
     public function orderFormat($order) {
         $data = [];
         foreach ($order as $value) {
+            if(Order::where('no', $value['OrderInfo']['OrderCode'])->first()) continue;
             $stock_detail = [];
             foreach ($value['Products'] as $product) {
                 if($productModelDetail = $this->updateProduct($product, ['yahoo_id' => $product['Id']])
@@ -149,6 +152,6 @@ class YahooService {
     }
 
     public function _msg($string) {
-        dump($string);
+        Log::info($string);
     }
 }

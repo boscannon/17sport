@@ -30,9 +30,9 @@ class StockShoplineImport implements ToCollection
 
                 $product = Product::updateOrCreate([
                     'barcode' => $row[5],
-                ], $update->map(function($item){
-                    return $item != '' ? $item : null;
-                })->toArray());
+                ], $update->filter(function($item){
+                    return $item != '';
+                })->all());
                 
                 $product->stockDetail()->create([
                     'source' => 'excel',

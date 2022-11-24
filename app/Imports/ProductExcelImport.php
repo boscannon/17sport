@@ -39,9 +39,9 @@ class ProductExcelImport implements ToCollection
 
                 $product = Product::updateOrCreate([
                     'barcode' => $row[3],
-                ], $update->map(function($item){
-                    return $item != '' ? $item : null;
-                })->toArray());
+                ], $update->filter(function($item){
+                    return $item != '';
+                })->all());
             
             } catch (Exception $e) {
                 $this->ignore[] = [

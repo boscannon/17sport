@@ -96,7 +96,7 @@ class MomoService {
         foreach ($order['dataList'] as $value) {
             if(Order::where('no', $value['completeOrderNo'])->first()) continue;
             $stock_detail = [];
-            if($productModelDetail = $this->updateProduct($value, ['momo_id' => $value['goodsCode']])) {
+            if($productModelDetail = $this->updateProduct($value, ['momo_id' => $value['goodsCode'], 'momo_dt_code' => $value['goodsDtCode']])) {
                 $stock_detail[] = $productModelDetail;
             }
             $data[] = [

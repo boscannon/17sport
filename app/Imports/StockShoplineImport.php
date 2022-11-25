@@ -14,10 +14,33 @@ class StockShoplineImport implements ToCollection
 
     public function collection(Collection $rows)
     {
+        if($rows[0]->all() != [
+            0 => "商品名稱",
+            1 => "選項",
+            2 => "供應商",
+            3 => "分類",
+            4 => "商品貨號",
+            5 => "商品條碼",
+            6 => "商品原價",
+            7 => "商品特價",
+            8 => "實體店價格",
+            9 => "會員價",
+            10 => "500VIP價",
+            11 => "美津濃專賣店會員價",
+            12 => "商品成本",
+            13 => "預設倉庫",
+            14 => "一起大昌",
+            15 => "總倉",
+            16 => "一起明華",
+            17 => "庫存總量",
+            18 => "總成本",
+        ]){
+            throw new Exception(__('data_format_error'));
+        }        
+
         foreach ($rows as $key => $row) 
         {
             try{
-		dd($row);
                 if($key == 0) continue;
 
                 if($row[5] == '') throw new Exception(__('not_barcode'));

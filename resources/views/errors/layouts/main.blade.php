@@ -91,10 +91,10 @@
                         <div class="content content-full">
                             <div class="py-30 text-center">
                                 @yield('content')
-                                <h1 class="h2 font-w700 mt-30 mb-10">Oops.. You just found an error page..</h1>
-                                <h2 class="h3 font-w400 text-muted mb-50">{{ $message }}</h2>
-                                <a class="btn btn-hero btn-rounded btn-alt-secondary" href="/">
-                                    <i class="fa fa-arrow-left mr-10"></i> Back to Home
+                                <h1 class="h2 font-w700 mt-30 mb-10">{{ __('Oops.. You just found an error page..') }}</h1>
+                                <h2 class="h3 font-w400 text-muted mb-50">{{ __($message) }}</h2>
+                                <a class="btn btn-hero btn-rounded btn-alt-secondary" href="javascript:history.back()">
+                                    <i class="fa fa-arrow-left mr-10"></i> {{ __('back') }}
                                 </a>
                             </div>
                         </div>

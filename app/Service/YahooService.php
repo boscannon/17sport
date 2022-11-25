@@ -61,8 +61,8 @@ class YahooService {
                 $data = $productModels->first(function ($item, $key) use ($product){
                     return $item->yahoo_id == $product['ProductId'];
                 });
-                if(!isset($data) || $data->stock == $product['Qty']) continue;
-                $qty = ($data->stock >= 0) ? $qty = $data->stock - $product['Qty'] : 0 - $product['Qty'];
+                if(!isset($data) || $data->stock == $product['LeftQty']) continue;
+                $qty = ($data->stock >= 0) ? $qty = $data->stock - $product['LeftQty'] : 0 - $product['LeftQty'];
                 $request[] = [
                     'ProductId' => $product['ProductId'],
                     'Quantity' => $qty,

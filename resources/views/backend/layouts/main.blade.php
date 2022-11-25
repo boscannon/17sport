@@ -341,9 +341,6 @@
         <script src="{{ asset('plugins/filepond-plugin-file-validate-type/dist/filepond-plugin-file-validate-type.js') }}"></script>
         <script src="{{ asset('plugins/filepond-plugin-file-encode/dist/filepond-plugin-file-encode.js') }}"></script>
 
-        <script src="https://unpkg.com/filepond-plugin-image-transform/dist/filepond-plugin-image-transform.js"></script>
-        <script src="https://unpkg.com/filepond-plugin-image-edit/dist/filepond-plugin-image-edit.js"></script>
-
         <script src="{{ asset('plugins/filepond/dist/filepond.js') }}"></script>
         <script src="{{ asset('/js/plugins/flatpickr/flatpickr.min.js') }}"></script>
         <script src="{{ asset('/js/plugins/jquery-datatables/datatables.min.js') }}"></script>        

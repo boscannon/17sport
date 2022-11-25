@@ -14,6 +14,24 @@ class ProductExcelImport implements ToCollection
 
     public function collection(Collection $rows)
     {
+        if($rows[0]->all() != [
+            0 => "yahoo 商品序號*",
+            1 => "momo 商品編號*",
+            2 => "momo 單品編號*",
+            3 => "國際條碼*",
+            4 => "名稱*",
+            5 => "規格",
+            6 => "單位",
+            7 => "型號",
+            8 => "選項",
+            9 => "售價",
+            10 => "庫存",
+            11 => "屬性",
+            12 => "備註",
+        ]){
+            throw new Exception(__('data_format_error'));
+        }
+
         foreach ($rows as $key => $row) 
         {
             try{
@@ -22,23 +40,24 @@ class ProductExcelImport implements ToCollection
                 if($row[3] == '') throw new Exception(__('not_barcode'));
                 
                 $update = collect([
+                    'barcode' => trim($row[3]),
+
                     'yahoo_id' => trim($row[0] ?? null),
                     'momo_id' => trim($row[1]),
                     'momo_dt_code' => trim($row[2]),
-                    'barcode' => trim($row[3]),
                     'name' => trim($row[4]),
                     'specification' => trim($row[5]),
                     'unit' => trim($row[6]),
                     'type' => trim($row[7]),
                     'size' => trim($row[8]),
-                    'price' => intval($row[9]),
-                    'stock' => intval($row[10]),
+                    'price' => trim($row[9]),
+                    'stock' => trim($row[10]),
                     'attribute' => trim($row[11]),
                     'remark' => trim($row[12]),
                 ]);
 
                 $product = Product::updateOrCreate([
-                    'barcode' => $row[3],
+                    'barcode' => $update->get('barcode'),
                 ], $update->filter(function($item){
                     return $item != '';
                 })->all());

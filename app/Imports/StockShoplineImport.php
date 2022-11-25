@@ -17,19 +17,22 @@ class StockShoplineImport implements ToCollection
         foreach ($rows as $key => $row) 
         {
             try{
+		dd($row);
                 if($key == 0) continue;
 
                 if($row[5] == '') throw new Exception(__('not_barcode'));
 
                 $update = collect([
+                    'barcode' => trim($row[5]),
+
                     'name' => trim($row[0]),
                     'attribute' => trim($row[1]),
-                    'price' => trim($row[6] ?? 0),
+                    'price' => trim($row[6]),
                     'stock' => trim($row[17] == '無限數量' ? 99999 : $row[17]) ,
                 ]);
 
                 $product = Product::updateOrCreate([
-                    'barcode' => $row[5],
+                    'barcode' => $update->get('barcode'),
                 ], $update->filter(function($item){
                     return $item != '';
                 })->all());

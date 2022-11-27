@@ -46,8 +46,8 @@ class UpdateOrdersStock {
         }
     }
 
-    public function updateStock() {
-        $productModels = Product::all();
+    public function updateStock($all = false) {
+        $productModels = $all ? Product::all() : Product::where('updated_at', '>=', date('Y-m-d H:i:s', strtotime('-15 min')))->get();
         foreach ($this->platform as $key => $platform) {
             $platform->updateStock($productModels);
         }

@@ -50,7 +50,7 @@ class StockShoplineController extends Controller
 
             DB::commit();
             //更新平台庫存
-            $this->UpdateOrdersStock->updateStock();
+            $this->UpdateOrdersStock->updateStock(true);
             return response()->json(['message' => __('import').__('success'), 'ignore' => $ignore]);
         } catch (Exception $e) {
             DB::rollBack();

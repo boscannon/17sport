@@ -52,8 +52,8 @@ class YahooService {
 
     public function updateStock($all) {
         $url = $this->apiUrl.'GdStock/UpdateMultipleQuantities';
-        $productModels = $all ? Product::select('yahoo_id', 'stock')->groupBy('yahoo_id')->get() : Product::select('yahoo_id', 'stock')->where('updated_at', '>=', date('Y-m-d H:i:s', strtotime('-15 min')))->groupBy('yahoo_id')->get();
-        $yahooIdsArray = array_chunk(array_diff($productModels->pluck('yahoo_id')->toArray(), [null, '']), 500);
+        $productModels = $all ? Product::select('yahoo_id', 'stock')->groupBy('yahoo_id')->get() : Product::select('yahoo_id', 'stock')->where('updated_at', '>=', date('Y-m-d H:i:s', strtotime('-1 day')))->groupBy('yahoo_id')->get();
+        $yahooIdsArray = array_chunk(array_diff($productModels->pluck('yahoo_id')->toArray(), [null, '']), 100);
         foreach ($yahooIdsArray as $yahooIds) {
             $request = [];
             $stocks = $this->getStock($yahooIds);

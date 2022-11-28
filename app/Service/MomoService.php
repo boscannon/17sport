@@ -77,16 +77,16 @@ class MomoService {
                 });
                 if(!isset($data) || $data->stock == $product['order_counsel_qty']) continue;
                 $qty = ($data->stock >= 0) ? $qty = $data->stock - $product['order_counsel_qty'] : 0 - $product['order_counsel_qty'];
-                $request['sendInfoList'][] = [
+                $request['sendInfoList'][] = json_encode([
                     'goodsCode' => $product['goods_code'],
                     'goodsName' => $product['goods_name'],
                     'goodsdtCode' => $product['goodsdt_code'],
                     'goodsdtInfo' => $product['goodsdt_info'],
                     'orderCounselQty' => $product['order_counsel_qty'],
                     'addReduceQty' => $qty
-                ];
+                ]);
             }
-            $response = $this->sendRequest(json_encode($request), $url);
+            $response = $this->sendRequest($request, $url);
             $this->_msg($response);
         }
     }

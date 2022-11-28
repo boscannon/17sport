@@ -69,6 +69,7 @@ class MomoService {
                 'loginInfo' => $this->loginInfo,
                 'sendInfoList' => []
             ];
+            $this->_msg(json_encode($momoIds));
             $stocks = $this->getStock($momoIds);
             foreach ($stocks as $product) {
                 $data = $productModels->first(function ($item, $key) use ($product){

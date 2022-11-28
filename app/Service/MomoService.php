@@ -62,7 +62,7 @@ class MomoService {
     public function updateStock($productModels) {
         $this->loginInfo['entpPwd'] = System_setting::where('key', 'momo_password')->first()->value;
         $url = $this->apiUrl.'GoodsServlet.do';
-        $momoIdsArray = array_chunk(array_diff($productModels->pluck('momo_id')->toArray(), [null, '']), 500);
+        $momoIdsArray = array_chunk(array_diff($productModels->groupBy('momo_id')->pluck('momo_id')->toArray(), [null, '']), 500);
         foreach ($momoIdsArray as $momoIds) {
             $request = [
                 'doAction' => 'changeGoodsQty',

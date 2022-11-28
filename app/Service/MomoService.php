@@ -139,6 +139,7 @@ class MomoService {
 
     public function sendRequest($requestData, $url) {
         $header = $this->getHeader();
+        $this->_msg('momo request: '. $requestData);
         $response = $this->curl->request($url, $header, $requestData);
         $this->_msg('momo response: '. $response);
         return $response;

@@ -59,10 +59,11 @@ class MomoService {
         return json_decode($this->sendRequest($request, $url), true)['dataList'];
     }
 
-    public function updateStock($productModels) {
+    public function updateStock($all) {
         $this->loginInfo['entpPwd'] = System_setting::where('key', 'momo_password')->first()->value;
         $url = $this->apiUrl.'GoodsServlet.do';
-        $momoIdsArray = array_chunk(array_diff($productModels->groupBy('momo_id')->pluck('momo_id')->toArray(), [null, '']), 500);
+        $productModels = $all ? Product::groupBy('momo_id')->get() : Product::where('updated_at', '>=', date('Y-m-d H:i:s', strtotime('-15 min')))->groupBy('momo_id')->get();
+        $momoIdsArray = array_chunk(array_diff($productModels->pluck('momo_id')->toArray(), [null, '']), 500);
         foreach ($momoIdsArray as $momoIds) {
             $request = [
                 'doAction' => 'changeGoodsQty',

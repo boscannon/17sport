@@ -50,10 +50,10 @@ class YahooService {
         return json_decode($this->sendRequest($request, $url), true)['GdStocks'];
     }
 
-    public function updateStock($productModels) {
+    public function updateStock($all) {
         $url = $this->apiUrl.'GdStock/UpdateMultipleQuantities';
-        $yahooIdsArray = array_chunk(array_diff($productModels->groupBy('yahoo_id')->pluck('yahoo_id')->toArray(), [null, '']), 500);
-        dump($yahooIdsArray);
+        $productModels = $all ? Product::groupBy('yahoo_id')->get() : Product::where('updated_at', '>=', date('Y-m-d H:i:s', strtotime('-15 min')))->groupBy('yahoo_id')->get();
+        $yahooIdsArray = array_chunk(array_diff($productModels->pluck('yahoo_id')->toArray(), [null, '']), 500);
         foreach ($yahooIdsArray as $yahooIds) {
             $request = [];
             $stocks = $this->getStock($yahooIds);

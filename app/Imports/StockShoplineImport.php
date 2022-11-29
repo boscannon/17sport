@@ -51,7 +51,7 @@ class StockShoplineImport implements ToCollection
                     'name' => trim($row[0]),
                     'attribute' => trim($row[1]),
                     'price' => trim($row[6]),
-                    'stock' => trim($row[17] == '無限數量' ? 99999 : $row[17]) ,
+                    'stock' => trim($row[17] == '無限數量' ? 9999 : $row[17]) ,
                 ]);
 
                 $product = Product::updateOrCreate([

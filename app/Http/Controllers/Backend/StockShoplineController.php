@@ -41,16 +41,19 @@ class StockShoplineController extends Controller
 
         try{
             DB::beginTransaction();
+            Log::info(__FILE__.'開始匯入');
             //更新商品 跟 新增庫存明細
             $import = new StockShoplineImport;
             Excel::import($import, $validatedData['file']);
 
             $ignore = $import->ignore;
-            Log::error($ignore);
+            //Log::error($ignore);
 
+            Log::info(__FILE__.'匯入完成');
             DB::commit();
             //更新平台庫存
             $this->UpdateOrdersStock->updateStock(true);
+            Log::info(__FILE__.'api完成');
             return response()->json(['message' => __('import').__('success'), 'ignore' => $ignore]);
         } catch (Exception $e) {
             DB::rollBack();

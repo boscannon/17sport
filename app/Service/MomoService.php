@@ -70,7 +70,7 @@ class MomoService {
                 'loginInfo' => $this->loginInfo,
                 'sendInfoList' => []
             ];
-            $this->_msg('momoIds : '.json_encode($momoIds));
+            // $this->_msg('momoIds : '.json_encode($momoIds));
             $stocks = $this->getStock($momoIds);
             foreach ($stocks as $product) {
                 $data = $productModels->first(function ($item, $key) use ($product){
@@ -89,7 +89,7 @@ class MomoService {
                 ];
             }
             $response = $this->sendRequest(json_encode($request), $url);
-            $this->_msg($response);
+            // $this->_msg($response);
         }
     }
 
@@ -141,9 +141,9 @@ class MomoService {
 
     public function sendRequest($requestData, $url) {
         $header = $this->getHeader();
-        $this->_msg('momo request: '. $requestData);
+        // $this->_msg('momo request: '. $requestData);
         $response = $this->curl->request($url, $header, $requestData);
-        $this->_msg('momo response: '. $response);
+        // $this->_msg('momo response: '. $response);
         return $response;
     }
 

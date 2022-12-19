@@ -69,7 +69,7 @@ class YahooService {
                 ];
             }
             $response = $this->sendRequest(json_encode($request), $url);
-            $this->_msg($response);
+            // $this->_msg($response);
         }
     }
 
@@ -118,10 +118,10 @@ class YahooService {
     }
 
     public function encrypt($requestData) {
-        $this->_msg('明文: '.$requestData);
+        // $this->_msg('明文: '.$requestData);
         $this->aes->getConfig($this->shareSecretKey, $this->shareSecretIV);
         $cipherText = $this->aes->encryptString($requestData);
-        $this->_msg('密文: '.$cipherText);
+        // $this->_msg('密文: '.$cipherText);
         return $cipherText;
     }
 
@@ -139,17 +139,17 @@ class YahooService {
     }
 
     public function sendRequest($requestData, $url) {
-        $this->_msg('yahoo request: '. $requestData);
+        // $this->_msg('yahoo request: '. $requestData);
         $encrypt = $this->encrypt($requestData);
         $signatureString = sprintf("%s%s%s%s", $this->timestamps, $this->token, $this->saltKey, $encrypt);
         $signature = $this->sha->hash($signatureString);
-        $this->_msg('簽名字串: '.$signatureString);
-        $this->_msg('簽名: '.$signature);
+        // $this->_msg('簽名字串: '.$signatureString);
+        // $this->_msg('簽名: '.$signature);
 
         $header = $this->getHeader($signature);
         $responseEncode = $this->curl->request($url, $header, $encrypt);
         $response = $this->aes->decryptString($responseEncode);
-        $this->_msg('yahoo response: '. $response);
+        // $this->_msg('yahoo response: '. $response);
         return $response;
     }
 

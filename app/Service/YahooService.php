@@ -139,7 +139,7 @@ class YahooService {
     }
 
     public function sendRequest($requestData, $url) {
-        // $this->_msg('yahoo request: '. $requestData);
+        $this->_msg('yahoo request: '. $requestData);
         $encrypt = $this->encrypt($requestData);
         $signatureString = sprintf("%s%s%s%s", $this->timestamps, $this->token, $this->saltKey, $encrypt);
         $signature = $this->sha->hash($signatureString);
@@ -149,7 +149,7 @@ class YahooService {
         $header = $this->getHeader($signature);
         $responseEncode = $this->curl->request($url, $header, $encrypt);
         $response = $this->aes->decryptString($responseEncode);
-        // $this->_msg('yahoo response: '. $response);
+        $this->_msg('yahoo response: '. $response);
         return $response;
     }
 
